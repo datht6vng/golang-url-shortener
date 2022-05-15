@@ -17,7 +17,7 @@ type Url struct {
 type UrlRecord struct {
 	ShortUrl   string    `json:"shortUrl" xml:"shortUrl" form:"shortUrl"`
 	LongUrl    string    `json:"longUrl"  xml:"longUrl"  form:"longUrl"`
-	ExpiryTime time.Time `json:"TTL" xml:"TTL" form:"TTL"`
+	ExpireTime time.Time `json:"expireTime" xml:"expireTime" form:"expireTime"`
 }
 
 func Connect() {
@@ -67,19 +67,19 @@ func CreateModel(connection *sql.DB) error {
 		CREATE TABLE IF NOT EXISTS URL (
 			SHORT_URL VARCHAR(500) PRIMARY KEY,
 			LONG_URL VARCHAR(500),
-			EXPIRY_TIME TIMESTAMP
+			EXPIRE_TIME TIMESTAMP
 		);
 	`)
 	return err
 }
 func FindLongUrl(connection *sql.DB, url string) (UrlRecord, error) {
 	result := UrlRecord{}
-	err := connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpiryTime)
+	err := connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime)
 	return result, err
 }
 func FindShortUrl(connection *sql.DB, url string) (UrlRecord, error) {
 	result := UrlRecord{}
-	err := connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpiryTime)
+	err := connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime)
 	return result, err
 }
 func InsertUrl(connection *sql.DB, shortUrl string, longUrl string, expiryTime time.Time) error {
