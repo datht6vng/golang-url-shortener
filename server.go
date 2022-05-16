@@ -27,6 +27,7 @@ func main() {
 	controller.Cache.Connect()
 	// Limiter
 	app.Use(limiter.CreateLimiter())
+	// Controller
 	app.Get("/", controller.GetIndexController)
 	app.Post("/gen-url", controller.PostGenUrlController)
 	app.Get("/init-db", controller.InitDBController)

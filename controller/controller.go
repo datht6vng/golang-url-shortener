@@ -10,6 +10,7 @@ import (
 )
 
 var baseUrl = "http://localhost"
+
 var Model = model.Model{}
 var Cache = cache.Cache{}
 
@@ -28,7 +29,7 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 	}
 	// find in database
 
-	// need to find in catch ?
+	// need to find in cache ?
 	return nil
 }
 func GetUrlController(ctx *fiber.Ctx) error {

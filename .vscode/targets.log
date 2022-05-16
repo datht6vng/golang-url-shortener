@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May 15 15:46:02 2022
+# Make data base, printed on Mon May 16 13:46:49 2022
 
 # Variables
 
@@ -23,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-021e21c6-3c94-43e1-911e-52fabd4ffdea.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a0dd7d27-5973-44a6-a322-ae917ddd35f5.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -45,7 +43,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # environment
-PWD = /home/dathuynh/Workspace/test_go/server_go
+PWD = /home/dathuynh/Workspace/golang-url-shortener
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -65,7 +63,7 @@ VSCODE_CODE_CACHE_PATH = /home/dathuynh/.config/Code/CachedData/da15b6fd3ef85647
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.LF5ZL1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.RF2HM1
 # default
 .LOADED := 
 # default
@@ -73,7 +71,7 @@ XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.LF5ZL1
 # makefile
 MAKEFLAGS = pqrR
 # makefile
-CURDIR := /home/dathuynh/Workspace/test_go/server_go
+CURDIR := /home/dathuynh/Workspace/golang-url-shortener
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -103,13 +101,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 42447
+VSCODE_PID = 3245
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh:@/tmp/.ICE-unix/6378,unix/dathuynh:/tmp/.ICE-unix/6378
+SESSION_MANAGER = local/dathuynh:@/tmp/.ICE-unix/1948,unix/dathuynh:/tmp/.ICE-unix/1948
 # automatic
 *F = $(notdir $*)
 # environment
@@ -153,7 +151,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = cd36becfce2b4161b86910e89d7c2d79
+INVOCATION_ID = 89bb4075cfa147d68ef23ec5b586c4b1
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -185,7 +183,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 6411
+SYSTEMD_EXEC_PID = 1996
 # environment
 DISPLAY = :0
 # environment
@@ -195,11 +193,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1757
+MANAGERPID = 1769
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 42447
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3245
 # environment
 PAGER = less
 # environment
@@ -209,7 +207,7 @@ LC_PAPER = vi_VN
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-JOURNAL_STREAM = 8:58815
+JOURNAL_STREAM = 8:37918
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -251,9 +249,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 1074249): 11 files, no impossibilities.
+# . (device 66308, inode 1072640): 17 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -264,7 +262,7 @@ LC_IDENTIFICATION = vi_VN
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-12 01:40:31.796604114
+#  Last modified 2022-05-16 11:40:13.569096351
 #  File has been updated.
 #  Successfully updated.
 
@@ -281,7 +279,6 @@ stop:
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 7):
 			docker compose stop
- 
 
 server:
 #  Implicit rule search has not been done.
@@ -302,6 +299,9 @@ all:
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
+
+ 
+make: *** No rule to make target 'all'.  Stop.
 
 run: stop up
 #  Implicit rule search has not been done.
@@ -335,12 +335,12 @@ remove:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 23 / storage = 183 B / avg = 7 B
-# current buf: size = 8162 B / used = 183 B / count = 23 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 29 / storage = 226 B / avg = 7 B
+# current buf: size = 8162 B / used = 226 B / count = 29 / avg = 7 B
 
-# strcache performance: lookups = 40 / hit rate = 42%
+# strcache performance: lookups = 46 / hit rate = 36%
 # hash-table stats:
-# Load=23/8192=0%, Rehash=0, Collisions=0/40=0%
-# Finished Make data base on Sun May 15 15:46:03 2022
+# Load=29/8192=0%, Rehash=0, Collisions=0/46=0%
+# Finished Make data base on Mon May 16 13:46:49 2022
 
  

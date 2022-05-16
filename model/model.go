@@ -44,7 +44,7 @@ func (this *Model) Connect() {
 	if database == "" {
 		database = "mysql"
 	}
-	dbConneectionString := fmt.Sprintf(
+	dbConnectionString := fmt.Sprintf(
 		"%s:%s@%s(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		user,
 		password,
@@ -53,7 +53,7 @@ func (this *Model) Connect() {
 		port,
 		database,
 	)
-	db, err := sql.Open("mysql", dbConneectionString)
+	db, err := sql.Open("mysql", dbConnectionString)
 	if err != nil {
 		fmt.Println("Failed to open database", err.Error())
 		return

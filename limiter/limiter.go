@@ -1,6 +1,8 @@
 package limiter
 
 import (
+	"os"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -8,9 +10,21 @@ import (
 )
 
 func CreateLimiter() fiber.Handler {
+	maxRequest := os.Getenv("MAX_REQUEST")
+	limitExpire := os.Getenv("LIMIT_EXPIRE")
+
+	if maxRequest == "" {
+		maxRequest = "5"
+	}
+	if limitExpire == "" {
+		limitExpire = "1"
+	}
+	intMaxRequest, _ := strconv.Atoi(maxRequest)
+	intLimitExpire, _ := strconv.Atoi(limitExpire)
+
 	config := limiter.Config{
-		Max:        5,
-		Expiration: 1 * time.Minute,
+		Max:        intMaxRequest,
+		Expiration: time.Duration(intLimitExpire) * time.Minute,
 		KeyGenerator: func(c *fiber.Ctx) string {
 			return c.IP()
 		},
