@@ -1,13 +1,17 @@
 package controller
 
 import (
+	"fmt"
 	"net/url"
+	"server_go/cache"
 	"server_go/model"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 var baseUrl = "http://localhost"
+var Model = model.Model{}
+var Cache = cache.Cache{}
 
 func GetIndexController(ctx *fiber.Ctx) error {
 	return ctx.Render("index", fiber.Map{})
@@ -23,22 +27,22 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 		return ctx.JSON(fiber.Map{"success": false, "url": nil})
 	}
 	// find in database
+
 	// need to find in catch ?
 	return nil
 }
 func GetUrlController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
-	if err := ctx.BodyParser(&requestData); err != nil {
-		return ctx.JSON(fiber.Map{"success": false, "url": nil})
-	}
-	result, err := model.FindLongUrl(model.Connection, requestData.Url)
+	requestData.Url = ctx.Params("url")
+	fmt.Println(requestData.Url)
+	result, err := Model.FindLongUrl(requestData.Url)
 	if err != nil {
 		ctx.JSON(err.Error())
 	}
 	return ctx.JSON(result)
 }
 func InitDBController(ctx *fiber.Ctx) error {
-	err := model.CreateModel(model.Connection)
+	err := Model.CreateModel()
 	if err != nil {
 		return ctx.JSON(fiber.Map{"success": false})
 	}

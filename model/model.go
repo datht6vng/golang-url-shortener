@@ -9,8 +9,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var Connection *sql.DB
-
 type Url struct {
 	Url string `json:"url" xml:"url" form:"url"`
 }
@@ -18,9 +16,14 @@ type UrlRecord struct {
 	ShortUrl   string    `json:"shortUrl" xml:"shortUrl" form:"shortUrl"`
 	LongUrl    string    `json:"longUrl"  xml:"longUrl"  form:"longUrl"`
 	ExpireTime time.Time `json:"expireTime" xml:"expireTime" form:"expireTime"`
+	UsedCount  int       `json:"usedCount" xml:"usedCount" form:"usedCount"`
 }
 
-func Connect() {
+type Model struct {
+	connection *sql.DB
+}
+
+func (this *Model) Connect() {
 	host := os.Getenv("DB_HOST")
 	if host == "" {
 		host = "127.0.0.1"
@@ -60,29 +63,33 @@ func Connect() {
 		return
 	}
 	fmt.Println("Open database")
-	Connection = db
+	this.connection = db
 }
-func CreateModel(connection *sql.DB) error {
-	_, err := connection.Query(`
+func (this *Model) Close() error {
+	return this.connection.Close()
+}
+func (this *Model) CreateModel() error {
+	_, err := this.connection.Query(`
 		CREATE TABLE IF NOT EXISTS URL (
 			SHORT_URL VARCHAR(500) PRIMARY KEY,
 			LONG_URL VARCHAR(500),
-			EXPIRE_TIME TIMESTAMP
+			EXPIRE_TIME TIMESTAMP,
+			USED_COUNT INT
 		);
 	`)
 	return err
 }
-func FindLongUrl(connection *sql.DB, url string) (UrlRecord, error) {
+func (this *Model) FindLongUrl(url string) (UrlRecord, error) {
 	result := UrlRecord{}
-	err := connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime)
+	err := this.connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime, &result.UsedCount)
 	return result, err
 }
-func FindShortUrl(connection *sql.DB, url string) (UrlRecord, error) {
+func (this *Model) FindShortUrl(url string) (UrlRecord, error) {
 	result := UrlRecord{}
-	err := connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime)
+	err := this.connection.QueryRow("SELECT * FROM URL WHERE SHORT_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime, &result.UsedCount)
 	return result, err
 }
-func InsertUrl(connection *sql.DB, shortUrl string, longUrl string, expiryTime time.Time) error {
-	_, err := connection.Query("INSERT INTO URL VALUES (?, ?, ?)", shortUrl, longUrl, expiryTime)
+func (this *Model) InsertUrl(shortUrl string, longUrl string, expireTime time.Time, usedCount int) error {
+	_, err := this.connection.Query("INSERT INTO URL VALUES (?, ?, ?, ?)", shortUrl, longUrl, expireTime, usedCount)
 	return err
 }

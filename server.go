@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"server_go/controller"
 	"server_go/limiter"
-	"server_go/model"
-	"server_go/unittest"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
@@ -14,14 +12,19 @@ import (
 )
 
 func main() {
-	// test
-	unittest.TestShortener()
+	// ------------------------------------------------------------
+	// unittest.TestShortener()
+	// unittest.TestValidUrl()
+	// ------------------------------------------------------------
+
 	viewEngine := html.New("./views", ".html")
 	// Create a new Fiber template with template engine
 	app := fiber.New(fiber.Config{
 		Views: viewEngine,
 	})
-	model.Connect()
+	// Connect database
+	controller.Model.Connect()
+	controller.Cache.Connect()
 	// Limiter
 	app.Use(limiter.CreateLimiter())
 	app.Get("/", controller.GetIndexController)
@@ -34,6 +37,6 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		model.Connection.Close()
+		controller.Model.Close()
 	}()
 }
