@@ -3,6 +3,7 @@ package cache
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -14,7 +15,7 @@ type Cache struct {
 func (this *Cache) Connect() {
 	redisHost := os.Getenv("REDIS_HOST")
 	if redisHost == "" {
-		redisHost = "127.0.0.1"
+		redisHost = "localhost"
 	}
 	redisPort := os.Getenv("REDIS_PORT")
 	if redisPort == "" {
@@ -35,4 +36,13 @@ func (this *Cache) Connect() {
 		fmt.Println("Success connect to redis")
 		this.connection = client
 	}
+}
+func (this *Cache) Get(key string) (string, error) {
+	return this.connection.Get(this.connection.Context(), key).Result()
+}
+func (this *Cache) Set(key string, value string, TTL int) error {
+	return this.connection.Set(this.connection.Context(), key, value, time.Duration(TTL)*time.Hour).Err()
+}
+func (this *Cache) Flush() error {
+	return this.connection.FlushDB(this.connection.Context()).Err()
 }

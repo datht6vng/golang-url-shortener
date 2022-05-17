@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 16 13:46:49 2022
+# Make data base, printed on Tue May 17 14:08:59 2022
 
 # Variables
 
@@ -21,7 +23,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a0dd7d27-5973-44a6-a322-ae917ddd35f5.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-45022fed-c078-4d1f-9242-e5fd2f71864b.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -63,7 +65,7 @@ VSCODE_CODE_CACHE_PATH = /home/dathuynh/.config/Code/CachedData/da15b6fd3ef85647
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.RF2HM1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.759HM1
 # default
 .LOADED := 
 # default
@@ -101,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3245
+VSCODE_PID = 13171
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh:@/tmp/.ICE-unix/1948,unix/dathuynh:/tmp/.ICE-unix/1948
+SESSION_MANAGER = local/dathuynh:@/tmp/.ICE-unix/1999,unix/dathuynh:/tmp/.ICE-unix/1999
 # automatic
 *F = $(notdir $*)
 # environment
@@ -151,7 +153,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 89bb4075cfa147d68ef23ec5b586c4b1
+INVOCATION_ID = f56f560db2484726bd7edb2e6b135d4c
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -183,7 +185,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1996
+SYSTEMD_EXEC_PID = 2037
 # environment
 DISPLAY = :0
 # environment
@@ -193,11 +195,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1769
+MANAGERPID = 1808
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3245
+GIO_LAUNCHED_DESKTOP_FILE_PID = 13171
 # environment
 PAGER = less
 # environment
@@ -207,7 +209,7 @@ LC_PAPER = vi_VN
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-JOURNAL_STREAM = 8:37918
+JOURNAL_STREAM = 8:34560
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -300,9 +302,6 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
- 
-make: *** No rule to make target 'all'.  Stop.
-
 run: stop up
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -323,6 +322,7 @@ rebuild: stop remove build up
 remove:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 12):
 			docker compose rm
@@ -341,6 +341,6 @@ remove:
 # strcache performance: lookups = 46 / hit rate = 36%
 # hash-table stats:
 # Load=29/8192=0%, Rehash=0, Collisions=0/46=0%
-# Finished Make data base on Mon May 16 13:46:49 2022
+# Finished Make data base on Tue May 17 14:08:59 2022
 
  

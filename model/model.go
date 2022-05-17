@@ -26,7 +26,7 @@ type Model struct {
 func (this *Model) Connect() {
 	host := os.Getenv("DB_HOST")
 	if host == "" {
-		host = "127.0.0.1"
+		host = "localhost"
 	}
 	user := os.Getenv("DB_USER")
 	if user == "" {
@@ -79,13 +79,13 @@ func (this *Model) CreateModel() error {
 	`)
 	return err
 }
-func (this *Model) FindLongUrl(url string) (UrlRecord, error) {
-	result := UrlRecord{}
+func (this *Model) FindLongUrl(url string) (*UrlRecord, error) {
+	result := new(UrlRecord)
 	err := this.connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime, &result.UsedCount)
 	return result, err
 }
-func (this *Model) FindShortUrl(url string) (UrlRecord, error) {
-	result := UrlRecord{}
+func (this *Model) FindShortUrl(url string) (*UrlRecord, error) {
+	result := new(UrlRecord)
 	err := this.connection.QueryRow("SELECT * FROM URL WHERE SHORT_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime, &result.UsedCount)
 	return result, err
 }

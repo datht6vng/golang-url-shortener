@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"server_go/controller"
 	"server_go/limiter"
+	"server_go/unittest"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
@@ -13,7 +14,7 @@ import (
 
 func main() {
 	// ------------------------------------------------------------
-	// unittest.TestShortener()
+	unittest.TestShortener()
 	// unittest.TestValidUrl()
 	// ------------------------------------------------------------
 
@@ -31,6 +32,7 @@ func main() {
 	app.Get("/", controller.GetIndexController)
 	app.Post("/gen-url", controller.PostGenUrlController)
 	app.Get("/init-db", controller.InitDBController)
+	app.Get("/reset", controller.GetReset)
 	app.Get("/:url", controller.GetUrlController)
 	app.Listen("localhost:8080")
 	defer func() {
