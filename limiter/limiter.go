@@ -11,20 +11,20 @@ import (
 
 func CreateLimiter() fiber.Handler {
 	maxRequest := os.Getenv("MAX_REQUEST")
-	limitExpire := os.Getenv("LIMIT_EXPIRE")
+	limiterExpire := os.Getenv("LIMITER_EXPIRE")
 
 	if maxRequest == "" {
-		maxRequest = "5"
+		maxRequest = "100000000"
 	}
-	if limitExpire == "" {
-		limitExpire = "1"
+	if limiterExpire == "" {
+		limiterExpire = "1"
 	}
 	intMaxRequest, _ := strconv.Atoi(maxRequest)
-	intLimitExpire, _ := strconv.Atoi(limitExpire)
+	intLimiterExpire, _ := strconv.Atoi(limiterExpire)
 
 	config := limiter.Config{
 		Max:        intMaxRequest,
-		Expiration: time.Duration(intLimitExpire) * time.Minute,
+		Expiration: time.Duration(intLimiterExpire) * time.Minute,
 		KeyGenerator: func(c *fiber.Ctx) string {
 			return c.IP()
 		},

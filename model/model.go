@@ -93,3 +93,16 @@ func (this *Model) InsertUrl(shortUrl string, longUrl string, expireTime time.Ti
 	_, err := this.connection.Query("INSERT INTO URL VALUES (?, ?, ?, ?)", shortUrl, longUrl, expireTime, usedCount)
 	return err
 }
+func (this *Model) DeleteUrl(shortUrl string, longUrl string) error {
+	var err error
+	if shortUrl == "" && longUrl == "" {
+		_, err = this.connection.Query("DELETE FROM URL")
+	} else if longUrl == "" {
+		_, err = this.connection.Query("DELETE FROM URL WHERE SHORT_URL = ?", shortUrl)
+	} else if shortUrl == "" {
+		_, err = this.connection.Query("DELETE FROM URL WHERE LONG_URL = ?", longUrl)
+	} else {
+		_, err = this.connection.Query("DELETE FROM URL WHERE SHORT_URL = ? AND LONG_URL = ?", shortUrl, longUrl)
+	}
+	return err
+}

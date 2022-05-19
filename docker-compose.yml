@@ -4,6 +4,7 @@ services:
       image: "redis"
       ports: 
         - "6379:6379"
+      command: redis-server --maxmemory-policy allkeys-lru --maxmemory 4G
   
   mysql:
     image: mysql
@@ -17,10 +18,16 @@ services:
       - '3306:3306'
     volumes:
       - db:/var/lib/mysql
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]
+            timeout: 5s
+            retries: 10
    
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
+    depends_on:
+      - mysql
     links:
       - mysql:db
     # environment:
@@ -30,6 +37,29 @@ services:
     restart: always
     ports:
       - 8081:80
+  
+  # server:
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_started
+  #   build: .
+  #   restart: unless-stopped
+  #   environment:
+  #     - DOMAIN=http://localhost:8080/
+  #     - MAX_REQUEST=10
+  #     - LIMITER_EXPIRE=1
+  #     - DB_HOST=mysql
+  #     - DB_USER=root
+  #     - DB_PASSWORD=123456
+  #     - DB_PORT=3306
+  #     - DB_DATABASE=mysql
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  #     - REDIS_PASSWORD=
+  #   ports:
+  #     - '8080:8080'
 volumes:
   db:
     
