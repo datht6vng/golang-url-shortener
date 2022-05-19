@@ -13,6 +13,7 @@ type Url struct {
 	Url string `json:"url" xml:"url" form:"url"`
 }
 type UrlRecord struct {
+	ID         int       `json:"ID" xml:"ID" form:"ID"`
 	ShortUrl   string    `json:"shortUrl" xml:"shortUrl" form:"shortUrl"`
 	LongUrl    string    `json:"longUrl"  xml:"longUrl"  form:"longUrl"`
 	ExpireTime time.Time `json:"expireTime" xml:"expireTime" form:"expireTime"`
@@ -71,11 +72,15 @@ func (this *Model) Close() error {
 func (this *Model) CreateModel() error {
 	_, err := this.connection.Query(`
 		CREATE TABLE IF NOT EXISTS URL (
-			SHORT_URL VARCHAR(500) PRIMARY KEY,
+			ID BIGINT PRIMARY KEY,
+			SHORT_URL VARCHAR(500),
 			LONG_URL VARCHAR(500),
 			EXPIRE_TIME TIMESTAMP,
 			USED_COUNT INT
 		);
+		ALTER TABLE URL ADD INDEX (ID) USING BTREE;
+		ALTER TABLE URL ADD INDEX (SHORT_URL) USING HASH;
+		ALTER TABLE URL ADD INDEX (LONG_URL) USING HASH;
 	`)
 	return err
 }
@@ -89,8 +94,13 @@ func (this *Model) FindShortUrl(url string) (*UrlRecord, error) {
 	err := this.connection.QueryRow("SELECT * FROM URL WHERE SHORT_URL = ?", url).Scan(&result.ShortUrl, &result.LongUrl, &result.ExpireTime, &result.UsedCount)
 	return result, err
 }
-func (this *Model) InsertUrl(shortUrl string, longUrl string, expireTime time.Time, usedCount int) error {
-	_, err := this.connection.Query("INSERT INTO URL VALUES (?, ?, ?, ?)", shortUrl, longUrl, expireTime, usedCount)
+func (this *Model) GetMax() (int64, error) {
+	var result int64
+	err := this.connection.QueryRow("SELECT MAX(ID) FROM URL").Scan(&result)
+	return result, err
+}
+func (this *Model) InsertUrl(id int64, shortUrl string, longUrl string, expireTime time.Time, usedCount int) error {
+	_, err := this.connection.Query("INSERT INTO URL VALUES (>, ?, ?, ?, ?)", id, shortUrl, longUrl, expireTime, usedCount)
 	return err
 }
 func (this *Model) DeleteUrl(shortUrl string, longUrl string) error {

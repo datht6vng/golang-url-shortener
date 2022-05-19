@@ -71,11 +71,14 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 		return ctx.JSON(&fiber.Map{"url": BaseUrl + urlRecord.ShortUrl, "error": nil})
 	}
 	// insert DB
-	newShortUrl := util.GenerateShortLink(requestData.Url)
+	newShortUrl := ""
 	channelModel := make(chan struct{})
 	channelCache := make(chan struct{})
 	go func() {
-		err = Model.InsertUrl(newShortUrl, requestData.Url, time.Now().UTC().AddDate(0, 0, 3), 0)
+		var newID int64
+		newID, err = Model.GetMax()
+		newShortUrl = util.GenerateShortLink(newID)
+		err = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().UTC().AddDate(0, 0, 3), 0)
 		channelModel <- struct{}{}
 	}()
 
