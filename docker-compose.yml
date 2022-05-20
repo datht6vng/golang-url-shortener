@@ -10,14 +10,13 @@ services:
     image: mysql
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_HOST='%'
-      - MYSQL_ROOT_PASSWORD='123456'
-      - MYSQL_DATABASE='mysql'
-
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=URL_SHORTENER
+      - MYSQL_ROOT_HOST=%
     ports:
       - '3306:3306'
     volumes:
-      - db:/var/lib/mysql
+      - ~/Workspace/mysql-data:/var/lib/URL_SHORTENER
     healthcheck:
             test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]
             timeout: 5s
@@ -54,12 +53,12 @@ services:
   #     - DB_USER=root
   #     - DB_PASSWORD=123456
   #     - DB_PORT=3306
-  #     - DB_DATABASE=mysql
+  #     - DB_DATABASE=URL_SHORTENER
   #     - REDIS_HOST=redis
   #     - REDIS_PORT=6379
   #     - REDIS_PASSWORD=
   #   ports:
   #     - '8080:8080'
-volumes:
-  db:
+# volumes:
+#   db: 
     

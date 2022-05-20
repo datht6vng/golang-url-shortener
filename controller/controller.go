@@ -2,6 +2,7 @@ package controller
 
 import (
 	"database/sql"
+	"fmt"
 	"net/url"
 	"server_go/cache"
 	"server_go/model"
@@ -16,21 +17,29 @@ var BaseUrl string
 var Model = model.Model{}
 var Cache = cache.Cache{}
 
+func InitController(baseUrl string) {
+	if baseUrl == "" {
+		BaseUrl = "http://localhost:8080/"
+	} else {
+		BaseUrl = baseUrl
+	}
+	Model.Connect()
+	Cache.Connect()
+}
 func ValidateController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
 	requestData.Url = ctx.Params("url")
-	if len(requestData.Url) != 16 {
+	if len(requestData.Url) < 6 {
 		return ctx.JSON(&fiber.Map{"error": "Invalid Short Url"})
 	}
-	urlPart := requestData.Url[:8]
-	userSignature := requestData.Url[8:]
+	urlPart := requestData.Url[:len(requestData.Url)-5]
+	userSignature := requestData.Url[len(requestData.Url)-5:]
 	systemSignature := util.SignUrl(urlPart)
 	if userSignature != systemSignature {
 		return ctx.JSON(&fiber.Map{"error": "Invalid Short Url"})
 	}
 	return ctx.Next()
 }
-
 func GetIndexController(ctx *fiber.Ctx) error {
 	return ctx.Render("index", &fiber.Map{})
 }
@@ -59,6 +68,7 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 	// Find in database
 	urlRecord, err := Model.FindLongUrl(requestData.Url)
 	if err != nil && err != sql.ErrNoRows {
+		fmt.Println("Fail here")
 		return ctx.JSON(&fiber.Map{"url": nil, "error": err.Error()})
 	}
 	if urlRecord.ShortUrl != "" && urlRecord.ExpireTime.Before(time.Now().UTC()) {
@@ -74,14 +84,12 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 	newShortUrl := ""
 	channelModel := make(chan struct{})
 	channelCache := make(chan struct{})
+	newID := Model.GetNextID()
 	go func() {
-		var newID int64
-		newID, err = Model.GetMax()
 		newShortUrl = util.GenerateShortLink(newID)
 		err = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().UTC().AddDate(0, 0, 3), 0)
 		channelModel <- struct{}{}
 	}()
-
 	go func() {
 		err = Cache.Set(newShortUrl, requestData.Url, 24)
 		err = Cache.Set(requestData.Url, newShortUrl, 24)

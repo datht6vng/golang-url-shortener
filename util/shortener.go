@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"math/big"
 	"os"
 	"strings"
 
@@ -47,7 +48,8 @@ func SignUrl(input string) string {
 	secret := "Secret key: !@#$%^&*()432144adsfdsafhk12312532dfhsajkfghjkg732478321er1234hkjdhf78234h"
 	hashSecret := hmac.New(sha256.New, []byte(secret))
 	hashSecret.Write([]byte(input))
-	return base58Encoded(hashSecret.Sum(nil))[:4]
+	generatedNumber := new(big.Int).SetBytes(hashSecret.Sum(nil)).Uint64()
+	return base58Encoded([]byte(fmt.Sprintf("%d", generatedNumber)))[:5]
 }
 
 var (
@@ -59,8 +61,8 @@ var (
 // Encode returns a base62 representation as
 // string of the given integer number.
 func Encode(num int64) string {
-	b := make([]byte, 0)
 
+	b := make([]byte, 0)
 	// loop as long the num is bigger than zero
 	for num > 0 {
 		// receive the rest
@@ -72,7 +74,6 @@ func Encode(num int64) string {
 		// append chars
 		b = append([]byte{CharacterSet[int(r)]}, b...)
 	}
-
 	return string(b)
 }
 

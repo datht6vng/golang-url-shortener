@@ -23,15 +23,9 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Views: viewEngine,
 	})
-	controller.BaseUrl = os.Getenv("DOMAIN")
-	if controller.BaseUrl == "" {
-		controller.BaseUrl = "http://localhost:8080/"
-	}
-	// Connect database, cache
-	controller.Model.Connect()
-	controller.Cache.Connect()
+	// Init controller + Connect database and cache
+	controller.InitController(os.Getenv("DOMAIN"))
 	// Limiter
-
 	app.Use(limiter.CreateLimiter())
 	// Cors
 	app.Use(cors.New(cors.Config{
@@ -56,6 +50,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
+		fmt.Println("This run")
 		controller.Model.Close()
 	}()
 }
