@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 20 10:22:18 2022
+# Make data base, printed on Mon May 23 21:43:03 2022
 
 # Variables
 
@@ -23,7 +23,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d0520565-ff8b-4d3b-b642-6896330b3488.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-226fbc45-d6ea-4d57-af3e-4ef65fad02dd.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -31,13 +31,13 @@ LC_NUMERIC = vi_VN
 # environment
 VSCODE_CWD = /home/dathuynh
 # environment
+WINDOWPATH = 2
+# environment
 LC_ADDRESS = vi_VN
 # default
 MAKE_COMMAND := make
 # environment
 QT_ACCESSIBILITY = 1
-# environment
-GOPATH = /home/dathuynh/go
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
@@ -51,7 +51,7 @@ PWD = /home/dathuynh/Workspace/golang-url-shortener
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-XDG_DATA_DIRS = /usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # environment
 OLDPWD = /home/dathuynh
 # automatic
@@ -65,7 +65,7 @@ VSCODE_CODE_CACHE_PATH = /home/dathuynh/.config/Code/CachedData/c3511e6c69bb3901
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.I4DBM1
+XAUTHORITY = /run/user/1000/gdm/Xauthority
 # default
 .LOADED := 
 # default
@@ -77,7 +77,7 @@ CURDIR := /home/dathuynh/Workspace/golang-url-shortener
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -87,7 +87,7 @@ SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # default
 .SHELLFLAGS := -c
 # environment
-WAYLAND_DISPLAY = wayland-0
+XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -103,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 13955
+VSCODE_PID = 14867
 # environment
-XDG_SESSION_TYPE = wayland
+XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1035,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1035
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1146,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1146
 # automatic
 *F = $(notdir $*)
 # environment
@@ -149,13 +149,11 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 49e8ed29672d4f5c815eb39f6f03a83c
+INVOCATION_ID = 1b02120a0dde4a3283927bbd3cf8e563
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = dathuynh
-# environment
-GNOME_SETUP_DISPLAY = :1
 # environment
 LC_TELEPHONE = vi_VN
 # automatic
@@ -177,11 +175,11 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = dathuynh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1066
+SYSTEMD_EXEC_PID = 1166
 # environment
 DISPLAY = :0
 # environment
@@ -191,11 +189,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 962
+MANAGERPID = 883
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 13955
+GIO_LAUNCHED_DESKTOP_FILE_PID = 14867
 # environment
 PAGER = less
 # environment
@@ -205,9 +203,9 @@ LC_PAPER = vi_VN
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-JOURNAL_STREAM = 8:33881
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-GOMODCACHE = /home/dathuynh/go/pkg/mod
+JOURNAL_STREAM = 8:24531
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -221,7 +219,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-30481b78-1.67.2-main.sock
 # environment
-GOPROXY = https://proxy.golang.org,direct
+IM_CONFIG_PHASE = 1
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -237,7 +235,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=112/1024=11%, Rehash=0, Collisions=5/142=4%
+# Load=111/1024=11%, Rehash=0, Collisions=4/141=3%
 
 # Pattern-specific Variable Values
 
@@ -245,9 +243,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 6422678): 18 files, no impossibilities.
+# . (device 66308, inode 5908410): 19 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 19 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -258,7 +256,7 @@ LC_IDENTIFICATION = vi_VN
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-20 10:13:50.874021619
+#  Last modified 2022-05-23 20:38:20.314227248
 #  File has been updated.
 #  Successfully updated.
 
@@ -312,7 +310,6 @@ rebuild: stop remove build up
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 remove:
 #  Implicit rule search has not been done.
@@ -322,6 +319,7 @@ remove:
 			docker compose rm
 
 # files hash-table stats:
+ 
 # Load=11/1024=1%, Rehash=0, Collisions=0/30=0%
 # VPATH Search Paths
 
@@ -329,12 +327,12 @@ remove:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 30 / storage = 237 B / avg = 7 B
-# current buf: size = 8162 B / used = 237 B / count = 30 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 245 B / avg = 7 B
+# current buf: size = 8162 B / used = 245 B / count = 31 / avg = 7 B
 
-# strcache performance: lookups = 47 / hit rate = 36%
+# strcache performance: lookups = 48 / hit rate = 35%
 # hash-table stats:
-# Load=30/8192=0%, Rehash=0, Collisions=0/47=0%
-# Finished Make data base on Fri May 20 10:22:18 2022
+# Load=31/8192=0%, Rehash=0, Collisions=0/48=0%
+# Finished Make data base on Mon May 23 21:43:03 2022
 
  

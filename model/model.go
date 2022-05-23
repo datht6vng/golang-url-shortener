@@ -54,26 +54,28 @@ func (this *Model) Connect() {
 		port,
 		database,
 	)
-	db, err := sql.Open("mysql", dbConnectionString)
+	var err error
+	this.connection, err = sql.Open("mysql", dbConnectionString)
 	if err != nil {
 		fmt.Println("Failed to open database", err.Error())
 		return
 	}
-	if err = db.Ping(); err != nil {
+	this.connection.SetMaxIdleConns(100)
+	this.connection.SetMaxOpenConns(100)
+	this.connection.SetConnMaxLifetime(10 * time.Second)
+	if err = this.connection.Ping(); err != nil {
 		fmt.Println("Failed to connect to database", err.Error())
 		return
 	}
 	fmt.Println("Open database")
-	db.SetMaxOpenConns(9999)
-	this.connection = db
 	this.currentID, err = this.GetMaxID()
-
 }
+
 func (this *Model) Close() error {
 	return this.connection.Close()
 }
 func (this *Model) CreateModel() error {
-	_, err := this.connection.Query(`
+	_, err := this.connection.Exec(`
 		CREATE TABLE IF NOT EXISTS URL (
 			ID BIGINT PRIMARY KEY,
 			SHORT_URL VARCHAR(500),
@@ -107,19 +109,19 @@ func (this *Model) GetNextID() int64 {
 	return this.currentID
 }
 func (this *Model) InsertUrl(id int64, shortUrl string, longUrl string, expireTime time.Time, usedCount int) error {
-	_, err := this.connection.Query("INSERT INTO URL VALUES (?, ?, ?, ?, ?)", id, shortUrl, longUrl, expireTime, usedCount)
+	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?, ?)", id, shortUrl, longUrl, expireTime, usedCount)
 	return err
 }
 func (this *Model) DeleteUrl(shortUrl string, longUrl string) error {
 	var err error
 	if shortUrl == "" && longUrl == "" {
-		_, err = this.connection.Query("DELETE FROM URL")
+		_, err = this.connection.Exec("DELETE FROM URL")
 	} else if longUrl == "" {
-		_, err = this.connection.Query("DELETE FROM URL WHERE SHORT_URL = ?", shortUrl)
+		_, err = this.connection.Exec("DELETE FROM URL WHERE SHORT_URL = ?", shortUrl)
 	} else if shortUrl == "" {
-		_, err = this.connection.Query("DELETE FROM URL WHERE LONG_URL = ?", longUrl)
+		_, err = this.connection.Exec("DELETE FROM URL WHERE LONG_URL = ?", longUrl)
 	} else {
-		_, err = this.connection.Query("DELETE FROM URL WHERE SHORT_URL = ? AND LONG_URL = ?", shortUrl, longUrl)
+		_, err = this.connection.Exec("DELETE FROM URL WHERE SHORT_URL = ? AND LONG_URL = ?", shortUrl, longUrl)
 	}
 	return err
 }
