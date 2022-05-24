@@ -8,7 +8,7 @@ function makeid(length) {
   }
   return result;
 }
-function make_request(n) {
+function make_gen_request(n) {
   for (let i = 0; i < n; ++i) {
     var count = 0;
     $.ajax({
@@ -18,7 +18,23 @@ function make_request(n) {
         url: "https://www.google.com/" + makeid(10),
       },
       success: function (data, textStatus) {
-        ++count;
+        console.log(data);
+      },
+      fail: function (xhr, textStatus, errorThrown) {
+        console.log(errorThrown);
+      },
+    });
+    console.log(count);
+  }
+}
+function make_get_request(n) {
+  for (let i = 0; i < n; ++i) {
+    var count = 0;
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/" + makeid(10),
+      success: function (data, textStatus) {
+        console.log(data)
       },
       fail: function (xhr, textStatus, errorThrown) {
         console.log(errorThrown);
