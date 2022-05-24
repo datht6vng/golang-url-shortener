@@ -98,3 +98,6 @@ func Decode(s string) (int64, error) {
 	}
 	return int64(r), nil
 }
+func TrimTimeStamp(s int64, base float64) int64 {
+	return s % int64(math.Pow(10, base))
+}

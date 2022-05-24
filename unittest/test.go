@@ -3,6 +3,8 @@ package unittest
 import (
 	"fmt"
 	"net/url"
+	"server_go/util"
+	"time"
 )
 
 func TestValidUrl() {
@@ -48,3 +50,15 @@ func TestValidUrl() {
 // 		fmt.Println(signature)
 // 	}
 // }
+
+func TestTrimTimeStamp() {
+	mp := map[int64]bool{}
+	for i := 0; i < 10000; i++ {
+		cur := util.TrimTimeStamp(time.Now().UnixNano(), 10)
+		if _, has := mp[cur]; has {
+			fmt.Println("Dup")
+		} else {
+			mp[cur] = true
+		}
+	}
+}

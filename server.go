@@ -17,6 +17,7 @@ func main() {
 	// ------------------------------------------------------------
 	// unittest.TestShortener()
 	// unittest.TestValidUrl()
+	// unittest.TestTrimTimeStamp()
 	// ------------------------------------------------------------
 	viewEngine := html.New("./views", ".html")
 	// Create a new Fiber template with template engine

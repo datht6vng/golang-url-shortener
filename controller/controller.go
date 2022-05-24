@@ -85,22 +85,27 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 	newShortUrl := ""
 	channelModel := make(chan struct{})
 	channelCache := make(chan struct{})
-	newID := time.Now().Unix() - time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC).Unix()
-	fmt.Println("ID: " + fmt.Sprint(newID))
+	newID := util.TrimTimeStamp(time.Now().UnixNano(), 10)
+	var errModel, errCache error
 	go func() {
 		newShortUrl = util.GenerateShortLink(newID)
-		err = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3).UTC(), 0)
-		fmt.Println(err)
+		errModel = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3).UTC(), 0)
 		channelModel <- struct{}{}
 	}()
 	go func() {
-		err = Cache.Set(newShortUrl, requestData.Url, 24)
-		err = Cache.Set(requestData.Url, newShortUrl, 24)
+		errCache = Cache.Set(newShortUrl, requestData.Url, 24)
+		errCache = Cache.Set(requestData.Url, newShortUrl, 24)
 		channelCache <- struct{}{}
 	}()
 	<-channelCache
 	<-channelModel
-	return ctx.JSON(&fiber.Map{"url": BaseUrl + newShortUrl, "error": err})
+	if errModel != nil {
+		return ctx.JSON(&fiber.Map{"url": nil, "error": errModel})
+	}
+	if errCache != nil {
+		return ctx.JSON(&fiber.Map{"url": nil, "error": errCache})
+	}
+	return ctx.JSON(&fiber.Map{"url": BaseUrl + newShortUrl, "error": nil})
 }
 func GetUrlController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
