@@ -21,7 +21,7 @@ type UrlRecord struct {
 }
 type Model struct {
 	connection *sql.DB
-	currentID  int64
+	timeFormat string
 }
 
 func (this *Model) Connect() {
@@ -60,34 +60,25 @@ func (this *Model) Connect() {
 		fmt.Println("Failed to open database", err.Error())
 		return
 	}
-	this.connection.SetMaxIdleConns(100)
-	this.connection.SetMaxOpenConns(100)
+	// s := new(string)
+	// this.connection.QueryRow("SELECT NOW();").Scan(s)
+	// fmt.Println("Database time:", *s)
+	// fmt.Println("System time:", time.Now())
+	// fmt.Println("System UTC time:", time.Now().UTC())
+
+	this.timeFormat = "2006-01-02 15:04:05" // MySQL time format
+	this.connection.SetMaxIdleConns(1000)
+	this.connection.SetMaxOpenConns(1000)
 	this.connection.SetConnMaxLifetime(10 * time.Second)
 	if err = this.connection.Ping(); err != nil {
 		fmt.Println("Failed to connect to database", err.Error())
 		return
 	}
 	fmt.Println("Open database")
-	this.currentID, err = this.GetMaxID()
 }
 
 func (this *Model) Close() error {
 	return this.connection.Close()
-}
-func (this *Model) CreateModel() error {
-	_, err := this.connection.Exec(`
-		CREATE TABLE IF NOT EXISTS URL (
-			ID BIGINT PRIMARY KEY,
-			SHORT_URL VARCHAR(500),
-			LONG_URL VARCHAR(500),
-			EXPIRE_TIME TIMESTAMP,
-			USED_COUNT INT
-		);
-		ALTER TABLE URL ADD INDEX INDEX_ID USING BTREE (ID);
-		ALTER TABLE URL ADD INDEX INDEX_SHORT_URL USING HASH (SHORT_URL);
-		ALTER TABLE URL ADD INDEX INDEX_LONG_URL USING HASH (LONG_URL);
-	`)
-	return err
 }
 func (this *Model) FindLongUrl(url string) (*UrlRecord, error) {
 	result := new(UrlRecord)
@@ -104,12 +95,9 @@ func (this *Model) GetMaxID() (int64, error) {
 	err := this.connection.QueryRow("SELECT MAX(ID) FROM URL").Scan(&result)
 	return result, err
 }
-func (this *Model) GetNextID() int64 {
-	this.currentID += 1
-	return this.currentID
-}
+
 func (this *Model) InsertUrl(id int64, shortUrl string, longUrl string, expireTime time.Time, usedCount int) error {
-	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?, ?)", id, shortUrl, longUrl, expireTime, usedCount)
+	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?, ?)", id, shortUrl, longUrl, expireTime.UTC().Format(this.timeFormat), usedCount)
 	return err
 }
 func (this *Model) DeleteUrl(shortUrl string, longUrl string) error {

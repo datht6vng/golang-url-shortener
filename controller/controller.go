@@ -16,6 +16,7 @@ import (
 var BaseUrl string
 var Model = model.Model{}
 var Cache = cache.Cache{}
+var baseTime = time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC).UnixNano()
 
 func InitController(baseUrl string) {
 	if baseUrl == "" {
@@ -84,10 +85,12 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 	newShortUrl := ""
 	channelModel := make(chan struct{})
 	channelCache := make(chan struct{})
-	newID := Model.GetNextID()
+	newID := time.Now().Unix() - time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC).Unix()
+	fmt.Println("ID: " + fmt.Sprint(newID))
 	go func() {
 		newShortUrl = util.GenerateShortLink(newID)
-		err = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().UTC().AddDate(0, 0, 3), 0)
+		err = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3).UTC(), 0)
+		fmt.Println(err)
 		channelModel <- struct{}{}
 	}()
 	go func() {
@@ -123,13 +126,7 @@ func GetUrlController(ctx *fiber.Ctx) error {
 	err = Cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
 	return ctx.JSON(&fiber.Map{"url": urlRecord.LongUrl, "error": nil})
 }
-func InitDBController(ctx *fiber.Ctx) error {
-	err := Model.CreateModel()
-	if err != nil {
-		return ctx.JSON(&fiber.Map{"error": err.Error()})
-	}
-	return ctx.JSON(&fiber.Map{"error": nil})
-}
+
 func GetResetCache(ctx *fiber.Ctx) error {
 	err := Cache.Flush()
 	if err != nil {

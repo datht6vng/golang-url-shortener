@@ -40,7 +40,6 @@ func main() {
 	// Controller
 	app.Get("/", controller.GetIndexController)
 	app.Post("/gen-url", controller.PostGenUrlController)
-	app.Get("/init-db", controller.InitDBController)
 	app.Get("/reset-cache", controller.GetResetCache)
 	app.Get("/reset-db", controller.GetResetDB)
 	app.Get("/:url", controller.ValidateController, controller.GetUrlController)

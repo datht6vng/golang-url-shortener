@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 23 21:43:03 2022
+# Make data base, printed on Tue May 24 12:47:04 2022
 
 # Variables
 
@@ -23,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-226fbc45-d6ea-4d57-af3e-4ef65fad02dd.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f5054f26-64f9-41d3-90e1-94d20094bce5.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -38,6 +36,8 @@ LC_ADDRESS = vi_VN
 MAKE_COMMAND := make
 # environment
 QT_ACCESSIBILITY = 1
+# environment
+GOPATH = /home/dathuynh/go
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
@@ -103,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 14867
+VSCODE_PID = 9828
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1146,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1146
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/4090,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/4090
 # automatic
 *F = $(notdir $*)
 # environment
@@ -136,6 +136,8 @@ GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 SHLVL = 0
 # environment
 MAKELEVEL := 0
+# environment
+IM_CONFIG_CHECK_ENV = 1
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
@@ -149,7 +151,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 1b02120a0dde4a3283927bbd3cf8e563
+INVOCATION_ID = 77203ce4866d47fd9b09dea5a9797f90
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -175,13 +177,13 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = dathuynh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1166
+SYSTEMD_EXEC_PID = 4109
 # environment
-DISPLAY = :0
+DISPLAY = :1
 # environment
 USER = dathuynh
 # environment
@@ -189,11 +191,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 883
+MANAGERPID = 911
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 14867
+GIO_LAUNCHED_DESKTOP_FILE_PID = 9828
 # environment
 PAGER = less
 # environment
@@ -205,7 +207,9 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:24531
+JOURNAL_STREAM = 8:45340
+# environment
+GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -220,6 +224,8 @@ ELECTRON_RUN_AS_NODE = 1
 VSCODE_IPC_HOOK = /run/user/1000/vscode-30481b78-1.67.2-main.sock
 # environment
 IM_CONFIG_PHASE = 1
+# environment
+GOPROXY = https://proxy.golang.org,direct
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -235,7 +241,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=111/1024=11%, Rehash=0, Collisions=4/141=3%
+# Load=115/1024=11%, Rehash=0, Collisions=5/145=3%
 
 # Pattern-specific Variable Values
 
@@ -243,9 +249,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 19 files, no impossibilities.
+# . (device 66308, inode 5908410): 20 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 20 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -290,6 +296,9 @@ server:
 # Not a target:
 all:
 #  Command line target.
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
@@ -319,7 +328,6 @@ remove:
 			docker compose rm
 
 # files hash-table stats:
- 
 # Load=11/1024=1%, Rehash=0, Collisions=0/30=0%
 # VPATH Search Paths
 
@@ -327,12 +335,12 @@ remove:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 245 B / avg = 7 B
-# current buf: size = 8162 B / used = 245 B / count = 31 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 32 / storage = 256 B / avg = 8 B
+# current buf: size = 8162 B / used = 256 B / count = 32 / avg = 8 B
 
-# strcache performance: lookups = 48 / hit rate = 35%
+# strcache performance: lookups = 49 / hit rate = 34%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=0/48=0%
-# Finished Make data base on Mon May 23 21:43:03 2022
+# Load=32/8192=0%, Rehash=0, Collisions=0/49=0%
+# Finished Make data base on Tue May 24 12:47:04 2022
 
  
