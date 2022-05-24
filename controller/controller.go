@@ -16,8 +16,10 @@ import (
 var BaseUrl string
 var Model = model.Model{}
 var Cache = cache.Cache{}
-var baseTime = time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC).UnixNano()
 
+func GetNextID() int64 {
+	return Cache.Increase("CurrentID")
+}
 func InitController(baseUrl string) {
 	if baseUrl == "" {
 		BaseUrl = "http://localhost:8080/"
@@ -26,6 +28,8 @@ func InitController(baseUrl string) {
 	}
 	Model.Connect()
 	Cache.Connect()
+	currentID, _ := Model.GetMaxID()
+	Cache.Set("CurrentID", currentID, -1)
 }
 func ValidateController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
@@ -85,7 +89,7 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 	newShortUrl := ""
 	channelModel := make(chan struct{})
 	channelCache := make(chan struct{})
-	newID := util.TrimTimeStamp(time.Now().UnixNano(), 10)
+	newID := GetNextID()
 	var errModel, errCache error
 	go func() {
 		newShortUrl = util.GenerateShortLink(newID)

@@ -46,3 +46,6 @@ func (this *Cache) Set(key string, value string, TTL int) error {
 func (this *Cache) Flush() error {
 	return this.connection.FlushDB(this.connection.Context()).Err()
 }
+func (this *Cache) Increase(key string) int64 {
+	return this.connection.Incr(this.connection.Context(), key).Val()
+}

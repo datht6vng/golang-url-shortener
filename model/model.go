@@ -90,10 +90,14 @@ func (this *Model) FindShortUrl(url string) (*UrlRecord, error) {
 	err := this.connection.QueryRow("SELECT * FROM URL WHERE SHORT_URL = ?", url).Scan(&result.ID, &result.ShortUrl, &result.LongUrl, &result.ExpireTime, &result.UsedCount)
 	return result, err
 }
-func (this *Model) GetMaxID() (int64, error) {
-	var result int64
+
+func (this *Model) GetMaxID() (string, error) {
+	var result interface{}
 	err := this.connection.QueryRow("SELECT MAX(ID) FROM URL").Scan(&result)
-	return result, err
+	if result == nil {
+		return "0", err
+	}
+	return string(result.([]byte)), err
 }
 
 func (this *Model) InsertUrl(id int64, shortUrl string, longUrl string, expireTime time.Time, usedCount int) error {

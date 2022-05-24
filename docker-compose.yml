@@ -4,7 +4,7 @@ services:
       image: "redis"
       ports: 
         - "6379:6379"
-      command: redis-server --maxmemory-policy allkeys-lru --maxmemory 4G
+      command: redis-server --maxmemory-policy volatile-lru --maxmemory 4G
   
   mysql:
     image: mysql
