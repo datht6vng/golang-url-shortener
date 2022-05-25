@@ -2,7 +2,9 @@ package main
 
 // add engine
 import (
+	"log"
 	"os"
+	"os/signal"
 	"server_go/controller"
 	"server_go/limiter"
 
@@ -14,18 +16,26 @@ import (
 )
 
 func main() {
-	// ------------------------------------------------------------
-	// unittest.TestShortener()
-	// unittest.TestValidUrl()
-	// unittest.TestTrimTimeStamp()
-	// ------------------------------------------------------------
+	logger, _ := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	log.SetOutput(logger)
+	log.Println("Server start!")
+
 	viewEngine := html.New("./views", ".html")
 	// Init controller
 	controller := new(controller.Controller)
 	controller.Init()
-	defer func() {
+
+	// Catch Ctr + C
+	go func() {
+		signalChannel := make(chan os.Signal)
+		signal.Notify(signalChannel, os.Interrupt)
+		<-signalChannel
+		log.Println("Server end!")
 		controller.Close()
+		logger.Close()
+		os.Exit(0)
 	}()
+
 	// Create a new Fiber template with template engine
 	app := fiber.New(fiber.Config{
 		Views:        viewEngine,
@@ -57,4 +67,5 @@ func main() {
 		port = "8080"
 	}
 	app.Listen(":" + port)
+
 }

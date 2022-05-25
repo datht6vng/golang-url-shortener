@@ -18,7 +18,6 @@ type Controller struct {
 	model   *model.Model
 	cache   *cache.Cache
 	baseUrl string
-	logger  *os.File
 }
 
 func (this *Controller) Init() {
@@ -30,15 +29,20 @@ func (this *Controller) Init() {
 	this.cache = new(cache.Cache)
 	this.model.Connect()
 	this.cache.Connect()
-	currentID, _ := this.model.GetMaxID()
-	this.cache.Set("CurrentID", currentID, -1)
-	this.logger, _ = os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	log.SetOutput(this.logger)
+	// Routine to reset ID
+	go func() {
+		for {
+			currentID, _ := this.model.GetMaxID()
+			this.cache.Set("CurrentID", currentID, -1)
+			log.Println("Reset max valid url ID!")
+			time.Sleep(24 * time.Hour)
+		}
+	}()
+
 }
 func (this *Controller) Close() {
 	this.model.Close()
 	this.cache.Flush()
-	this.logger.Close()
 }
 
 func (this *Controller) GetNextID() int64 {
@@ -64,13 +68,13 @@ func (this *Controller) ValidateController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
 	requestData.Url = ctx.Params("url")
 	if len(requestData.Url) < 6 {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid Short Url"})
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url"})
 	}
 	urlPart := requestData.Url[:len(requestData.Url)-5]
 	userSignature := requestData.Url[len(requestData.Url)-5:]
 	systemSignature := util.SignUrl(urlPart)
 	if userSignature != systemSignature {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid Short Url"})
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url"})
 	}
 	return ctx.Next()
 }
@@ -153,13 +157,13 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	urlRecord, err := this.model.FindShortUrl(requestData.Url)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": nil, "error": "Url Not Found!"})
+			return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": nil, "error": "Url not found!"})
 		}
 		return err
 	}
 	// Url Expire
 	if urlRecord.ExpireTime.Before(time.Now().UTC()) {
-		return ctx.Status(fiber.StatusGone).JSON(&fiber.Map{"url": nil, "error": "Url Is Expired!"})
+		return ctx.Status(fiber.StatusGone).JSON(&fiber.Map{"url": nil, "error": "Url is expired!"})
 	}
 	err = this.cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
 	err = this.cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
@@ -182,4 +186,11 @@ func (this *Controller) GetResetDB(ctx *fiber.Ctx) error {
 		return err
 	}
 	return ctx.JSON(&fiber.Map{"error": nil})
+}
+
+// use this or run routine
+func (this *Controller) GetResetID(ctx *fiber.Ctx) error {
+	currentID, err := this.model.GetMaxID()
+	this.cache.Set("CurrentID", currentID, -1)
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"error": err.Error()})
 }
