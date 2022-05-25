@@ -2,7 +2,6 @@ package main
 
 // add engine
 import (
-	"log"
 	"os"
 	"server_go/controller"
 	"server_go/limiter"
@@ -10,6 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html"
 )
 
@@ -19,18 +19,20 @@ func main() {
 	// unittest.TestValidUrl()
 	// unittest.TestTrimTimeStamp()
 	// ------------------------------------------------------------
-	logFile, _ := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	defer logFile.Close()
-	log.SetOutput(logFile)
-
 	viewEngine := html.New("./views", ".html")
-	// Create a new Fiber template with template engine
-	app := fiber.New(fiber.Config{
-		Views: viewEngine,
-	})
-	// Init controller + Connect database and cache
+	// Init controller
 	controller := new(controller.Controller)
 	controller.Init()
+	defer func() {
+		controller.Close()
+	}()
+	// Create a new Fiber template with template engine
+	app := fiber.New(fiber.Config{
+		Views:        viewEngine,
+		ErrorHandler: controller.ErrorController,
+	})
+	// Default error handler (catch all panic)
+	app.Use(recover.New())
 	// Limiter
 	app.Use(limiter.CreateLimiter())
 	// Cors
@@ -55,11 +57,4 @@ func main() {
 		port = "8080"
 	}
 	app.Listen(":" + port)
-	defer func() {
-		err := recover()
-		if err != nil {
-			log.Println(err)
-		}
-		controller.Close()
-	}()
 }
