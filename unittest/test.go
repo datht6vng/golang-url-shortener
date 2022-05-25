@@ -3,8 +3,6 @@ package unittest
 import (
 	"fmt"
 	"net/url"
-	"server_go/util"
-	"time"
 )
 
 func TestValidUrl() {
@@ -51,14 +49,20 @@ func TestValidUrl() {
 // 	}
 // }
 
-func TestTrimTimeStamp() {
-	mp := map[int64]bool{}
-	for i := 0; i < 10000; i++ {
-		cur := util.TrimTimeStamp(time.Now().UnixNano(), 10)
-		if _, has := mp[cur]; has {
-			fmt.Println("Dup")
-		} else {
-			mp[cur] = true
-		}
-	}
-}
+// func TestTrimTimeStamp() {
+// 	mp := map[int64]bool{}
+// 	for i := 0; i < 10000; i++ {
+// 		cur := util.TrimTimeStamp(time.Now().UnixNano(), 10)
+// 		if _, has := mp[cur]; has {
+// 			fmt.Println("Dup")
+// 		} else {
+// 			mp[cur] = true
+// 		}
+// 	}
+// }
+// func Base62Test() {
+// 	num := int64(123123123123123123)
+// 	newRevNumBase62, _ := bsconv.ConvertFromDec(fmt.Sprint(num), 62)
+// 	fmt.Println(util.Encode(num))
+// 	fmt.Println(newRevNumBase62)
+// }

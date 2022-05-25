@@ -2,6 +2,7 @@ package controller
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/url"
 	"os"
@@ -45,8 +46,8 @@ func (this *Controller) Close() {
 	this.cache.Flush()
 }
 
-func (this *Controller) GetNextID() int64 {
-	return this.cache.Increase("CurrentID")
+func (this *Controller) GetNextID() string {
+	return fmt.Sprint(this.cache.Increase("CurrentID"))
 }
 
 func (this *Controller) ErrorController(ctx *fiber.Ctx, err error) error {
@@ -68,13 +69,13 @@ func (this *Controller) ValidateController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
 	requestData.Url = ctx.Params("url")
 	if len(requestData.Url) < 6 {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url"})
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url!"})
 	}
 	urlPart := requestData.Url[:len(requestData.Url)-5]
 	userSignature := requestData.Url[len(requestData.Url)-5:]
 	systemSignature := util.SignUrl(urlPart)
 	if userSignature != systemSignature {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url"})
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url!"})
 	}
 	return ctx.Next()
 }
@@ -128,7 +129,8 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 	}()
 	go func() {
 		errCache = this.cache.Set(newShortUrl, requestData.Url, 24)
-		if err != nil {
+		if errCache != nil {
+			channelCache <- struct{}{}
 			return
 		}
 		errCache = this.cache.Set(requestData.Url, newShortUrl, 24)
@@ -178,6 +180,7 @@ func (this *Controller) GetResetCache(ctx *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
+	log.Println("Flush cache!")
 	return ctx.JSON(&fiber.Map{"error": nil})
 }
 func (this *Controller) GetResetDB(ctx *fiber.Ctx) error {
@@ -185,6 +188,9 @@ func (this *Controller) GetResetDB(ctx *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
+	currentID, _ := this.model.GetMaxID()
+	this.cache.Set("CurrentID", currentID, -1)
+	log.Println("Reset max valid url ID!")
 	return ctx.JSON(&fiber.Map{"error": nil})
 }
 
@@ -192,5 +198,6 @@ func (this *Controller) GetResetDB(ctx *fiber.Ctx) error {
 func (this *Controller) GetResetID(ctx *fiber.Ctx) error {
 	currentID, err := this.model.GetMaxID()
 	this.cache.Set("CurrentID", currentID, -1)
+	log.Println("Reset max valid url ID!")
 	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"error": err.Error()})
 }
