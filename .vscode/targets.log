@@ -2,29 +2,52 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target 'all'.  Stop.
 
 # GNU Make 4.3
+ 
 # Built for x86_64-pc-linux-gnu
+ 
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
+ 
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+ 
 # This is free software: you are free to change and redistribute it.
+ 
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Wed May 25 20:53:34 2022
+ 
+# Make data base, printed on Thu May 26 01:42:09 2022
+ 
 
 # Variables
+ 
 
+ 
 # environment
+ 
 GDK_BACKEND = x11
+ 
 # environment
+ 
 LC_ALL = C
+ 
 # environment
+ 
 GNOME_SHELL_SESSION_MODE = ubuntu
+ 
 # environment
+ 
 SSH_AGENT_LAUNCHER = gnome-keyring
+ 
 # environment
+ 
 GJS_DEBUG_OUTPUT = stderr
+ 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-903e1f81-3579-4488-8819-50e39240e3b5.sock
+ 
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-9196f49c-f223-4053-8ffa-a4e2d46e4f8c.sock
+ 
 # environment
+ 
 LC_NAME = vi_VN
 # environment
 LC_NUMERIC = vi_VN
@@ -59,6 +82,7 @@ OLDPWD = /home/dathuynh
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
+ 
 VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
@@ -105,7 +129,7 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 25689
+VSCODE_PID = 163314
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -123,6 +147,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # default
+ 
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
@@ -193,6 +218,7 @@ DISPLAY = :1
 # environment
 USER = dathuynh
 # environment
+ 
 GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
@@ -201,7 +227,7 @@ MANAGERPID = 988
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 25689
+GIO_LAUNCHED_DESKTOP_FILE_PID = 163314
 # environment
 PAGER = less
 # environment
@@ -257,9 +283,10 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 21 files, no impossibilities.
+ 
+# . (device 66308, inode 5908410): 23 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 23 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -270,7 +297,7 @@ LC_IDENTIFICATION = vi_VN
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-25 15:32:54.361812015
+#  Last modified 2022-05-25 21:28:46.633584784
 #  File has been updated.
 #  Successfully updated.
 
@@ -308,6 +335,7 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
+ 
 run: stop up
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -335,7 +363,6 @@ remove:
 down:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 9):
 			docker compose down
@@ -348,12 +375,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 34 / storage = 267 B / avg = 7 B
-# current buf: size = 8162 B / used = 267 B / count = 34 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 36 / storage = 296 B / avg = 8 B
+# current buf: size = 8162 B / used = 296 B / count = 36 / avg = 8 B
 
-# strcache performance: lookups = 52 / hit rate = 34%
+# strcache performance: lookups = 54 / hit rate = 33%
 # hash-table stats:
-# Load=34/8192=0%, Rehash=0, Collisions=0/52=0%
-# Finished Make data base on Wed May 25 20:53:34 2022
+# Load=36/8192=0%, Rehash=0, Collisions=0/54=0%
+# Finished Make data base on Thu May 26 01:42:09 2022
 
  

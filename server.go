@@ -25,6 +25,12 @@ func main() {
 	controller := new(controller.Controller)
 	controller.Init()
 
+	defer func() {
+		log.Println("Server end!")
+		controller.Close()
+		logger.Close()
+	}()
+
 	// Catch Ctr + C
 	go func() {
 		signalChannel := make(chan os.Signal)
