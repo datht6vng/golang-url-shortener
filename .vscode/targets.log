@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 24 12:47:04 2022
+# Make data base, printed on Wed May 25 20:53:34 2022
 
 # Variables
 
@@ -21,7 +23,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f5054f26-64f9-41d3-90e1-94d20094bce5.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-903e1f81-3579-4488-8819-50e39240e3b5.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -51,7 +53,7 @@ PWD = /home/dathuynh/Workspace/golang-url-shortener
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+XDG_DATA_DIRS = /usr/share/ubuntu:/home/dathuynh/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # environment
 OLDPWD = /home/dathuynh
 # automatic
@@ -103,13 +105,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 9828
+VSCODE_PID = 25689
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/4090,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/4090
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/24147,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/24147
 # automatic
 *F = $(notdir $*)
 # environment
@@ -126,6 +128,8 @@ MAKE_HOST := x86_64-pc-linux-gnu
 GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # makefile
 SHELL = /bin/sh
+# environment
+CLASSPATH = .:/home/dathuynh/.ANTLR/antlr-4.10.1-complete.jar:
 # default
 MAKECMDGOALS := all
 # environment
@@ -134,6 +138,8 @@ XMODIFIERS = @im=ibus
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
 SHLVL = 0
+# environment
+ANTLR_HOME = /home/dathuynh/.ANTLR
 # environment
 MAKELEVEL := 0
 # environment
@@ -151,7 +157,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 77203ce4866d47fd9b09dea5a9797f90
+INVOCATION_ID = 16da06476133431f937b41ddc6af23b4
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -181,7 +187,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 4109
+SYSTEMD_EXEC_PID = 24166
 # environment
 DISPLAY = :1
 # environment
@@ -191,11 +197,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 911
+MANAGERPID = 988
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 9828
+GIO_LAUNCHED_DESKTOP_FILE_PID = 25689
 # environment
 PAGER = less
 # environment
@@ -207,7 +213,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:45340
+JOURNAL_STREAM = 8:203204
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -237,11 +243,13 @@ SUFFIXES :=
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
+ANTLR_JAR = /home/dathuynh/.ANTLR/antlr-4.10.1-complete.jar
+# environment
 GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=115/1024=11%, Rehash=0, Collisions=5/145=3%
+# Load=118/1024=12%, Rehash=0, Collisions=5/148=3%
 
 # Pattern-specific Variable Values
 
@@ -249,9 +257,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 20 files, no impossibilities.
+# . (device 66308, inode 5908410): 21 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -262,7 +270,7 @@ LC_IDENTIFICATION = vi_VN
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-23 20:38:20.314227248
+#  Last modified 2022-05-25 15:32:54.361812015
 #  File has been updated.
 #  Successfully updated.
 
@@ -296,9 +304,6 @@ server:
 # Not a target:
 all:
 #  Command line target.
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
@@ -312,7 +317,7 @@ build:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 9):
+#  recipe to execute (from 'Makefile', line 11):
 			docker compose build
 
 rebuild: stop remove build up
@@ -324,23 +329,31 @@ remove:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 12):
+#  recipe to execute (from 'Makefile', line 14):
 			docker compose rm
 
+down:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+ 
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 9):
+			docker compose down
+
 # files hash-table stats:
-# Load=11/1024=1%, Rehash=0, Collisions=0/30=0%
+# Load=12/1024=1%, Rehash=0, Collisions=0/31=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 32 / storage = 256 B / avg = 8 B
-# current buf: size = 8162 B / used = 256 B / count = 32 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 34 / storage = 267 B / avg = 7 B
+# current buf: size = 8162 B / used = 267 B / count = 34 / avg = 7 B
 
-# strcache performance: lookups = 49 / hit rate = 34%
+# strcache performance: lookups = 52 / hit rate = 34%
 # hash-table stats:
-# Load=32/8192=0%, Rehash=0, Collisions=0/49=0%
-# Finished Make data base on Tue May 24 12:47:04 2022
+# Load=34/8192=0%, Rehash=0, Collisions=0/52=0%
+# Finished Make data base on Wed May 25 20:53:34 2022
 
  

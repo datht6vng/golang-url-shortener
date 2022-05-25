@@ -44,7 +44,11 @@ func (this *Cache) Set(key string, value string, TTL int) error {
 	return this.connection.Set(this.connection.Context(), key, value, time.Duration(TTL)*time.Hour).Err()
 }
 func (this *Cache) Flush() error {
-	return this.connection.FlushDB(this.connection.Context()).Err()
+	err := this.connection.FlushDB(this.connection.Context()).Err()
+	if err != nil {
+		return err
+	}
+	return this.connection.FlushAll(this.connection.Context()).Err()
 }
 func (this *Cache) Increase(key string) int64 {
 	return this.connection.Incr(this.connection.Context(), key).Val()
