@@ -2,7 +2,6 @@ package controller
 
 import (
 	"database/sql"
-	"fmt"
 	"net/url"
 	"os"
 	"server_go/cache"
@@ -13,10 +12,6 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
 )
-
-var BaseUrl string
-var Model = model.Model{}
-var Cache = cache.Cache{}
 
 type Controller struct {
 	model   *model.Model
@@ -38,6 +33,7 @@ func (this *Controller) Init() {
 }
 func (this *Controller) Close() {
 	this.model.Close()
+	this.cache.Flush()
 }
 
 func (this *Controller) GetNextID() int64 {
@@ -72,31 +68,29 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 		return ctx.JSON(&fiber.Map{"url": nil, "error": err.Error()})
 	}
 	// find in database
-	// need to find in cache ??
-	shortUrl, err := Cache.Get(requestData.Url)
+	shortUrl, err := this.cache.Get(requestData.Url)
 
 	// found in cache
 	if err == nil {
-		return ctx.JSON(&fiber.Map{"url": BaseUrl + shortUrl, "error": nil})
+		return ctx.JSON(&fiber.Map{"url": this.baseUrl + shortUrl, "error": nil})
 	}
 	// err that is not "not found"
 	if err != redis.Nil {
 		return ctx.JSON(&fiber.Map{"url": nil, "error": err.Error()})
 	}
 	// Find in database
-	urlRecord, err := Model.FindLongUrl(requestData.Url)
+	urlRecord, err := this.model.FindLongUrl(requestData.Url)
 	if err != nil && err != sql.ErrNoRows {
-		fmt.Println("Fail here")
 		return ctx.JSON(&fiber.Map{"url": nil, "error": err.Error()})
 	}
 	if urlRecord.ShortUrl != "" && urlRecord.ExpireTime.Before(time.Now().UTC()) {
 		// Expire
-		err = Cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
-		err = Cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
+		err = this.cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
+		err = this.cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
 		if err != nil {
 			return ctx.JSON(&fiber.Map{"url": nil, "error": err.Error()})
 		}
-		return ctx.JSON(&fiber.Map{"url": BaseUrl + urlRecord.ShortUrl, "error": nil})
+		return ctx.JSON(&fiber.Map{"url": this.baseUrl + urlRecord.ShortUrl, "error": nil})
 	}
 	// insert DB
 	channelModel := make(chan struct{})
@@ -105,12 +99,12 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 	var errModel, errCache error
 	newShortUrl := util.GenerateShortLink(newID)
 	go func() {
-		errModel = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3).UTC(), 0)
+		errModel = this.model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3).UTC(), 0)
 		channelModel <- struct{}{}
 	}()
 	go func() {
-		errCache = Cache.Set(newShortUrl, requestData.Url, 24)
-		errCache = Cache.Set(requestData.Url, newShortUrl, 24)
+		errCache = this.cache.Set(newShortUrl, requestData.Url, 24)
+		errCache = this.cache.Set(requestData.Url, newShortUrl, 24)
 		channelCache <- struct{}{}
 	}()
 	<-channelCache
@@ -121,19 +115,19 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 	if errCache != nil {
 		return ctx.JSON(&fiber.Map{"url": nil, "error": errCache})
 	}
-	return ctx.JSON(&fiber.Map{"url": BaseUrl + newShortUrl, "error": nil})
+	return ctx.JSON(&fiber.Map{"url": this.baseUrl + newShortUrl, "error": nil})
 }
 func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
 	requestData.Url = ctx.Params("url")
-	longUrl, err := Cache.Get(requestData.Url)
+	longUrl, err := this.cache.Get(requestData.Url)
 	if err == nil {
 		return ctx.JSON(&fiber.Map{"url": longUrl, "error": nil})
 	}
 	if err != redis.Nil {
 		return ctx.JSON(&fiber.Map{"url": nil, "error": err.Error()})
 	}
-	urlRecord, err := Model.FindShortUrl(requestData.Url)
+	urlRecord, err := this.model.FindShortUrl(requestData.Url)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return ctx.JSON(&fiber.Map{"url": urlRecord.LongUrl, "error": "Url Not Found!"})
@@ -143,20 +137,20 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	if urlRecord.ExpireTime.Before(time.Now().UTC()) {
 		return ctx.JSON(&fiber.Map{"url": "", "error": "Url Is Expired!"})
 	}
-	err = Cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
-	err = Cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
+	err = this.cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
+	err = this.cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
 	return ctx.JSON(&fiber.Map{"url": urlRecord.LongUrl, "error": nil})
 }
 
 func (this *Controller) GetResetCache(ctx *fiber.Ctx) error {
-	err := Cache.Flush()
+	err := this.cache.Flush()
 	if err != nil {
 		return ctx.JSON(&fiber.Map{"error": err.Error()})
 	}
 	return ctx.JSON(&fiber.Map{"error": nil})
 }
 func (this *Controller) GetResetDB(ctx *fiber.Ctx) error {
-	err := Model.DeleteUrl("", "")
+	err := this.model.DeleteUrl("", "")
 	if err != nil {
 		return ctx.JSON(&fiber.Map{"error": err.Error()})
 	}

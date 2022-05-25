@@ -54,7 +54,7 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	app.Listen("0.0.0.0:" + port)
+	app.Listen(":" + port)
 	defer func() {
 		err := recover()
 		if err != nil {
