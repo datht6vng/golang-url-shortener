@@ -60,12 +60,6 @@ func (this *Model) Connect() {
 		fmt.Println("Failed to open database", err.Error())
 		return
 	}
-	// s := new(string)
-	// this.connection.QueryRow("SELECT NOW();").Scan(s)
-	// fmt.Println("Database time:", *s)
-	// fmt.Println("System time:", time.Now())
-	// fmt.Println("System UTC time:", time.Now().UTC())
-
 	this.timeFormat = "2006-01-02 15:04:05" // MySQL time format
 	this.connection.SetMaxIdleConns(1000)
 	this.connection.SetMaxOpenConns(1000)

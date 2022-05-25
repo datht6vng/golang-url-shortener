@@ -4,7 +4,7 @@ services:
       image: "redis"
       ports: 
         - "6379:6379"
-      command: redis-server --maxmemory-policy volatile-lru --maxmemory 4G
+      command: redis-server --maxmemory-policy volatile-lru --maxmemory 10M
   
   mysql:
     image: mysql
@@ -38,29 +38,30 @@ services:
     ports:
       - 8081:80
   
-  # server:
-  #   depends_on:
-  #     mysql:
-  #       condition: service_healthy
-  #     redis:
-  #       condition: service_started
-  #   build: .
-  #   restart: unless-stopped
-  #   environment:
-  #     - DOMAIN=http://localhost:8080/
-  #     - MAX_REQUEST=10
-  #     - LIMITER_EXPIRE=1
-  #     - DB_HOST=mysql
-  #     - DB_USER=root
-  #     - DB_PASSWORD=123456
-  #     - DB_PORT=3306
-  #     - DB_DATABASE=URL_SHORTENER
-  #     - REDIS_HOST=redis
-  #     - REDIS_PORT=6379
-  #     - REDIS_PASSWORD=
-  #
-  #   ports:
-  #     - '8080:8080'
+#   server:
+#     depends_on:
+#       mysql:
+#         condition: service_healthy
+#       redis:
+#         condition: service_started
+#     build: .
+#     restart: unless-stopped
+#     environment:
+#       - PORT=8080
+#       - DOMAIN=http://localhost:8080/
+#       - MAX_REQUEST=10
+#       - LIMITER_EXPIRE=1
+#       - DB_HOST=mysql
+#       - DB_USER=root
+#       - DB_PASSWORD=123456
+#       - DB_PORT=3306
+#       - DB_DATABASE=URL_SHORTENER
+#       - REDIS_HOST=redis
+#       - REDIS_PORT=6379
+#       - REDIS_PASSWORD=
+  
+#     ports:
+#       - '8080:8080'
 # volumes:
 #   db: 
     

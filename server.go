@@ -2,7 +2,7 @@ package main
 
 // add engine
 import (
-	"fmt"
+	"log"
 	"os"
 	"server_go/controller"
 	"server_go/limiter"
@@ -19,13 +19,18 @@ func main() {
 	// unittest.TestValidUrl()
 	// unittest.TestTrimTimeStamp()
 	// ------------------------------------------------------------
+	logFile, _ := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	defer logFile.Close()
+	log.SetOutput(logFile)
+
 	viewEngine := html.New("./views", ".html")
 	// Create a new Fiber template with template engine
 	app := fiber.New(fiber.Config{
 		Views: viewEngine,
 	})
 	// Init controller + Connect database and cache
-	controller.InitController(os.Getenv("DOMAIN"))
+	controller := new(controller.Controller)
+	controller.Init()
 	// Limiter
 	app.Use(limiter.CreateLimiter())
 	// Cors
@@ -44,13 +49,17 @@ func main() {
 	app.Get("/reset-cache", controller.GetResetCache)
 	app.Get("/reset-db", controller.GetResetDB)
 	app.Get("/:url", controller.ValidateController, controller.GetUrlController)
-	app.Listen("0.0.0.0:8080")
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	app.Listen("0.0.0.0:" + port)
 	defer func() {
 		err := recover()
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 		}
-		fmt.Println("This run")
-		controller.Model.Close()
+		controller.Close()
 	}()
 }

@@ -2,6 +2,7 @@ package cache
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -41,6 +42,8 @@ func (this *Cache) Get(key string) (string, error) {
 	return this.connection.Get(this.connection.Context(), key).Result()
 }
 func (this *Cache) Set(key string, value string, TTL int) error {
+	log.Println("abc", key, value, TTL)
+	fmt.Println("abc", key, value, TTL)
 	return this.connection.Set(this.connection.Context(), key, value, time.Duration(TTL)*time.Hour).Err()
 }
 func (this *Cache) Flush() error {

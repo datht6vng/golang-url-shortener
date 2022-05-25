@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/url"
+	"os"
 	"server_go/cache"
 	"server_go/model"
 	"server_go/util"
@@ -17,21 +18,33 @@ var BaseUrl string
 var Model = model.Model{}
 var Cache = cache.Cache{}
 
-func GetNextID() int64 {
-	return Cache.Increase("CurrentID")
+type Controller struct {
+	model   *model.Model
+	cache   *cache.Cache
+	baseUrl string
 }
-func InitController(baseUrl string) {
-	if baseUrl == "" {
-		BaseUrl = "http://localhost:8080/"
-	} else {
-		BaseUrl = baseUrl
+
+func (this *Controller) Init() {
+	this.baseUrl = os.Getenv("DOMAIN")
+	if this.baseUrl == "" {
+		this.baseUrl = "http://localhost:8080"
 	}
-	Model.Connect()
-	Cache.Connect()
-	currentID, _ := Model.GetMaxID()
-	Cache.Set("CurrentID", currentID, -1)
+	this.model = new(model.Model)
+	this.cache = new(cache.Cache)
+	this.model.Connect()
+	this.cache.Connect()
+	currentID, _ := this.model.GetMaxID()
+	this.cache.Set("CurrentID", currentID, -1)
 }
-func ValidateController(ctx *fiber.Ctx) error {
+func (this *Controller) Close() {
+	this.model.Close()
+}
+
+func (this *Controller) GetNextID() int64 {
+	return this.cache.Increase("CurrentID")
+}
+
+func (this *Controller) ValidateController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
 	requestData.Url = ctx.Params("url")
 	if len(requestData.Url) < 6 {
@@ -45,10 +58,10 @@ func ValidateController(ctx *fiber.Ctx) error {
 	}
 	return ctx.Next()
 }
-func GetIndexController(ctx *fiber.Ctx) error {
+func (this *Controller) GetIndexController(ctx *fiber.Ctx) error {
 	return ctx.Render("index", &fiber.Map{})
 }
-func PostGenUrlController(ctx *fiber.Ctx) error {
+func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
 	if err := ctx.BodyParser(&requestData); err != nil {
 		return ctx.JSON(&fiber.Map{"url": nil, "error": err.Error()})
@@ -86,13 +99,12 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 		return ctx.JSON(&fiber.Map{"url": BaseUrl + urlRecord.ShortUrl, "error": nil})
 	}
 	// insert DB
-	newShortUrl := ""
 	channelModel := make(chan struct{})
 	channelCache := make(chan struct{})
-	newID := GetNextID()
+	newID := this.GetNextID()
 	var errModel, errCache error
+	newShortUrl := util.GenerateShortLink(newID)
 	go func() {
-		newShortUrl = util.GenerateShortLink(newID)
 		errModel = Model.InsertUrl(newID, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3).UTC(), 0)
 		channelModel <- struct{}{}
 	}()
@@ -111,7 +123,7 @@ func PostGenUrlController(ctx *fiber.Ctx) error {
 	}
 	return ctx.JSON(&fiber.Map{"url": BaseUrl + newShortUrl, "error": nil})
 }
-func GetUrlController(ctx *fiber.Ctx) error {
+func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	requestData := model.Url{}
 	requestData.Url = ctx.Params("url")
 	longUrl, err := Cache.Get(requestData.Url)
@@ -136,14 +148,14 @@ func GetUrlController(ctx *fiber.Ctx) error {
 	return ctx.JSON(&fiber.Map{"url": urlRecord.LongUrl, "error": nil})
 }
 
-func GetResetCache(ctx *fiber.Ctx) error {
+func (this *Controller) GetResetCache(ctx *fiber.Ctx) error {
 	err := Cache.Flush()
 	if err != nil {
 		return ctx.JSON(&fiber.Map{"error": err.Error()})
 	}
 	return ctx.JSON(&fiber.Map{"error": nil})
 }
-func GetResetDB(ctx *fiber.Ctx) error {
+func (this *Controller) GetResetDB(ctx *fiber.Ctx) error {
 	err := Model.DeleteUrl("", "")
 	if err != nil {
 		return ctx.JSON(&fiber.Map{"error": err.Error()})
