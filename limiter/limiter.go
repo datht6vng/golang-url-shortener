@@ -12,9 +12,8 @@ import (
 func CreateLimiter() fiber.Handler {
 	maxRequest := os.Getenv("MAX_REQUEST")
 	limiterExpire := os.Getenv("LIMITER_EXPIRE")
-
 	if maxRequest == "" {
-		maxRequest = "100000000"
+		maxRequest = "5"
 	}
 	if limiterExpire == "" {
 		limiterExpire = "1"
