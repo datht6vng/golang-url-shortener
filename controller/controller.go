@@ -170,7 +170,7 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 		return err
 	}
 	// Url Expire
-	if urlRecord.ExpireTime.Before(time.Now().UTC()) {
+	if urlRecord.ExpireTime.Before(time.Now()) {
 		return ctx.Status(fiber.StatusGone).JSON(&fiber.Map{"url": nil, "error": "Url is expired!"})
 	}
 	err = this.cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
