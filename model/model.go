@@ -95,7 +95,8 @@ func (this *Model) GetMaxID() (string, error) {
 }
 
 func (this *Model) InsertUrl(id string, shortUrl string, longUrl string, expireTime time.Time) error {
-	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?)", id, shortUrl, longUrl, expireTime.UTC().Format(this.timeFormat))
+	fmt.Println(expireTime.UTC())
+	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?)", id, shortUrl, longUrl, expireTime.UTC())
 	return err
 }
 func (this *Model) DeleteUrl(shortUrl string, longUrl string) error {
@@ -109,5 +110,9 @@ func (this *Model) DeleteUrl(shortUrl string, longUrl string) error {
 	} else {
 		_, err = this.connection.Exec("DELETE FROM URL WHERE SHORT_URL = ? AND LONG_URL = ?", shortUrl, longUrl)
 	}
+	return err
+}
+func (this *Model) DeleteExpiredRecord() error {
+	_, err := this.connection.Exec("DELETE FROM URL WHERE EXPIRE_TIME < ?", time.Now())
 	return err
 }

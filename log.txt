@@ -1,12 +1,13 @@
-2022/05/26 01:57:14 Reset max valid url ID!
-2022/05/26 02:00:29 Server start!
-2022/05/26 02:00:29 Reset max valid url ID!
-2022/05/26 02:00:30 Server end!
-2022/05/26 02:00:33 Server start!
-2022/05/26 02:00:33 Reset max valid url ID!
-2022/05/26 02:01:04 Server start!
-2022/05/26 02:01:04 Reset max valid url ID!
-2022/05/26 02:01:05 Reset max valid url ID!
-2022/05/26 02:03:56 Server start!
-2022/05/26 02:03:56 Reset max valid url ID!
-2022/05/26 02:05:41 Server end!
+2022/05/26 11:47:58 Server start!
+2022/05/26 11:47:58 Delete expired record and reset ID!
+2022/05/26 11:48:00 Server end!
+2022/05/26 11:48:12 Server start!
+2022/05/26 11:48:12 Delete expired record and reset ID!
+2022/05/26 11:48:38 Reset max valid url ID!
+2022/05/26 11:48:40 Flush cache!
+2022/05/26 11:48:56 Flush cache!
+2022/05/26 11:49:18 Flush cache!
+2022/05/26 11:53:33 Server end!
+2022/05/26 11:53:34 Server start!
+2022/05/26 11:53:34 Delete expired record and reset ID!
+2022/05/26 11:57:53 Server end!
