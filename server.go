@@ -11,7 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/recover"
+	fiberRecover "github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html"
 )
 
@@ -26,8 +26,11 @@ func main() {
 	controller.Init()
 
 	defer func() {
+		err := recover()
+		if err != nil {
+			log.Println(err)
+		}
 		log.Println("Server end!")
-		controller.Close()
 		logger.Close()
 	}()
 
@@ -48,7 +51,7 @@ func main() {
 		ErrorHandler: controller.ErrorController,
 	})
 	// Default error handler (catch all panic)
-	app.Use(recover.New())
+	app.Use(fiberRecover.New())
 	// Limiter
 	app.Use(limiter.CreateLimiter())
 	// Cors

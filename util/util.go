@@ -19,7 +19,7 @@ func SignUrl(input string) string {
 	secret := "Secret key: !@#$%^&*()432144adsfdsafhk12312532dfhsajkfghjkg732478321er1234hkjdhf78234h"
 	hashSecret := hmac.New(sha256.New, []byte(secret))
 	hashSecret.Write([]byte(input))
-	return base62.EncodeToString(hashSecret.Sum(nil))[:5]
+	return base62.EncodeToString(hashSecret.Sum(nil))[:4]
 }
 
 // var (

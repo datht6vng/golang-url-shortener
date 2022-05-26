@@ -74,11 +74,11 @@ func (this *Controller) ErrorController(ctx *fiber.Ctx, err error) error {
 func (this *Controller) ValidateController(ctx *fiber.Ctx) error {
 	requestData := new(model.Url)
 	requestData.Url = ctx.Params("url")
-	if len(requestData.Url) < 6 {
+	if len(requestData.Url) < 5 {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url!"})
 	}
-	urlPart := requestData.Url[:len(requestData.Url)-5]
-	userSignature := requestData.Url[len(requestData.Url)-5:]
+	urlPart := requestData.Url[:len(requestData.Url)-4]
+	userSignature := requestData.Url[len(requestData.Url)-4:]
 	systemSignature := util.SignUrl(urlPart)
 	if userSignature != systemSignature {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url!"})
