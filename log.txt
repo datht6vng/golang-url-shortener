@@ -14,3 +14,32 @@
 2022/05/26 12:25:05 Server start!
 2022/05/26 12:25:05 Delete expired record and reset ID!
 2022/05/26 12:25:05 Server end!
+2022/05/26 13:10:49 Server start!
+2022/05/26 13:10:49 Delete expired record and reset ID!
+2022/05/26 13:17:53 Server end!
+2022/05/26 13:17:54 Server start!
+2022/05/26 13:17:54 Delete expired record and reset ID!
+2022/05/26 13:23:38 Server end!
+2022/05/26 13:26:46 Server start!
+2022/05/26 13:26:46 Delete expired record and reset ID!
+2022/05/26 13:28:17 Server end!
+2022/05/26 13:28:19 Server start!
+2022/05/26 13:28:19 Delete expired record and reset ID!
+2022/05/26 13:29:02 Server end!
+2022/05/26 13:29:03 Server start!
+2022/05/26 13:29:03 Delete expired record and reset ID!
+2022/05/26 13:30:30 Server end!
+2022/05/26 13:31:32 Server start!
+2022/05/26 13:31:32 driver: bad connection
+2022/05/26 13:31:32 driver: bad connection
+2022/05/26 13:31:32 Delete expired record and reset ID!
+2022/05/26 13:31:34 Server end!
+2022/05/26 13:31:37 Server start!
+2022/05/26 13:31:37 Delete expired record and reset ID!
+2022/05/26 13:31:37 Server end!
+2022/05/26 13:31:40 Server start!
+2022/05/26 13:31:40 Delete expired record and reset ID!
+2022/05/26 13:33:12 Server end!
+2022/05/26 13:33:27 Server start!
+2022/05/26 13:33:27 Delete expired record and reset ID!
+2022/05/26 13:33:59 Server end!
