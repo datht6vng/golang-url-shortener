@@ -33,10 +33,10 @@ func (this *Controller) Init() {
 	// Routine to delete expired record and reset ID
 	go func() {
 		for {
-			err := this.model.DeleteExpiredRecord()
-			if err != nil {
-				log.Println(err.Error())
-			}
+			// err := this.model.DeleteExpiredRecord()
+			// if err != nil {
+			// 	log.Println(err.Error())
+			// }
 			currentID, err := this.model.GetMaxID()
 			if err != nil {
 				log.Println(err.Error())

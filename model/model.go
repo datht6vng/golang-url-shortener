@@ -21,7 +21,6 @@ type UrlRecord struct {
 }
 type Model struct {
 	connection *sql.DB
-	timeFormat string
 }
 
 func (this *Model) Connect() {
@@ -60,7 +59,6 @@ func (this *Model) Connect() {
 		fmt.Println("Failed to open database", err.Error())
 		return
 	}
-	this.timeFormat = "2006-01-02 15:04:05" // MySQL time format
 	this.connection.SetMaxIdleConns(1000)
 	this.connection.SetMaxOpenConns(1000)
 	this.connection.SetConnMaxLifetime(10 * time.Second)
@@ -95,7 +93,6 @@ func (this *Model) GetMaxID() (string, error) {
 }
 
 func (this *Model) InsertUrl(id string, shortUrl string, longUrl string, expireTime time.Time) error {
-	fmt.Println(expireTime.UTC())
 	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?)", id, shortUrl, longUrl, expireTime.UTC())
 	return err
 }

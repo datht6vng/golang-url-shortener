@@ -14,3 +14,6 @@
 2022/05/26 12:25:05 Server start!
 2022/05/26 12:25:05 Delete expired record and reset ID!
 2022/05/26 12:25:05 Server end!
+2022/05/26 14:31:38 Server start!
+2022/05/26 14:31:38 Delete expired record and reset ID!
+2022/05/26 14:33:37 Server end!
