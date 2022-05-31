@@ -1,148 +1,150 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"> 
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>500 Server Error</title>
-<style id="" media="all">/* vietnamese */
-* {
-    -webkit-box-sizing: border-box;
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>500 Server Error</title>
+    <style id="" media="all">
+        /* vietnamese */
+        * {
+            -webkit-box-sizing: border-box;
             box-sizing: border-box;
-  }
-  
-  body {
-    padding: 0;
-    margin: 0;
-  }
-  
-  #notfound {
-    position: relative;
-    height: 100vh;
-  }
-  
-  #notfound .notfound {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        #error-container {
+            position: relative;
+            height: 100vh;
+        }
+
+        #error-container .error-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
-  }
-  
-  .notfound {
-    max-width: 460px;
-    width: 100%;
-    text-align: center;
-    line-height: 1.4;
-  }
-  
-  .notfound .notfound-404 {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    margin: 0px auto 50px;
-  }
-  
-  .notfound .notfound-404>div:first-child {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: #ffa200;
-    -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
+        }
+
+        .error-container {
+            max-width: 460px;
+            width: 100%;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .error-container .error-code {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0px auto 50px;
+        }
+
+        .error-container .error-code>div:first-child {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: #ffa200;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
             transform: rotate(45deg);
-    border: 5px dashed #000;
-    border-radius: 5px;
-  }
-  
-  .notfound .notfound-404>div:first-child:before {
-    content: '';
-    position: absolute;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    top: -5px;
-    -webkit-box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1) inset;
+            border: 5px dashed #000;
+            border-radius: 5px;
+        }
+
+        .error-container .error-code>div:first-child:before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            top: -5px;
+            -webkit-box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1) inset;
             box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 0.1) inset;
-    border-radius: 5px;
-  }
-  
-  .notfound .notfound-404 h1 {
-    font-family: 'Cabin', sans-serif;
-    color: #000;
-    font-weight: 700;
-    margin: 0;
-    font-size: 90px;
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
+            border-radius: 5px;
+        }
+
+        .error-container .error-code h1 {
+            font-family: 'Cabin', sans-serif;
+            color: #000;
+            font-weight: 700;
+            margin: 0;
+            font-size: 90px;
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
-    left: 50%;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-  }
-  
-  .notfound h2 {
-    font-family: 'Cabin', sans-serif;
-    font-size: 33px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 7px;
-  }
-  
-  .notfound p {
-    font-family: 'Cabin', sans-serif;
-    font-size: 16px;
-    color: #000;
-    font-weight: 400;
-  }
-  
-  .notfound a {
-    font-family: 'Cabin', sans-serif;
-    display: inline-block;
-    padding: 10px 25px;
-    background-color: #8f8f8f;
-    border: none;
-    border-radius: 40px;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    -webkit-transition: 0.2s all;
-    transition: 0.2s all;
-  }
-  
-  .notfound a:hover {
-    background-color: #2c2c2c;
-  }
-  
-</style>
-<meta name="robots" content="noindex, follow">
+            left: 50%;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .error-container h2 {
+            font-family: 'Cabin', sans-serif;
+            font-size: 33px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 7px;
+        }
+
+        .error-container p {
+            font-family: 'Cabin', sans-serif;
+            font-size: 16px;
+            color: #000;
+            font-weight: 400;
+        }
+
+        .error-container a {
+            font-family: 'Cabin', sans-serif;
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: #8f8f8f;
+            border: none;
+            border-radius: 40px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            -webkit-transition: 0.2s all;
+            transition: 0.2s all;
+        }
+
+        .error-container a:hover {
+            background-color: #2c2c2c;
+        }
+    </style>
+    <meta name="robots" content="noindex, follow">
+
 <body>
-<div id="notfound">
-<div class="notfound">
-<div class="notfound-404">
-<div></div>
-<h1>500</h1>
-</div>
-<h2>INTERNAL SERVER ERROR</h2>
-<p>We're sorry, our server has some problems! Come back soon!</p>
+    <div id="error-container">
+        <div class="error-container">
+            <div class="error-code">
+                <div></div>
+                <h1>500</h1>
+            </div>
+            <h2>INTERNAL SERVER ERROR</h2>
+            <p>We're sorry, our server has some problems! Come back soon!</p>
 
-</div>
-</div>
+        </div>
+    </div>
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-23581568-13');
-</script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-23581568-13');
+    </script>
 </body>
+
 </html>
