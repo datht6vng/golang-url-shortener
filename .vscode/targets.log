@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 31 16:20:42 2022
+# Make data base, printed on Tue May 31 20:43:09 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-08c16c88-c727-4c89-8673-447637efefcc.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d61b8400-b5f9-4fc4-af09-182622b0a07f.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -103,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 49707
+VSCODE_PID = 6539
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1343,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1343
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1320,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1320
 # automatic
 *F = $(notdir $*)
 # environment
@@ -153,7 +153,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = bdc5f8766c0547759f064598eb0b78e8
+INVOCATION_ID = 8bebcda440e04c84bb8b17697bd9e947
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -183,7 +183,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1367
+SYSTEMD_EXEC_PID = 1343
 # environment
 DISPLAY = :0
 # environment
@@ -193,11 +193,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 985
+MANAGERPID = 986
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 49707
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6539
 # environment
 PAGER = less
 # environment
@@ -209,7 +209,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:31217
+JOURNAL_STREAM = 8:21321
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -284,15 +284,15 @@ stop:
 #  recipe to execute (from 'Makefile', line 7):
 			docker compose stop
 
- 
-make: *** No rule to make target 'all'.  Stop.
-
 server:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 2):
 			go run server.go
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 
 # Not a target:
 .DEFAULT:
@@ -352,6 +352,6 @@ down:
 # strcache performance: lookups = 52 / hit rate = 34%
 # hash-table stats:
 # Load=34/8192=0%, Rehash=0, Collisions=0/52=0%
-# Finished Make data base on Tue May 31 16:20:42 2022
+# Finished Make data base on Tue May 31 20:43:09 2022
 
  

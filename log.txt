@@ -107,3 +107,22 @@
 2022/05/31 17:08:24 Cannot GET /user/a
 2022/05/31 17:08:24 Cannot GET /user/a
 2022/05/31 17:09:18 Server end!
+2022/05/31 17:30:52 Server start!
+2022/05/31 17:30:52 Delete expired record and reset ID!
+2022/05/31 17:31:30 Flush cache!
+2022/05/31 17:32:18 Server end!
+2022/05/31 17:32:19 Server start!
+2022/05/31 17:32:19 Delete expired record and reset ID!
+2022/05/31 17:33:07 Reset max valid url ID!
+2022/05/31 17:33:07 Flush cache!
+2022/05/31 17:34:05 Server end!
+2022/05/31 17:34:06 Server start!
+2022/05/31 17:34:06 Delete expired record and reset ID!
+2022/05/31 17:36:47 Server end!
+2022/05/31 17:37:14 Server start!
+2022/05/31 17:37:14 Delete expired record and reset ID!
+2022/05/31 17:37:15 Server end!
+2022/05/31 17:37:21 Server start!
+2022/05/31 17:37:21 Delete expired record and reset ID!
+2022/05/31 17:37:23 Reset max valid url ID!
+2022/05/31 17:37:44 Cannot GET /abc/abcdhjsahdfjk

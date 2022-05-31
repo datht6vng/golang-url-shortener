@@ -170,13 +170,13 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	urlRecord, err := this.model.FindShortUrl(requestData.Url)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": nil, "error": "Url not found!"})
+			return ctx.Status(fiber.StatusNotFound).Render("404", nil)
 		}
 		return err
 	}
 	// Url Expire
 	if urlRecord.ExpireTime.Before(time.Now()) {
-		return ctx.Status(fiber.StatusGone).JSON(&fiber.Map{"url": nil, "error": "Url is expired!"})
+		return ctx.Status(fiber.StatusGone).Render("410", nil)
 	}
 	err = this.cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
 	err = this.cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
