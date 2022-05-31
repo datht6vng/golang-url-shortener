@@ -68,20 +68,23 @@ func (this *Controller) ErrorController(ctx *fiber.Ctx, err error) error {
 	ctx.Set(fiber.HeaderContentType, fiber.MIMETextPlainCharsetUTF8)
 	log.Println(err.Error())
 	// Return statuscode with error message
-	return ctx.Status(code).JSON(&fiber.Map{"url": nil, "error": err.Error()})
+	if code == 404 {
+		return ctx.Status(404).Render("404", nil)
+	}
+	return ctx.Status(500).Render("500", nil)
 }
 
 func (this *Controller) ValidateController(ctx *fiber.Ctx) error {
 	requestData := new(model.Url)
 	requestData.Url = ctx.Params("url")
 	if len(requestData.Url) < 5 {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url!"})
+		return ctx.Status(fiber.StatusNotFound).Render("404", nil)
 	}
 	urlPart := requestData.Url[:len(requestData.Url)-4]
 	userSignature := requestData.Url[len(requestData.Url)-4:]
 	systemSignature := util.SignUrl(urlPart)
 	if userSignature != systemSignature {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": "Invalid short url!"})
+		return ctx.Status(fiber.StatusNotFound).Render("404", nil)
 	}
 	return ctx.Next()
 }
@@ -90,9 +93,11 @@ func (this *Controller) GetIndexController(ctx *fiber.Ctx) error {
 }
 func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 	requestData := new(model.Url)
-	if err := ctx.BodyParser(&requestData); err != nil {
+	if err := ctx.BodyParser(requestData); err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{"url": nil, "error": err.Error()})
+
 	}
+
 	// check is a valid url
 	_, err := url.ParseRequestURI(requestData.Url)
 	if err != nil {
@@ -157,7 +162,7 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	requestData.Url = ctx.Params("url")
 	longUrl, err := this.cache.Get(requestData.Url)
 	if err == nil {
-		return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": longUrl, "error": nil})
+		return ctx.Redirect(longUrl)
 	}
 	if err != redis.Nil {
 		return err
@@ -178,7 +183,7 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": urlRecord.LongUrl, "error": nil})
+	return ctx.Redirect(longUrl)
 }
 
 func (this *Controller) GetResetCache(ctx *fiber.Ctx) error {

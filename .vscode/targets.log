@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu May 26 15:26:03 2022
+# Make data base, printed on Tue May 31 16:20:42 2022
 
 # Variables
 
@@ -23,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-12a80b1f-fbc3-433b-8b5e-10bc226f3199.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-08c16c88-c727-4c89-8673-447637efefcc.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -105,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 198474
+VSCODE_PID = 49707
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1347,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1347
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1343,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1343
 # automatic
 *F = $(notdir $*)
 # environment
@@ -145,7 +143,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/dathuynh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -155,7 +153,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = a80ca771012540a281d3c033edf456a6
+INVOCATION_ID = bdc5f8766c0547759f064598eb0b78e8
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -185,7 +183,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1366
+SYSTEMD_EXEC_PID = 1367
 # environment
 DISPLAY = :0
 # environment
@@ -195,11 +193,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1013
+MANAGERPID = 985
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 198474
+GIO_LAUNCHED_DESKTOP_FILE_PID = 49707
 # environment
 PAGER = less
 # environment
@@ -211,7 +209,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:28571
+JOURNAL_STREAM = 8:31217
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -255,9 +253,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 22 files, no impossibilities.
+# . (device 66308, inode 5908410): 21 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -286,6 +284,9 @@ stop:
 #  recipe to execute (from 'Makefile', line 7):
 			docker compose stop
 
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 server:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -293,7 +294,6 @@ server:
 #  recipe to execute (from 'Makefile', line 2):
 			go run server.go
 
- 
 # Not a target:
 .DEFAULT:
 #  Implicit rule search has not been done.
@@ -346,12 +346,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 35 / storage = 279 B / avg = 7 B
-# current buf: size = 8162 B / used = 279 B / count = 35 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 34 / storage = 267 B / avg = 7 B
+# current buf: size = 8162 B / used = 267 B / count = 34 / avg = 7 B
 
-# strcache performance: lookups = 53 / hit rate = 33%
+# strcache performance: lookups = 52 / hit rate = 34%
 # hash-table stats:
-# Load=35/8192=0%, Rehash=0, Collisions=0/53=0%
-# Finished Make data base on Thu May 26 15:26:03 2022
+# Load=34/8192=0%, Rehash=0, Collisions=0/52=0%
+# Finished Make data base on Tue May 31 16:20:42 2022
 
  
