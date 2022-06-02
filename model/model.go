@@ -10,10 +10,12 @@ import (
 )
 
 type Url struct {
-	Url string `json:"url" xml:"url" form:"url"`
+	User string `json:"user" xml:"user" form:"user"`
+	Url  string `json:"url" xml:"url" form:"url"`
 }
 type UrlRecord struct {
 	ID         int       `json:"ID" xml:"ID" form:"ID"`
+	User       string    `json:"user" xml:"user" form:"user"`
 	ShortUrl   string    `json:"shortUrl" xml:"shortUrl" form:"shortUrl"`
 	LongUrl    string    `json:"longUrl"  xml:"longUrl"  form:"longUrl"`
 	ExpireTime time.Time `json:"expireTime" xml:"expireTime" form:"expireTime"`
@@ -21,10 +23,9 @@ type UrlRecord struct {
 }
 type Model struct {
 	connection *sql.DB
-	timeFormat string
 }
 
-func (this *Model) Connect() {
+func (this *Model) Connect() *Model {
 	host := os.Getenv("DB_HOST")
 	if host == "" {
 		host = "localhost"
@@ -58,17 +59,17 @@ func (this *Model) Connect() {
 	this.connection, err = sql.Open("mysql", dbConnectionString)
 	if err != nil {
 		fmt.Println("Failed to open database", err.Error())
-		return
+		return this
 	}
-	this.timeFormat = "2006-01-02 15:04:05" // MySQL time format
 	this.connection.SetMaxIdleConns(1000)
 	this.connection.SetMaxOpenConns(1000)
 	this.connection.SetConnMaxLifetime(10 * time.Second)
 	if err = this.connection.Ping(); err != nil {
 		fmt.Println("Failed to connect to database", err.Error())
-		return
+		return this
 	}
 	fmt.Println("Open database")
+	return this
 }
 
 func (this *Model) Close() error {
@@ -76,12 +77,12 @@ func (this *Model) Close() error {
 }
 func (this *Model) FindLongUrl(url string) (*UrlRecord, error) {
 	result := new(UrlRecord)
-	err := this.connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ID, &result.ShortUrl, &result.LongUrl, &result.ExpireTime)
+	err := this.connection.QueryRow("SELECT * FROM URL WHERE LONG_URL = ?", url).Scan(&result.ID, &result.User, &result.ShortUrl, &result.LongUrl, &result.ExpireTime)
 	return result, err
 }
 func (this *Model) FindShortUrl(url string) (*UrlRecord, error) {
 	result := new(UrlRecord)
-	err := this.connection.QueryRow("SELECT * FROM URL WHERE SHORT_URL = ?", url).Scan(&result.ID, &result.ShortUrl, &result.LongUrl, &result.ExpireTime)
+	err := this.connection.QueryRow("SELECT * FROM URL WHERE SHORT_URL = ?", url).Scan(&result.ID, &result.User, &result.ShortUrl, &result.LongUrl, &result.ExpireTime)
 	return result, err
 }
 
@@ -94,8 +95,8 @@ func (this *Model) GetMaxID() (string, error) {
 	return string(result.([]byte)), err
 }
 
-func (this *Model) InsertUrl(id string, shortUrl string, longUrl string, expireTime time.Time) error {
-	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?)", id, shortUrl, longUrl, expireTime)
+func (this *Model) InsertUrl(user string, id string, shortUrl string, longUrl string, expireTime time.Time) error {
+	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?, ?)", id, user, shortUrl, longUrl, expireTime)
 	return err
 }
 func (this *Model) DeleteUrl(shortUrl string, longUrl string) error {

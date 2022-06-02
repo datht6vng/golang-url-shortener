@@ -13,6 +13,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	fiberRecover "github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/valyala/fasthttp/fasthttpadaptor"
 )
 
 func main() {
@@ -22,9 +24,7 @@ func main() {
 
 	viewEngine := html.New("./views", ".html")
 	// Init controller
-	controller := new(controller.Controller)
-	controller.Init()
-
+	controller := new(controller.Controller).Init()
 	defer func() {
 		err := recover()
 		if err != nil {
@@ -52,6 +52,10 @@ func main() {
 	})
 	// Default error handler (catch all panic)
 	app.Use(fiberRecover.New())
+	app.Get("/metrics", func(ctx *fiber.Ctx) error {
+		fasthttpadaptor.NewFastHTTPHandler(promhttp.Handler())(ctx.Context())
+		return nil
+	})
 	// Limiter
 	app.Use(limiter.CreateLimiter())
 	// Cors
@@ -65,10 +69,12 @@ func main() {
 		MaxAge:           0,
 	}))
 	// Controller
+	app.Use(controller.AllRequestController)
 	app.Get("/", controller.GetIndexController)
 	app.Post("/gen-url", controller.PostGenUrlController)
 	app.Get("/reset-cache", controller.GetResetCache)
 	app.Get("/reset-db", controller.GetResetDB)
+	app.Get("/statistic", controller.GetStatisticController)
 	app.Get("/:url", controller.ValidateController, controller.GetUrlController)
 
 	port := os.Getenv("PORT")

@@ -12,7 +12,7 @@ type Cache struct {
 	connection *redis.Client
 }
 
-func (this *Cache) Connect() {
+func (this *Cache) Connect() *Cache {
 	redisHost := os.Getenv("REDIS_HOST")
 	if redisHost == "" {
 		redisHost = "localhost"
@@ -36,6 +36,7 @@ func (this *Cache) Connect() {
 		fmt.Println("Success connect to redis")
 		this.connection = client
 	}
+	return this
 }
 func (this *Cache) Get(key string) (string, error) {
 	return this.connection.Get(this.connection.Context(), key).Result()
