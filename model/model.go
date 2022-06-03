@@ -95,7 +95,7 @@ func (this *Model) GetMaxID() (string, error) {
 	return string(result.([]byte)), err
 }
 
-func (this *Model) InsertUrl(user string, id string, shortUrl string, longUrl string, expireTime time.Time) error {
+func (this *Model) InsertUrl(id string, user string, shortUrl string, longUrl string, expireTime time.Time) error {
 	_, err := this.connection.Exec("INSERT INTO URL VALUES (?, ?, ?, ?, ?)", id, user, shortUrl, longUrl, expireTime)
 	return err
 }

@@ -74,7 +74,6 @@ func main() {
 	app.Post("/gen-url", controller.PostGenUrlController)
 	app.Get("/reset-cache", controller.GetResetCache)
 	app.Get("/reset-db", controller.GetResetDB)
-	app.Get("/statistic", controller.GetStatisticController)
 	app.Get("/:url", controller.ValidateController, controller.GetUrlController)
 
 	port := os.Getenv("PORT")

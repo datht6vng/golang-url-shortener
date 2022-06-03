@@ -6,6 +6,8 @@ services:
         - "6379:6379"
       command: redis-server --maxmemory-policy volatile-lru --maxmemory 4G
       restart: always
+      volumes:
+      - redis-data:/data
   
   mysql:
     image: mysql
@@ -20,9 +22,9 @@ services:
       - mysql-data:/var/lib/URL_SHORTENER
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-            test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]
-            timeout: 5s
-            retries: 10
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]
+      timeout: 5s
+      retries: 10
    
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -53,32 +55,32 @@ services:
       - 9090:9090
     restart: always
 
-  server:
-    depends_on:
-      mysql:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    build: .
-    restart: unless-stopped
-    environment:
-      - PORT=8080
-      - DOMAIN=http://localhost:8080/
-      - MAX_REQUEST=10
-      - LIMITER_EXPIRE=1
-      - DB_HOST=mysql
-      - DB_USER=root
-      - DB_PASSWORD=123456
-      - DB_PORT=3306
-      - DB_DATABASE=URL_SHORTENER
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_PASSWORD=
-    ports:
-      - '8080:8080'
+  # server:
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_started
+  #   build: .
+  #   restart: unless-stopped
+  #   environment:
+  #     - PORT=8080
+  #     - DOMAIN=http://localhost:8080/
+  #     - MAX_REQUEST=10
+  #     - LIMITER_EXPIRE=1
+  #     - DB_HOST=mysql
+  #     - DB_USER=root
+  #     - DB_PASSWORD=123456
+  #     - DB_PORT=3306
+  #     - DB_DATABASE=URL_SHORTENER
+  #     - REDIS_HOST=redis
+  #     - REDIS_PORT=6379
+  #     - REDIS_PASSWORD=
+  #   ports:
+  #     - '8080:8080'
       
 
 volumes:
   prometheus-data:
+  redis-data:
   mysql-data:
-    

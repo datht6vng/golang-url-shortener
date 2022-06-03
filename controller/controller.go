@@ -14,6 +14,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
+	"github.com/robfig/cron/v3"
 )
 
 type Controller struct {
@@ -32,32 +33,31 @@ func (this *Controller) Init() *Controller {
 	this.cache = new(cache.Cache).Connect()
 	this.metrics = new(metrics.Metrics).Init()
 	// Routine to delete expired record and reset ID
-	go func() {
-		for {
-			// err := this.model.DeleteExpiredRecord()
-			// if err != nil {
-			// 	log.Println(err.Error())
-			// }
-			currentID, err := this.model.GetMaxID()
-			if err != nil {
-				log.Println(err.Error())
-			}
-			this.cache.Set("CurrentID", currentID, -1)
-			log.Println("Delete expired record and reset ID!")
-			time.Sleep(24 * time.Hour)
-		}
-	}()
+	this.model.DeleteExpiredRecord()
+
+	currentID, _ := this.model.GetMaxID()
+	this.cache.Set("CurrentID", currentID, -1)
+
+	cron := cron.New()
+	cron.AddFunc("@daily", func() {
+		log.Println("Delete expired record!")
+		this.model.DeleteExpiredRecord()
+	})
+	cron.AddFunc("@daily", func() {
+		currentID, _ := this.model.GetMaxID()
+		this.cache.Set("CurrentID", currentID, -1)
+		log.Println("Reset ID!")
+	})
+	cron.Start()
 	return this
 }
 func (this *Controller) Close() {
 	this.model.Close()
 	this.cache.Flush()
 }
-
 func (this *Controller) GetNextID() string {
 	return fmt.Sprint(this.cache.Increase("CurrentID"))
 }
-
 func (this *Controller) ErrorController(ctx *fiber.Ctx, err error) error {
 	// Default 500 statuscode
 	code := fiber.StatusInternalServerError
@@ -73,7 +73,7 @@ func (this *Controller) ErrorController(ctx *fiber.Ctx, err error) error {
 	if code == 404 {
 		return ctx.Status(404).Render("404", nil)
 	}
-	return ctx.Status(500).Render("500", nil)
+	return ctx.Status(500).Render("500", fiber.Map{"err": err.Error()})
 }
 func (this *Controller) AllRequestController(ctx *fiber.Ctx) error {
 	go this.metrics.IncreaseTotalRequests()
@@ -140,7 +140,7 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 	var errModel, errCache error
 	newShortUrl := util.GenerateShortLink(newID)
 	go func() {
-		errModel = this.model.InsertUrl(requestData.User, newID, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3))
+		errModel = this.model.InsertUrl(newID, requestData.User, newShortUrl, requestData.Url, time.Now().AddDate(0, 0, 3))
 		channelModel <- struct{}{}
 	}()
 	go func() {
@@ -152,6 +152,7 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 		errCache = this.cache.Set(requestData.Url, newShortUrl, 24)
 		channelCache <- struct{}{}
 	}()
+	go this.metrics.ResetGetUrlRequests(newShortUrl)
 	<-channelCache
 	<-channelModel
 	if errModel != nil {
@@ -190,7 +191,6 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	}
 	return ctx.Redirect(longUrl)
 }
-
 func (this *Controller) GetResetCache(ctx *fiber.Ctx) error {
 	err := this.cache.Flush()
 	if err != nil {
@@ -208,15 +208,4 @@ func (this *Controller) GetResetDB(ctx *fiber.Ctx) error {
 	this.cache.Set("CurrentID", currentID, -1)
 	log.Println("Reset max valid url ID!")
 	return ctx.JSON(&fiber.Map{"error": nil})
-}
-
-// use this or run routine
-func (this *Controller) GetResetID(ctx *fiber.Ctx) error {
-	currentID, err := this.model.GetMaxID()
-	this.cache.Set("CurrentID", currentID, -1)
-	log.Println("Reset max valid url ID!")
-	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"error": err.Error()})
-}
-func (this *Controller) GetStatisticController(ctx *fiber.Ctx) error {
-	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"error": nil})
 }
