@@ -42,17 +42,6 @@ func (this *Metrics) IncreaseTotalRequests() {
 func (this *Metrics) ResetTotalRequests() {
 	this.totalRequests.Set(0)
 }
-
-// func (this *Metrics) DecreaseTotalRequests() {
-// 	this.totalRequests.Dec()
-// }
-// func (this *Metrics) AddTotalRequests(x float64) {
-// 	this.totalRequests.Add(x)
-// }
-// func (this *Metrics) SubTotalRequests(x float64) {
-// 	this.totalRequests.Sub(x)
-// }
-
 func (this *Metrics) IncreaseGenUrlRequests(key string) {
 	this.genUrlRequests.WithLabelValues(key).Inc()
 }
