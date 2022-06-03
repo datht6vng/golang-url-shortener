@@ -33,7 +33,6 @@ func main() {
 		log.Println("Server end!")
 		logger.Close()
 	}()
-
 	// Catch Ctr + C
 	go func() {
 		signalChannel := make(chan os.Signal)
@@ -50,7 +49,7 @@ func main() {
 		Views:        viewEngine,
 		ErrorHandler: controller.ErrorController,
 	})
-	// Default error handler (catch all panic)
+	// Default error handler
 	app.Use(fiberRecover.New())
 	app.Get("/metrics", func(ctx *fiber.Ctx) error {
 		fasthttpadaptor.NewFastHTTPHandler(promhttp.Handler())(ctx.Context())
@@ -81,5 +80,4 @@ func main() {
 		port = "8080"
 	}
 	app.Listen(":" + port)
-
 }

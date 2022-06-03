@@ -13,14 +13,25 @@
 </head>
 
 <body>
-  <div class="container-fluid d-flex flex-wrap justify-content-center align-items-center min-vh-100">
-    <form id = "input-form" method="POST" action="/gen-url" class="text-center">
+  <div class="container-fluid w-50" style="margin-top:10%">
+    <form id = "input-form" method="POST" action="/gen-url" class="text-center m-5">
       <div class="form-group">
         <label for="url">URL</label>
         <input type="text" class="form-control mt-2 mb-2" id="url" name="url" placeholder="URL">
       </div>
-      <input class="btn btn-primary" type="submit" value="Submit">
+      <input class="btn btn-primary" type="submit" value="Generate">
     </form>
+    <form id = "metrics" method="GET" action="/metrics" class="text-center m-5">
+      <input class="btn btn-primary" type="submit" value="Metrics">
+    </form>
+    <form id = "reset-db-form" method="GET" action="/reset-db" class="text-center m-5">
+      <input class="btn btn-danger" type="submit" value="Reset Database">
+    </form>
+    <form id = "reset-cache-form" method="GET" action="/reset-cache" class="text-center m-5">
+      <input class="btn btn-danger" type="submit" value="Reset Cache">
+    </form>
+
+    
   </div>
 </body>
 

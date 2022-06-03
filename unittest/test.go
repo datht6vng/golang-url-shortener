@@ -25,6 +25,17 @@ func TestValidUrl() {
 	}
 }
 
+// func TestCacheJSON() {
+// 	cache := new(cache.Cache).Connect()
+// 	cache.SetJSON("abc", model.Url{
+// 		Url:  "abc",
+// 		User: "xyz",
+// 	}, -1)
+// 	data, err := cache.GetJSON("abc")
+// 	fmt.Println("error:", err)
+// 	fmt.Println("Data:", data)
+// }
+
 // func TestShortener() {
 // 	links := []string{
 // 		"https://www.youtube.com/watch?v=1KPirsObPEg&list=RD1KPirsObPEg&start_radio=1",

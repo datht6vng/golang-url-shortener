@@ -29,7 +29,7 @@ func (this *Metrics) Init() *Metrics {
 			Name: "get_url_requests",
 			Help: "Number of get shor url requests.",
 		},
-		[]string{"url"},
+		[]string{"url", "user"},
 	)
 	prometheus.MustRegister(this.totalRequests)
 	prometheus.MustRegister(this.genUrlRequests)
@@ -62,12 +62,16 @@ func (this *Metrics) ResetGenUrlRequests(key string) {
 func (this *Metrics) AddGenUrlRequests(key string, x float64) {
 	this.genUrlRequests.WithLabelValues(key).Add(x)
 }
-func (this *Metrics) IncreaseGetUrlRequests(key string) {
-	this.getUrlRequests.WithLabelValues(key).Inc()
+
+func (this *Metrics) IncreaseGetUrlRequests(url string, user string) {
+	this.getUrlRequests.With(prometheus.Labels{
+		"url":  url,
+		"user": user,
+	}).Inc()
 }
-func (this *Metrics) ResetGetUrlRequests(key string) {
-	this.getUrlRequests.WithLabelValues(key).Set(0)
-}
-func (this *Metrics) AddGetUrlRequests(key string, x float64) {
-	this.getUrlRequests.WithLabelValues(key).Add(x)
+func (this *Metrics) ResetGetUrlRequests(url string, user string) {
+	this.getUrlRequests.With(prometheus.Labels{
+		"url":  url,
+		"user": user,
+	}).Set(0)
 }

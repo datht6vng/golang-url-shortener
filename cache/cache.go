@@ -1,8 +1,10 @@
 package cache
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
+	"server_go/model"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -43,6 +45,22 @@ func (this *Cache) Get(key string) (string, error) {
 }
 func (this *Cache) Set(key string, value string, TTL int) error {
 	return this.connection.Set(this.connection.Context(), key, value, time.Duration(TTL)*time.Hour).Err()
+}
+func (this *Cache) SetURL(key string, value model.Url, TTL int) error {
+	encodedValue, _ := json.Marshal(value)
+	return this.connection.Set(this.connection.Context(), key, encodedValue, time.Duration(TTL)*time.Hour).Err()
+}
+func (this *Cache) GetURL(key string) (*model.Url, error) {
+	encodedValue, err := this.connection.Get(this.connection.Context(), key).Result()
+	if err != nil {
+		return nil, err
+	}
+	value := new(model.Url)
+	err = json.Unmarshal([]byte(encodedValue), value)
+	if err != nil {
+		return nil, err
+	}
+	return value, nil
 }
 func (this *Cache) Flush() error {
 	err := this.connection.FlushDB(this.connection.Context()).Err()

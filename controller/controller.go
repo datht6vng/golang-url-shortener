@@ -39,11 +39,11 @@ func (this *Controller) Init() *Controller {
 	this.cache.Set("CurrentID", currentID, -1)
 
 	cron := cron.New()
-	cron.AddFunc("@daily", func() {
+	cron.AddFunc("@everty 24h", func() {
 		log.Println("Delete expired record!")
 		this.model.DeleteExpiredRecord()
 	})
-	cron.AddFunc("@daily", func() {
+	cron.AddFunc("@everty 24h", func() {
 		currentID, _ := this.model.GetMaxID()
 		this.cache.Set("CurrentID", currentID, -1)
 		log.Println("Reset ID!")
@@ -125,8 +125,8 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 		return err
 	}
 	if urlRecord.ShortUrl != "" && urlRecord.ExpireTime.After(time.Now()) {
-		// Expire
-		err = this.cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
+		// Cache
+		err = this.cache.SetURL(urlRecord.ShortUrl, *requestData, 24)
 		err = this.cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
 		if err != nil {
 			return err
@@ -144,7 +144,7 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 		channelModel <- struct{}{}
 	}()
 	go func() {
-		errCache = this.cache.Set(newShortUrl, requestData.Url, 24)
+		errCache = this.cache.SetURL(newShortUrl, *requestData, 24)
 		if errCache != nil {
 			channelCache <- struct{}{}
 			return
@@ -152,7 +152,7 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 		errCache = this.cache.Set(requestData.Url, newShortUrl, 24)
 		channelCache <- struct{}{}
 	}()
-	go this.metrics.ResetGetUrlRequests(newShortUrl)
+	go this.metrics.ResetGetUrlRequests(newShortUrl, requestData.User)
 	<-channelCache
 	<-channelModel
 	if errModel != nil {
@@ -165,9 +165,10 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 }
 func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	url := ctx.Params("url")
-	go this.metrics.IncreaseGetUrlRequests(url)
-	longUrl, err := this.cache.Get(url)
+	cacheUrl, err := this.cache.GetURL(url)
 	if err == nil {
+		go this.metrics.IncreaseGetUrlRequests(url, cacheUrl.User)
+		longUrl := cacheUrl.Url
 		return ctx.Redirect(longUrl)
 	}
 	if err != redis.Nil {
@@ -184,12 +185,12 @@ func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	if urlRecord.ExpireTime.Before(time.Now()) {
 		return ctx.Status(fiber.StatusGone).Render("410", nil)
 	}
-	err = this.cache.Set(urlRecord.ShortUrl, urlRecord.LongUrl, 24)
+	err = this.cache.SetURL(urlRecord.ShortUrl, model.Url{Url: urlRecord.ShortUrl, User: urlRecord.User}, 24)
 	err = this.cache.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24)
 	if err != nil {
 		return err
 	}
-	return ctx.Redirect(longUrl)
+	return ctx.Redirect(urlRecord.LongUrl)
 }
 func (this *Controller) GetResetCache(ctx *fiber.Ctx) error {
 	err := this.cache.Flush()

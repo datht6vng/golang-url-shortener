@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun  3 10:12:00 2022
+# Make data base, printed on Fri Jun  3 15:12:57 2022
 
 # Variables
 
@@ -23,7 +23,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-6686b6cf-fffa-4f6b-9ed6-0d485a818f8e.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ce419bbe-8638-4750-8042-0a2c3339aa1e.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -105,13 +105,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3439
+VSCODE_PID = 3004
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1317,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1317
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1345,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1345
 # automatic
 *F = $(notdir $*)
 # environment
@@ -145,7 +145,7 @@ MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/dathuynh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/dathuynh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin
 # default
 MAKEFILES := 
 # environment
@@ -155,7 +155,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 81655716d01647c9a5966a190ec9669b
+INVOCATION_ID = dd250c159f9a463a818be269a53f4d53
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -185,7 +185,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1342
+SYSTEMD_EXEC_PID = 1379
 # environment
 DISPLAY = :0
 # environment
@@ -195,11 +195,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1010
+MANAGERPID = 1004
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3439
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3004
 # environment
 PAGER = less
 # environment
@@ -211,7 +211,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:30638
+JOURNAL_STREAM = 8:30971
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -298,6 +298,7 @@ server:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # Not a target:
 all:
@@ -328,7 +329,6 @@ remove:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 14):
- 
 			docker compose rm
 
 down:
@@ -352,6 +352,6 @@ down:
 # strcache performance: lookups = 54 / hit rate = 33%
 # hash-table stats:
 # Load=36/8192=0%, Rehash=0, Collisions=0/54=0%
-# Finished Make data base on Fri Jun  3 10:12:00 2022
+# Finished Make data base on Fri Jun  3 15:12:57 2022
 
  
