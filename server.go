@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"server_go/config"
 	"server_go/controller"
 	"server_go/limiter"
 
@@ -17,9 +18,13 @@ import (
 	"github.com/valyala/fasthttp/fasthttpadaptor"
 )
 
-func main() {
+func init() {
 	logger, _ := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	log.SetOutput(logger)
+	config.ReadConfig()
+}
+func main() {
+
 	log.Println("Server start!")
 
 	viewEngine := html.New("./views", ".html")
@@ -31,7 +36,6 @@ func main() {
 			log.Println(err)
 		}
 		log.Println("Server end!")
-		logger.Close()
 	}()
 	// Catch Ctr + C
 	go func() {
@@ -40,7 +44,6 @@ func main() {
 		<-signalChannel
 		log.Println("Server end!")
 		controller.Close()
-		logger.Close()
 		os.Exit(0)
 	}()
 
@@ -75,9 +78,6 @@ func main() {
 	app.Get("/reset-db", controller.GetResetDB)
 	app.Get("/:url", controller.ValidateController, controller.GetUrlController)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	port := config.Config.Server.Port
 	app.Listen(":" + port)
 }

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/url"
-	"os"
 	"server_go/cache"
+	"server_go/config"
 	"server_go/metrics"
 	"server_go/model"
 	"server_go/util"
@@ -25,10 +25,7 @@ type Controller struct {
 }
 
 func (this *Controller) Init() *Controller {
-	this.baseUrl = os.Getenv("DOMAIN")
-	if this.baseUrl == "" {
-		this.baseUrl = "http://localhost:8080/"
-	}
+	this.baseUrl = config.Config.Server.Domain
 	this.model = new(model.Model).Connect()
 	this.cache = new(cache.Cache).Connect()
 	this.metrics = new(metrics.Metrics).Init()

@@ -1,7 +1,7 @@
 package limiter
 
 import (
-	"os"
+	"server_go/config"
 	"strconv"
 	"time"
 
@@ -10,14 +10,8 @@ import (
 )
 
 func CreateLimiter() fiber.Handler {
-	maxRequest := os.Getenv("MAX_REQUEST")
-	limiterExpire := os.Getenv("LIMITER_EXPIRE")
-	if maxRequest == "" {
-		maxRequest = "5"
-	}
-	if limiterExpire == "" {
-		limiterExpire = "1"
-	}
+	maxRequest := config.Config.Limitter.MaxRequest
+	limiterExpire := config.Config.Limitter.LimitterExprire
 	intMaxRequest, _ := strconv.Atoi(maxRequest)
 	intLimiterExpire, _ := strconv.Atoi(limiterExpire)
 

@@ -3,7 +3,7 @@ package cache
 import (
 	"encoding/json"
 	"fmt"
-	"os"
+	"server_go/config"
 	"server_go/model"
 	"time"
 
@@ -15,16 +15,9 @@ type Cache struct {
 }
 
 func (this *Cache) Connect() *Cache {
-	redisHost := os.Getenv("REDIS_HOST")
-	if redisHost == "" {
-		redisHost = "localhost"
-	}
-	redisPort := os.Getenv("REDIS_PORT")
-	if redisPort == "" {
-		redisPort = "6379"
-	}
-	redisPassword := os.Getenv("REDIS_PASSWORD")
-
+	redisHost := config.Config.Redis.Host
+	redisPort := config.Config.Redis.Port
+	redisPassword := config.Config.Redis.Password
 	client := redis.NewClient(&redis.Options{
 		Addr:     redisHost + ":" + redisPort,
 		Password: redisPassword,

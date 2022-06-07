@@ -3,7 +3,7 @@ package model
 import (
 	"database/sql"
 	"fmt"
-	"os"
+	"server_go/config"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -26,26 +26,11 @@ type Model struct {
 }
 
 func (this *Model) Connect() *Model {
-	host := os.Getenv("DB_HOST")
-	if host == "" {
-		host = "localhost"
-	}
-	user := os.Getenv("DB_USER")
-	if user == "" {
-		user = "root"
-	}
-	password := os.Getenv("DB_PASSWORD")
-	if password == "" {
-		password = "123456"
-	}
-	port := os.Getenv("DB_PORT")
-	if port == "" {
-		port = "3306"
-	}
-	database := os.Getenv("DB_DATABASE")
-	if database == "" {
-		database = "URL_SHORTENER"
-	}
+	host := config.Config.Database.Host
+	user := config.Config.Database.User
+	password := config.Config.Database.Password
+	port := config.Config.Database.Port
+	database := config.Config.Database.Database
 	dbConnectionString := fmt.Sprintf(
 		"%s:%s@%s(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local&multiStatements=true",
 		user,
