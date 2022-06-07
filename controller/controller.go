@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/url"
 	"server_go/cache"
-	"server_go/config"
 	"server_go/metrics"
 	"server_go/model"
 	"server_go/util"
@@ -21,11 +20,9 @@ type Controller struct {
 	model   *model.Model
 	cache   *cache.Cache
 	metrics *metrics.Metrics
-	baseUrl string
 }
 
 func (this *Controller) Init() *Controller {
-	this.baseUrl = config.Config.Server.Domain
 	this.model = new(model.Model).Connect()
 	this.cache = new(cache.Cache).Connect()
 	this.metrics = new(metrics.Metrics).Init()
@@ -53,7 +50,13 @@ func (this *Controller) Close() {
 	this.cache.Flush()
 }
 func (this *Controller) GetNextID() string {
-	return fmt.Sprint(this.cache.Increase("CurrentID"))
+	nextID := this.cache.Increase("CurrentID")
+	if nextID == 1 {
+		currentID, _ := this.model.GetMaxID()
+		this.cache.Set("CurrentID", currentID, -1)
+		return fmt.Sprint(this.cache.Increase("CurrentID"))
+	}
+	return fmt.Sprint(nextID)
 }
 func (this *Controller) ErrorController(ctx *fiber.Ctx, err error) error {
 	// Default 500 statuscode
@@ -110,7 +113,7 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 
 	// found in cache
 	if err == nil {
-		return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": this.baseUrl + shortUrl, "error": nil})
+		return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": ctx.BaseURL() + "/" + shortUrl, "error": nil})
 	}
 	// err that is not "not found"
 	if err != redis.Nil {
@@ -128,7 +131,7 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": this.baseUrl + urlRecord.ShortUrl, "error": nil})
+		return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": ctx.BaseURL() + "/" + urlRecord.ShortUrl, "error": nil})
 	}
 	// insert DB
 	channelModel := make(chan struct{})
@@ -158,7 +161,7 @@ func (this *Controller) PostGenUrlController(ctx *fiber.Ctx) error {
 	if errCache != nil {
 		return err
 	}
-	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": this.baseUrl + newShortUrl, "error": nil})
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{"url": ctx.BaseURL() + "/" + newShortUrl, "error": nil})
 }
 func (this *Controller) GetUrlController(ctx *fiber.Ctx) error {
 	url := ctx.Params("url")
