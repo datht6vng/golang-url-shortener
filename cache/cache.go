@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"server_go/config"
@@ -64,4 +65,20 @@ func (this *Cache) Flush() error {
 }
 func (this *Cache) Increase(key string) int64 {
 	return this.connection.Incr(this.connection.Context(), key).Val()
+}
+func (this *Cache) Pipeline() redis.Pipeliner {
+	return this.connection.Pipeline()
+}
+
+func (this *Cache) Context() context.Context {
+	return this.connection.Context()
+}
+func (this *Cache) Watch(task func(tx *redis.Tx) error, key string) error {
+	return this.connection.Watch(this.connection.Context(), task, key)
+}
+func (this *Cache) TxPipeline() redis.Pipeliner {
+	return this.connection.TxPipeline()
+}
+func (this *Cache) Exec(pipe redis.Pipeliner) {
+	_, _ = pipe.Exec(this.connection.Context())
 }

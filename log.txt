@@ -1,70 +1,95 @@
-2022/06/07 16:06:00 Server start!
-2022/06/07 16:09:15 Server start!
-2022/06/07 16:09:18 Server end!
-2022/06/07 16:09:20 Server start!
-2022/06/07 16:09:22 Server end!
-2022/06/07 16:09:42 Server start!
-2022/06/07 16:09:43 Server end!
-2022/06/07 16:10:03 Server start!
-2022/06/07 16:10:06 Server end!
-2022/06/07 16:10:16 Server start!
-2022/06/07 16:10:18 Server end!
-2022/06/07 16:11:04 Server start!
-2022/06/07 16:11:04 Server end!
-2022/06/07 16:11:34 Server start!
-2022/06/07 16:11:37 Server end!
-2022/06/07 16:12:15 Server start!
-2022/06/07 16:12:16 Server end!
-2022/06/07 16:12:34 Server start!
-2022/06/07 16:12:35 Server end!
-2022/06/07 16:12:42 Server start!
-2022/06/07 16:12:43 Server end!
-2022/06/07 16:14:20 Server start!
-2022/06/07 16:14:22 Server end!
-2022/06/07 16:15:15 Server start!
-2022/06/07 16:15:16 Server end!
-2022/06/07 16:15:29 Server start!
-2022/06/07 16:15:30 Server end!
-2022/06/07 16:16:46 Server start!
-2022/06/07 16:16:50 Server end!
-2022/06/07 16:17:22 Server start!
-2022/06/07 16:17:24 Server end!
-2022/06/07 16:19:28 Server start!
-2022/06/07 16:19:29 Server end!
-2022/06/07 16:19:35 Server start!
-2022/06/07 16:19:36 Server end!
-2022/06/07 16:20:10 Server start!
-2022/06/07 16:20:11 Server end!
-2022/06/07 16:21:59 Server start!
-2022/06/07 16:22:03 Server end!
-2022/06/07 16:23:20 Server start!
-2022/06/07 16:23:20 Server end!
-2022/06/07 16:23:33 Cannot load config: While parsing config: toml: expected newline but got U+003D '='
-2022/06/07 16:23:38 Cannot load config: While parsing config: toml: expected character =
-2022/06/07 16:24:35 Server start!
-2022/06/07 16:24:36 Server end!
-2022/06/07 16:25:06 Server start!
-2022/06/07 16:25:08 Server end!
-2022/06/07 16:28:17 Server start!
-2022/06/07 16:28:18 Server end!
-2022/06/07 16:28:39 Server start!
-2022/06/07 16:28:41 Server end!
-2022/06/07 16:28:56 Server start!
-2022/06/07 16:28:57 Server end!
-2022/06/07 16:31:37 Server start!
-2022/06/07 16:31:39 Server end!
-2022/06/07 16:31:41 Server start!
-2022/06/07 16:31:50 Server end!
-2022/06/07 16:32:20 Server start!
-2022/06/07 16:32:21 Server end!
-2022/06/07 16:34:29 Server start!
-2022/06/07 16:34:37 Server end!
-2022/06/07 16:34:46 Server start!
-2022/06/07 16:35:27 Server end!
-2022/06/07 16:35:36 Server start!
-2022/06/07 16:35:38 Server end!
-2022/06/07 16:35:43 Server start!
-2022/06/07 16:35:48 Server end!
-2022/06/07 16:35:58 Server start!
-2022/06/07 16:36:02 Server end!
-2022/06/07 16:37:20 Server start!
+2022/06/08 13:53:43 Server end!
+2022/06/08 13:53:46 Server start!
+2022/06/08 13:53:54 Reset max valid url ID!
+2022/06/08 13:53:58 Flush cache!
+2022/06/08 13:53:58 sql: no rows in result set
+2022/06/08 13:54:01 Reset max valid url ID!
+2022/06/08 13:54:02 Reset max valid url ID!
+2022/06/08 13:54:04 Flush cache!
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:04 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:05 sql: no rows in result set
+2022/06/08 13:54:15 Reset max valid url ID!
+2022/06/08 13:54:19 Reset max valid url ID!
+2022/06/08 13:54:22 Flush cache!
+2022/06/08 13:54:23 sql: no rows in result set
+2022/06/08 13:54:35 Flush cache!
+2022/06/08 13:55:28 Server end!
+2022/06/08 13:56:31 Server start!
+2022/06/08 13:56:41 Flush cache!
+2022/06/08 13:56:41 sql: no rows in result set
+2022/06/08 13:58:15 Server end!
+2022/06/08 13:58:17 Server start!
+2022/06/08 13:58:21 Flush cache!
+2022/06/08 13:58:21 sql: no rows in result set
+2022/06/08 13:58:37 Server end!
+2022/06/08 13:59:58 Server start!
+2022/06/08 14:00:02 Flush cache!
+2022/06/08 14:00:02 Error 1062: Duplicate entry '1054' for key 'URL.PRIMARY'
+2022/06/08 14:01:50 Server end!
+2022/06/08 14:01:51 Server start!
+2022/06/08 15:41:25 Server end!
+2022/06/08 15:41:27 Server start!
+2022/06/08 16:16:03 dial tcp 127.0.0.1:6379: connect: connection refused
+2022/06/08 16:16:15 dial tcp 127.0.0.1:6379: connect: connection refused
+2022/06/08 17:44:31 Server end!
+2022/06/08 17:44:32 Server start!
+2022/06/08 17:44:45 Flush cache!
+2022/06/08 17:44:50 Invalid number: OK
+2022/06/08 17:46:24 Server end!
+2022/06/08 17:46:25 Server start!
+2022/06/08 17:46:59 Flush cache!
+2022/06/08 17:47:05 Invalid number: OK
+2022/06/08 17:47:47 Server end!
+2022/06/08 17:47:48 Server start!
+2022/06/08 17:47:51 Flush cache!
+2022/06/08 17:47:55 Invalid number: OK
+2022/06/08 17:48:08 Server end!
+2022/06/08 17:49:53 Server start!
+2022/06/08 17:49:57 Reset max valid url ID!
+2022/06/08 17:50:02 Flush cache!
+2022/06/08 17:50:07 Flush cache!
+2022/06/08 17:50:09 Reset max valid url ID!
+2022/06/08 17:50:23 Flush cache!
+2022/06/08 17:50:51 Reset max valid url ID!
+2022/06/08 17:51:00 Flush cache!
+2022/06/08 17:51:07 Flush cache!
+2022/06/08 17:53:21 Flush cache!
+2022/06/08 17:53:24 Reset max valid url ID!
+2022/06/08 17:53:26 Flush cache!
+2022/06/08 17:53:34 Flush cache!
+2022/06/08 17:53:37 Flush cache!
+2022/06/08 17:53:49 Flush cache!
+2022/06/08 17:53:53 Flush cache!
+2022/06/08 17:54:55 Flush cache!
+2022/06/08 17:55:01 Flush cache!
+2022/06/08 17:55:10 Flush cache!
+2022/06/08 17:55:11 Reset max valid url ID!
+2022/06/08 17:56:44 Flush cache!
+2022/06/08 17:56:46 Flush cache!
+2022/06/08 17:56:48 Flush cache!
+2022/06/08 17:57:08 Server end!

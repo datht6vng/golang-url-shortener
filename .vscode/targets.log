@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun  7 16:08:36 2022
+# Make data base, printed on Wed Jun  8 10:03:07 2022
 
 # Variables
 
@@ -23,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ccdad49e-0012-4e97-acd0-d5a905f2ab6e.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-1bcda682-2774-46a6-9b07-422a9d61d300.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -105,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3242
+VSCODE_PID = 5373
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1361,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1361
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1317,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1317
 # automatic
 *F = $(notdir $*)
 # environment
@@ -155,7 +153,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 22b05b6b2a3344d8b5abb8f4e583872a
+INVOCATION_ID = 47fe3fdc614d4571ac990fef6c0731e8
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -185,7 +183,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1380
+SYSTEMD_EXEC_PID = 1336
 # environment
 DISPLAY = :0
 # environment
@@ -195,11 +193,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1023
+MANAGERPID = 1013
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3242
+GIO_LAUNCHED_DESKTOP_FILE_PID = 5373
 # environment
 PAGER = less
 # environment
@@ -211,7 +209,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:29104
+JOURNAL_STREAM = 8:32827
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -281,7 +279,6 @@ up:
 
 stop:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 7):
@@ -301,6 +298,9 @@ server:
 #  File has not been updated.
 
 # Not a target:
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 all:
 #  Command line target.
 #  Implicit rule search has been done.
@@ -352,6 +352,6 @@ down:
 # strcache performance: lookups = 56 / hit rate = 32%
 # hash-table stats:
 # Load=38/8192=0%, Rehash=0, Collisions=0/56=0%
-# Finished Make data base on Tue Jun  7 16:08:36 2022
+# Finished Make data base on Wed Jun  8 10:03:07 2022
 
  

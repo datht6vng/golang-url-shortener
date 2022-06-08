@@ -1,13 +1,13 @@
 version: '3'
 services:
   redis: 
-      image: "redis"
-      ports: 
-        - "6379:6379"
-      command: redis-server --maxmemory-policy volatile-lru --maxmemory 4G
-      restart: always
-      volumes:
-      - redis-data:/data
+    image: "redis"
+    ports: 
+      - "6379:6379"
+    command: redis-server --maxmemory-policy volatile-lru --maxmemory 4G
+    restart: always
+    volumes:
+    - redis-data:/data
   
   mysql:
     image: mysql
@@ -71,16 +71,16 @@ services:
     depends_on:
       - prometheus
 
-  server:
-    depends_on:
-      mysql:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    build: .
-    restart: unless-stopped
-    ports:
-      - '8080:8080'
+  # server:
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_started
+  #   build: .
+  #   restart: unless-stopped
+  #   ports:
+  #     - '8080:8080'
       
 
 volumes:

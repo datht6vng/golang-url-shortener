@@ -50,6 +50,6 @@ function DDos(n) {
 }
 function task() {
   setTimeout(function() {
-      make_request(1000);
+      make_gen_request(1000);
   }, 1000);
 }

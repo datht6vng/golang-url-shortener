@@ -1,12 +1,12 @@
 [database]
-    host        = "mysql"
+    host        = "localhost"
     port        = "3306"   
     user        = "root"
     password    = "123456"
     database    = "URL_SHORTENER"
 
 [redis]
-    host        = "redis"
+    host        = "localhost"
     port        = "6379"
     password    = ""
 
@@ -14,5 +14,5 @@
     port        = "8080"
 
 [limitter]
-    max_request     = "10000"
+    max_request     = "100000"
     limitter_expire = "1"
