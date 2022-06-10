@@ -1,18 +1,31 @@
 [database]
-    host        = "mysql"
-    port        = "3306"   
-    user        = "root"
-    password    = "123456"
-    database    = "URL_SHORTENER"
+    host                = "0.0.0.0"
+    port                = "3306"   
+    user                = "root"
+    password            = "123456"  
+    database            = "URL_SHORTENER"
+    max_open_connection = "1000"
+    max_idle_connection = "1000"
 
 [redis]
-    host        = "redis"
-    port        = "6379"
-    password    = ""
+    address             = "0.0.0.0:6379" 
+    # Split address by COMMA, Example: address = "0.0.0.0:6379, 0.0.0.0:6379" 
+    password            = ""
+    database            = "0"
+    is_cluster          = "false"
 
-[server]
-    port        = "8080"
+[app]
+    port                = "8080"
 
 [limitter]
-    max_request     = "10"
-    limitter_expire = "1"
+    max_request         = "1000000"
+    limitter_expire     = "1"
+
+[logger]
+    path                = "./log/log.txt"
+
+[view]
+    path                = "./view"
+
+[key]
+    secret = "Secret key: !@#$%^&*()432144adsfdsafhk12312532dfhsajkfghjkg732478321er1234hkjdhf78234h"

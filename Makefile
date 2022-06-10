@@ -1,5 +1,5 @@
 server:		
-			go run server.go
+			go run cmd/shorten-link/main.go
 run: 		stop up
 up:
 			docker compose up -d
