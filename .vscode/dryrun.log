@@ -1,5 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/dathuynh/Workspace/golang-url-shortener'
-go run server.go
+go run cmd/shorten-link/main.go
 make: Leaving directory '/home/dathuynh/Workspace/golang-url-shortener'
  

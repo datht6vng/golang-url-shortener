@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun  9 20:30:17 2022
+# Make data base, printed on Sun Jun 12 01:28:30 2022
 
 # Variables
 
@@ -21,9 +21,7 @@ GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-GJS_DEBUG_OUTPUT = stderr
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-994c9645-6243-4652-b55a-d3dc3eec39fc.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-22808967-f10f-4c16-849a-3a0b8ecaf6b8.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -53,7 +51,7 @@ PWD = /home/dathuynh/Workspace/golang-url-shortener
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-XDG_DATA_DIRS = /usr/share/ubuntu:/home/dathuynh/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/share/gnome:/home/dathuynh/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 # environment
 OLDPWD = /home/dathuynh
 # automatic
@@ -63,7 +61,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/dathuynh/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /home/dathuynh/.config/Code/CachedData/4af164ea3a06f701fe3e89a2bcbb421d2026b68f
 # environment
 LANG = C
 # environment
@@ -105,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 10130
+VSCODE_PID = 3160
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1366,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1366
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1348,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1348
 # automatic
 *F = $(notdir $*)
 # environment
@@ -135,8 +133,6 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-GJS_DEBUG_TOPICS = JS ERROR;JS LOG
-# environment
 SHLVL = 0
 # environment
 ANTLR_HOME = /home/dathuynh/.ANTLR
@@ -155,7 +151,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = fffd2c7c990945e39f1d14422b5677cc
+INVOCATION_ID = 415e4af3e2af44e3a9616d6bbfc201d6
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -181,11 +177,11 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = dathuynh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1392
+SYSTEMD_EXEC_PID = 1348
 # environment
 DISPLAY = :0
 # environment
@@ -195,11 +191,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1037
+MANAGERPID = 1005
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 10130
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3160
 # environment
 PAGER = less
 # environment
@@ -211,7 +207,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:31576
+JOURNAL_STREAM = 8:26474
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -225,7 +221,9 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-30481b78-1.67.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-30481b78-1.68.0-main.sock
+# environment
+GSETTINGS_SCHEMA_DIR = /home/dathuynh/data
 # environment
 IM_CONFIG_PHASE = 1
 # environment
@@ -247,7 +245,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=117/1024=11%, Rehash=0, Collisions=5/147=3%
+# Load=116/1024=11%, Rehash=0, Collisions=5/146=3%
 
 # Pattern-specific Variable Values
 
@@ -255,9 +253,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 25 files, no impossibilities.
+# . (device 66308, inode 5908410): 18 files, no impossibilities.
 
-# 25 files, no impossibilities in 1 directories.
+# 18 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -268,7 +266,7 @@ LC_IDENTIFICATION = vi_VN
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-02 13:23:12.587483329
+#  Last modified 2022-06-09 10:23:29.54119
 #  File has been updated.
 #  Successfully updated.
 
@@ -281,7 +279,6 @@ up:
 
 stop:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 7):
@@ -292,7 +289,7 @@ server:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 2):
-			go run server.go
+			go run cmd/shorten-link/main.go
 
 # Not a target:
 .DEFAULT:
@@ -307,6 +304,7 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
+ 
 run: stop up
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -346,12 +344,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 38 / storage = 301 B / avg = 7 B
-# current buf: size = 8162 B / used = 301 B / count = 38 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 237 B / avg = 7 B
+# current buf: size = 8162 B / used = 237 B / count = 31 / avg = 7 B
 
-# strcache performance: lookups = 56 / hit rate = 32%
+# strcache performance: lookups = 49 / hit rate = 36%
 # hash-table stats:
-# Load=38/8192=0%, Rehash=0, Collisions=0/56=0%
-# Finished Make data base on Thu Jun  9 20:30:17 2022
+# Load=31/8192=0%, Rehash=0, Collisions=0/49=0%
+# Finished Make data base on Sun Jun 12 01:28:30 2022
 
  

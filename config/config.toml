@@ -1,5 +1,5 @@
 [database]
-    host                = "0.0.0.0"
+    host                = "mysql"
     port                = "3306"   
     user                = "root"
     password            = "123456"  
@@ -8,7 +8,7 @@
     max_idle_connection = "1000"
 
 [redis]
-    address             = "0.0.0.0:6379" 
+    address             = "redis:6379" 
     # Split address by COMMA, Example: address = "0.0.0.0:6379, 0.0.0.0:6379" 
     password            = ""
     database            = "0"
@@ -18,7 +18,7 @@
     port                = "8080"
 
 [limitter]
-    max_request         = "1000000"
+    max_request         = "10"
     limitter_expire     = "1"
 
 [logger]

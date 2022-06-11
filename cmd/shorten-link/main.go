@@ -31,6 +31,7 @@ func main() {
 			log.Println(err)
 		}
 		log.Println("Service end!")
+		_log.Logger.Close()
 	}()
 	// Catch Ctr + C
 	go func() {
@@ -38,6 +39,7 @@ func main() {
 		signal.Notify(signalChannel, os.Interrupt)
 		<-signalChannel
 		log.Println("Service end!")
+		_log.Logger.Close()
 		os.Exit(0)
 	}()
 	app := http.NewApp()
