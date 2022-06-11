@@ -7,5 +7,6 @@ import (
 )
 
 func CreateTable(db *gorm.DB) {
-	db.AutoMigrate(&model.Url{})
+	db.AutoMigrate(&model.URL{})
+	db.AutoMigrate(&model.Client{})
 }

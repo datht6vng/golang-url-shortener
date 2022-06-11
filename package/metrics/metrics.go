@@ -6,8 +6,8 @@ import (
 
 type Metrics struct {
 	totalRequests  prometheus.Gauge
-	genUrlRequests *prometheus.GaugeVec
-	getUrlRequests *prometheus.GaugeVec
+	genURLRequests *prometheus.GaugeVec
+	getURLRequests *prometheus.GaugeVec
 }
 
 func (this *Metrics) Init() *Metrics {
@@ -17,14 +17,14 @@ func (this *Metrics) Init() *Metrics {
 			Help: "Number of requests call to server.",
 		},
 	)
-	this.genUrlRequests = prometheus.NewGaugeVec(
+	this.genURLRequests = prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: "gen_url_requests",
 			Help: "Number of gen short url requests.",
 		},
 		[]string{"user"},
 	)
-	this.getUrlRequests = prometheus.NewGaugeVec(
+	this.getURLRequests = prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: "get_url_requests",
 			Help: "Number of get shor url requests.",
@@ -32,8 +32,8 @@ func (this *Metrics) Init() *Metrics {
 		[]string{"url", "user"},
 	)
 	prometheus.MustRegister(this.totalRequests)
-	prometheus.MustRegister(this.genUrlRequests)
-	prometheus.MustRegister(this.getUrlRequests)
+	prometheus.MustRegister(this.genURLRequests)
+	prometheus.MustRegister(this.getURLRequests)
 	return this
 }
 
@@ -43,24 +43,24 @@ func (this *Metrics) IncreaseTotalRequests() {
 func (this *Metrics) ResetTotalRequests() {
 	this.totalRequests.Set(0)
 }
-func (this *Metrics) IncreaseGenUrlRequests(key string) {
-	this.genUrlRequests.WithLabelValues(key).Inc()
+func (this *Metrics) IncreaseGenURLRequests(key string) {
+	this.genURLRequests.WithLabelValues(key).Inc()
 }
-func (this *Metrics) ResetGenUrlRequests(key string) {
-	this.genUrlRequests.WithLabelValues(key).Set(0)
+func (this *Metrics) ResetGenURLRequests(key string) {
+	this.genURLRequests.WithLabelValues(key).Set(0)
 }
-func (this *Metrics) AddGenUrlRequests(key string, x float64) {
-	this.genUrlRequests.WithLabelValues(key).Add(x)
+func (this *Metrics) AddGenURLRequests(key string, x float64) {
+	this.genURLRequests.WithLabelValues(key).Add(x)
 }
 
-func (this *Metrics) IncreaseGetUrlRequests(url string, user string) {
-	this.getUrlRequests.With(prometheus.Labels{
+func (this *Metrics) IncreaseGetURLRequests(url string, user string) {
+	this.getURLRequests.With(prometheus.Labels{
 		"url":  url,
 		"user": user,
 	}).Inc()
 }
-func (this *Metrics) ResetGetUrlRequests(url string, user string) {
-	this.getUrlRequests.With(prometheus.Labels{
+func (this *Metrics) ResetGetURLRequests(url string, user string) {
+	this.getURLRequests.With(prometheus.Labels{
 		"url":  url,
 		"user": user,
 	}).Set(0)

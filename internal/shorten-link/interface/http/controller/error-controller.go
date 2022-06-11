@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -28,12 +29,9 @@ func (this *ErrorController) ErrorController(ctx *fiber.Ctx, err error) error {
 	// Set Content-Type: text/plain; charset=utf-8
 	ctx.Set(fiber.HeaderContentType, fiber.MIMETextPlainCharsetUTF8)
 	// Return statuscode with error message
-	if code == 404 {
-		return ctx.Status(404).Render("404", nil)
-	}
 	// Log internal server error
 	if code >= 500 {
 		log.Println(err.Error())
 	}
-	return ctx.Status(500).Render("500", fiber.Map{"err": err.Error()})
+	return ctx.Status(code).Render(fmt.Sprint(code), fiber.Map{"error": err.Error()})
 }

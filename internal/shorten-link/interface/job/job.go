@@ -9,12 +9,12 @@ import (
 )
 
 type Job struct {
-	urlRepository *repository.UrlRepository
+	urlRepository *repository.URLRepository
 	redis         *_redis.Redis
 	cron          *cron.Cron
 }
 
-func (this *Job) Init(urlRepository *repository.UrlRepository, redis *_redis.Redis) *Job {
+func (this *Job) Init(urlRepository *repository.URLRepository, redis *_redis.Redis) *Job {
 	this.urlRepository = urlRepository
 	this.redis = redis
 	this.cron = cron.New()
@@ -26,8 +26,8 @@ func (this *Job) CreateCronJob(interval string, cronJobs ...func()) {
 	}
 	this.cron.Start()
 }
-func (this *Job) DeleteExpireUrl() {
-	this.urlRepository.DeleteExpiredUrl()
+func (this *Job) DeleteExpireURL() {
+	this.urlRepository.DeleteExpiredURL()
 	log.Printf("Delete expire URL!")
 }
 func (this *Job) ResetMaxID() {

@@ -10,35 +10,35 @@ import (
 	"gorm.io/gorm"
 )
 
-type GetUrlService struct {
-	urlRepository *repository.UrlRepository
+type GetURLService struct {
+	urlRepository *repository.URLRepository
 	redis         *_redis.Redis
 	metrics       *metrics.Metrics
 }
 
-func (this *GetUrlService) Init(urlRepository *repository.UrlRepository, redis *_redis.Redis, metrics *metrics.Metrics) *GetUrlService {
+func (this *GetURLService) Init(urlRepository *repository.URLRepository, redis *_redis.Redis, metrics *metrics.Metrics) *GetURLService {
 	this.urlRepository = urlRepository
 	this.redis = redis
 	this.metrics = metrics
 	return this
 }
 
-func (this *GetUrlService) GetUrl(url string) (string, error) {
-	cacheUrl := new(UrlData)
-	err := this.redis.GetJSON(url, cacheUrl)
+func (this *GetURLService) GetURL(url string) (string, error) {
+	cacheURL := new(URLData)
+	err := this.redis.GetJSON("url:"+url, cacheURL)
 	if err != nil {
 		return "", err
 	}
-	if cacheUrl.Url != "" {
-		go this.metrics.IncreaseGetUrlRequests(url, cacheUrl.User)
-		return cacheUrl.Url, nil
+	if cacheURL.URL != "" {
+		go this.metrics.IncreaseGetURLRequests(url, cacheURL.ClientID)
+		return cacheURL.URL, nil
 	}
-	urlRecord, err := this.urlRepository.FindShortUrl(url)
+	urlRecord, err := this.urlRepository.FindByShortURL(url)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return "", &fiber.Error{
 				Code:    404,
-				Message: "Url not found!",
+				Message: "URL not found!",
 			}
 		}
 		return "", err
@@ -46,14 +46,14 @@ func (this *GetUrlService) GetUrl(url string) (string, error) {
 	if urlRecord.ExpireTime.Before(time.Now()) {
 		return "", &fiber.Error{
 			Code:    410,
-			Message: "Url has been expired!",
+			Message: "URL has been expired!",
 		}
 	}
-	err = this.redis.SetJSON(urlRecord.ShortUrl, UrlData{Url: urlRecord.ShortUrl, User: urlRecord.User}, 24*time.Hour)
-	err = this.redis.Set(urlRecord.LongUrl, urlRecord.ShortUrl, 24*time.Hour)
+	err = this.redis.SetJSON("url:"+urlRecord.ShortURL, URLData{URL: urlRecord.ShortURL, ClientID: urlRecord.ClientID}, 24*time.Hour)
+	err = this.redis.Set("url:"+urlRecord.LongURL, urlRecord.ShortURL, 24*time.Hour)
 	if err != nil {
 		return "", err
 	}
-	go this.metrics.IncreaseGetUrlRequests(url, urlRecord.User)
-	return urlRecord.LongUrl, nil
+	go this.metrics.IncreaseGetURLRequests(url, urlRecord.ClientID)
+	return urlRecord.LongURL, nil
 }

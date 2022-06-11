@@ -12,24 +12,20 @@ import (
 	"gorm.io/gorm"
 )
 
-type UrlData struct {
-	User string `json:"user" xml:"user" form:"user"`
-	Url  string `json:"url" xml:"url" form:"url"`
-}
-
-type GenerateUrlService struct {
-	urlRepository *repository.UrlRepository
+type GenerateURLService struct {
+	urlRepository *repository.URLRepository
 	redis         *_redis.Redis
 	metrics       *metrics.Metrics
 }
 
-func (this *GenerateUrlService) Init(urlRepository *repository.UrlRepository, redis *_redis.Redis, metrics *metrics.Metrics) *GenerateUrlService {
+func (this *GenerateURLService) Init(urlRepository *repository.URLRepository, redis *_redis.Redis, metrics *metrics.Metrics) *GenerateURLService {
 	this.urlRepository = urlRepository
 	this.redis = redis
 	this.metrics = metrics
 	return this
 }
-func (this *GenerateUrlService) GetNextID() string {
+
+func (this *GenerateURLService) GetNextID() string {
 	if currentID := this.redis.Get("CurrentID"); currentID == "" {
 		pipe := this.redis.TxPipeline()
 		resultID := ""
@@ -47,40 +43,41 @@ func (this *GenerateUrlService) GetNextID() string {
 	}
 	return fmt.Sprint(this.redis.Incr("CurrentID"))
 }
-func (this *GenerateUrlService) GenerateUrl(inputData *UrlData) (string, error) {
-	go this.metrics.IncreaseGenUrlRequests(inputData.User)
-	shortUrl := this.redis.Get(inputData.Url)
-	if shortUrl != "" {
-		return shortUrl, nil
+
+func (this *GenerateURLService) GenerateURL(url string, clientID string) (string, error) {
+	go this.metrics.IncreaseGenURLRequests(clientID)
+	shortURL := this.redis.Get("url:" + url)
+	if shortURL != "" {
+		return shortURL, nil
 	}
-	urlRecord, err := this.urlRepository.FindLongUrl(inputData.Url)
+	urlRecord, err := this.urlRepository.FindByLongURL(url)
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return "", err
 	}
 	// Found url and not exprire
 	if err != gorm.ErrRecordNotFound && urlRecord.ExpireTime.After(time.Now()) {
-		return urlRecord.ShortUrl, nil
+		return urlRecord.ShortURL, nil
 	}
 	// insert DB
 	channelRepo := make(chan struct{})
 	channelRedis := make(chan struct{})
 	newID := this.GetNextID()
-	newShortUrl := encryption.GenerateShortLink(newID)
+	newShortURL := encryption.GenerateShortLink(newID)
 	var errRepo, errRedis error
 	go func() {
-		errRepo = this.urlRepository.InsertUrl(newID, inputData.User, newShortUrl, inputData.Url, time.Now().AddDate(0, 0, 3))
+		errRepo = this.urlRepository.InsertURL(newID, clientID, newShortURL, url, time.Now().AddDate(0, 0, 3))
 		channelRepo <- struct{}{}
 	}()
 	go func() {
-		errRedis = this.redis.SetJSON(newShortUrl, inputData, 24*time.Hour)
+		errRedis = this.redis.SetJSON("url:"+newShortURL, URLData{URL: url, ClientID: clientID}, 24*time.Hour)
 		if errRedis != nil {
 			channelRedis <- struct{}{}
 			return
 		}
-		errRedis = this.redis.Set(inputData.Url, newShortUrl, 24*time.Hour)
+		errRedis = this.redis.Set("url:"+url, newShortURL, 24*time.Hour)
 		channelRedis <- struct{}{}
 	}()
-	go this.metrics.ResetGetUrlRequests(newShortUrl, inputData.User)
+	go this.metrics.ResetGetURLRequests(newShortURL, clientID)
 	<-channelRepo
 	<-channelRedis
 	if errRepo != nil {
@@ -89,5 +86,5 @@ func (this *GenerateUrlService) GenerateUrl(inputData *UrlData) (string, error) 
 	if errRedis != nil {
 		return "", errRedis
 	}
-	return newShortUrl, nil
+	return newShortURL, nil
 }

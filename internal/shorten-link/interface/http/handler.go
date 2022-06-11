@@ -4,6 +4,7 @@ import (
 	"time"
 	"trueid-shorten-link/config"
 	"trueid-shorten-link/internal/shorten-link/interface/http/controller"
+	"trueid-shorten-link/internal/shorten-link/interface/http/middleware"
 	"trueid-shorten-link/internal/shorten-link/interface/job"
 	"trueid-shorten-link/internal/shorten-link/repository"
 	"trueid-shorten-link/internal/shorten-link/service"
@@ -13,17 +14,20 @@ import (
 	"trueid-shorten-link/package/redis"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
-	fiberRecover "github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html"
 )
 
 type Handler struct {
-	App                   *fiber.App
-	ErrorController       *controller.ErrorController
-	GenerateUrlController *controller.GenerateUrlController
-	GetUrlController      *controller.GetUrlController
-	MetricsController     *controller.MetricsController
+	App                      *fiber.App
+	ErrorController          *controller.ErrorController
+	GenerateURLController    *controller.GenerateURLController
+	GetURLController         *controller.GetURLController
+	MetricsController        *controller.MetricsController
+	ValidateURLMiddleware    *middleware.ValidateURLMiddleware
+	ValidateAPIKeyMiddleware *middleware.ValidateAPIKeyMiddleware
 }
 
 func (this *Handler) InitHandler() *Handler {
@@ -36,36 +40,45 @@ func (this *Handler) InitHandler() *Handler {
 	metrics := new(metrics.Metrics).Init()
 
 	// Repositories
-	urlRepository := new(repository.UrlRepository).Init(db)
-
+	urlRepository := new(repository.URLRepository).Init(db)
+	clientRepository := new(repository.ClientRepository).Init(db)
 	// Job
 	job := new(job.Job).Init(urlRepository, redis)
 	job.CreateCronJob(
 		"@every 12h",
-		job.DeleteExpireUrl,
+		job.DeleteExpireURL,
 		job.ResetMaxID,
 	)
-	job.DeleteExpireUrl()
+	job.DeleteExpireURL()
 	job.ResetMaxID()
 
 	// Controllers
 	this.ErrorController = new(controller.ErrorController)
-	this.GenerateUrlController = new(controller.GenerateUrlController).Init(
-		new(service.GenerateUrlService).Init(urlRepository, redis, metrics),
+	this.GenerateURLController = new(controller.GenerateURLController).Init(
+		new(service.GenerateURLService).Init(urlRepository, redis, metrics),
 	)
-	this.GetUrlController = new(controller.GetUrlController).Init(
-		new(service.GetUrlService).Init(urlRepository, redis, metrics),
+	this.GetURLController = new(controller.GetURLController).Init(
+		new(service.GetURLService).Init(urlRepository, redis, metrics),
 	)
-
-	viewEngine := html.New(config.Config.View.Path, ".html")
-
+	// Middlewares
+	this.ValidateURLMiddleware = new(middleware.ValidateURLMiddleware).Init()
+	this.ValidateAPIKeyMiddleware = new(middleware.ValidateAPIKeyMiddleware).Init(
+		new(service.ValidateAPIKeyService).Init(clientRepository, redis),
+	)
 	this.App = fiber.New(fiber.Config{
-		Views:        viewEngine,
+		Views:        html.New(config.Config.View.Path, ".html"),
 		ErrorHandler: this.ErrorController.ErrorController,
 	})
-
-	this.App.Use(fiberRecover.New())
-
+	this.App.Use(recover.New())
+	this.App.Use(cors.New(cors.Config{
+		Next:             nil,
+		AllowOrigins:     "*",
+		AllowMethods:     "GET,POST,HEAD,PUT,DELETE,PATCH",
+		AllowHeaders:     "",
+		AllowCredentials: false,
+		ExposeHeaders:    "",
+		MaxAge:           0,
+	}))
 	this.App.Use(limiter.New(limiter.Config{
 		Max:        config.Config.Limitter.MaxRequest,
 		Expiration: time.Duration(config.Config.Limitter.LimitterExprire) * time.Minute,
@@ -79,7 +92,6 @@ func (this *Handler) InitHandler() *Handler {
 		SkipSuccessfulRequests: false,
 		LimiterMiddleware:      limiter.FixedWindow{},
 	}))
-
 	this.InitRoute()
 	return this
 }

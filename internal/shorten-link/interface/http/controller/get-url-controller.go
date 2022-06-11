@@ -6,20 +6,20 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type GetUrlController struct {
+type GetURLController struct {
 	Controller
-	getUrlService *service.GetUrlService
+	getURLService *service.GetURLService
 }
 
-func (this *GetUrlController) Init(getUrlService *service.GetUrlService) *GetUrlController {
-	this.getUrlService = getUrlService
+func (this *GetURLController) Init(getURLService *service.GetURLService) *GetURLController {
+	this.getURLService = getURLService
 	return this
 }
-func (this *GetUrlController) GetUrl(ctx *fiber.Ctx) error {
+func (this *GetURLController) GetURL(ctx *fiber.Ctx) error {
 	url := ctx.Params("url")
-	longUrl, err := this.getUrlService.GetUrl(url)
+	longURL, err := this.getURLService.GetURL(url)
 	if err != nil {
 		return err
 	}
-	return ctx.Redirect(longUrl)
+	return ctx.Redirect(longURL)
 }
