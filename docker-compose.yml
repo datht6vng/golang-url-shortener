@@ -1,14 +1,14 @@
 version: '3'
 services:
-  redis: 
+  redis:
     image: "redis"
-    ports: 
+    ports:
       - "6379:6379"
     command: redis-server --maxmemory-policy volatile-lru --maxmemory 4G
     restart: always
     volumes:
-    - redis-data:/data
-  
+      - redis-data:/data
+
   mysql:
     image: mysql
     restart: unless-stopped
@@ -22,26 +22,26 @@ services:
       - mysql-data:/var/lib/mysql
       #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
     security_opt:
-    - seccomp:unconfined
+      - seccomp:unconfined
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "mysql" ]
       timeout: 5s
       retries: 10
-   
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:
       - mysql
     links:
       - mysql:db
-    # environment:
+      # environment:
       # PMA_HOST: mysql
       # PMA_PORT: 3306
       # PMA_ARBITRARY: 1
     restart: always
     ports:
       - 8081:80
-  
+
   prometheus:
     image: prom/prometheus
     volumes:
@@ -55,7 +55,7 @@ services:
     ports:
       - 9090:9090
     restart: always
-  
+
   grafana:
     image: grafana/grafana
     user: '472'
@@ -84,8 +84,7 @@ services:
       - .:/trueid-shorten-link
     working_dir: /trueid-shorten-link
     command: >
-      sh -c "go mod download
-      && go run cmd/shorten-link/main.go"
+      sh -c "go mod download && go run cmd/shorten-link/main.go"
     restart: unless-stopped
     ports:
       - '8080:8080'
