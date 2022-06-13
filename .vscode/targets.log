@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jun 12 01:28:30 2022
+# Make data base, printed on Mon Jun 13 17:18:32 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-22808967-f10f-4c16-849a-3a0b8ecaf6b8.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e482b60f-3ce3-4043-9426-d6616764d2cb.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -103,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3160
+VSCODE_PID = 195339
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1348,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1348
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/192213,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/192213
 # automatic
 *F = $(notdir $*)
 # environment
@@ -138,10 +138,12 @@ SHLVL = 0
 ANTLR_HOME = /home/dathuynh/.ANTLR
 # environment
 MAKELEVEL := 0
+# environment
+IM_CONFIG_CHECK_ENV = 1
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/dathuynh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin:/home/dathuynh/go/bin
+PATH = /home/dathuynh/.local/bin:/home/dathuynh/.local/bin:/home/dathuynh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin:/home/dathuynh/go/bin
 # default
 MAKEFILES := 
 # environment
@@ -151,7 +153,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 415e4af3e2af44e3a9616d6bbfc201d6
+INVOCATION_ID = a292a9306eda44c1957ea3116153994a
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -181,9 +183,9 @@ GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1348
+SYSTEMD_EXEC_PID = 192213
 # environment
-DISPLAY = :0
+DISPLAY = :1
 # environment
 USER = dathuynh
 # environment
@@ -191,11 +193,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1005
+MANAGERPID = 1004
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3160
+GIO_LAUNCHED_DESKTOP_FILE_PID = 195339
 # environment
 PAGER = less
 # environment
@@ -207,7 +209,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:26474
+JOURNAL_STREAM = 8:2443620
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -245,7 +247,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=116/1024=11%, Rehash=0, Collisions=5/146=3%
+# Load=117/1024=11%, Rehash=0, Collisions=5/147=3%
 
 # Pattern-specific Variable Values
 
@@ -253,9 +255,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 18 files, no impossibilities.
+# . (device 66308, inode 5908410): 17 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -278,6 +280,7 @@ up:
 			docker compose up -d
 
 stop:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -304,7 +307,6 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
- 
 run: stop up
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -344,12 +346,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 237 B / avg = 7 B
-# current buf: size = 8162 B / used = 237 B / count = 31 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 30 / storage = 226 B / avg = 7 B
+# current buf: size = 8162 B / used = 226 B / count = 30 / avg = 7 B
 
-# strcache performance: lookups = 49 / hit rate = 36%
+# strcache performance: lookups = 48 / hit rate = 37%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=0/49=0%
-# Finished Make data base on Sun Jun 12 01:28:30 2022
+# Load=30/8192=0%, Rehash=0, Collisions=0/48=0%
+# Finished Make data base on Mon Jun 13 17:18:32 2022
 
  
