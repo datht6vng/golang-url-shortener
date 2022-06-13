@@ -19,7 +19,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - mysql-data:/var/lib/URL_SHORTENER
+      - mysql-data:/var/lib/mysql
       #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]

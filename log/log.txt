@@ -10,3 +10,12 @@
 2022/06/11 18:46:51 Service start!
 2022/06/11 18:46:51 Delete expire URL!
 2022/06/11 18:46:51 Reset max ID!
+2022/06/13 09:16:12 Service start!
+2022/06/13 09:16:12 Delete expire URL!
+2022/06/13 09:16:12 Reset max ID!
+2022/06/13 09:22:47 Service start!
+2022/06/13 09:22:47 Delete expire URL!
+2022/06/13 09:22:47 Reset max ID!
+2022/06/13 09:23:42 Service start!
+2022/06/13 09:23:42 Delete expire URL!
+2022/06/13 09:23:42 Reset max ID!
