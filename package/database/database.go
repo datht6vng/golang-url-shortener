@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"trueid-shorten-link/config"
+	"trueid-shorten-link/package/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"time"
-	"trueid-shorten-link/config"
+	"trueid-shorten-link/package/config"
 
 	"github.com/go-redis/redis/v7"
 )

@@ -1,9 +1,6 @@
 package config
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/spf13/viper"
 )
 
@@ -30,9 +27,15 @@ type ServerConfig struct {
 	Port   string `mapstructure:"port"`
 	Domain string `mapstructure:"domain"`
 }
-type LoggerConfig struct {
-	Path string `mapstructure:"path"`
+type LogConfig struct {
+	Level     string `mapstructure:"level"`
+	FilePath  string `mapstructure:"filePath"`
+	MaxSize   int    `mapstructure:"maxSize"`
+	MaxBackup int    `mapstructure:"maxBackups"`
+	MaxAge    int    `mapstructure:"maxAge"`
+	SentryURL string `mapstructure:"sentry_url"`
 }
+
 type ViewConfig struct {
 	Path string `mapstructure:"path"`
 }
@@ -44,7 +47,7 @@ type AppConfig struct {
 	Redis    RedisConfig    `mapstructure:"redis"`
 	App      ServerConfig   `mapstructure:"app"`
 	Limitter LimitterConfig `mapstructure:"limitter"`
-	Logger   LoggerConfig   `mapstructure:"logger"`
+	Logger   LogConfig      `mapstructure:"logger"`
 	View     ViewConfig     `mapstructure:"view"`
 	Key      KeyConfig      `mapstructure:"key"`
 }
@@ -53,14 +56,15 @@ var (
 	Config AppConfig
 )
 
-func ReadConfig(configPath string) {
+func ReadConfig(configPath string) error {
+
 	viper := viper.New()
 	viper.SetConfigFile(configPath)
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Printf("Cannot load config: %s", err)
-		os.Exit(1)
+		return err
 	}
 	if err := viper.Unmarshal(&Config); err != nil {
-		fmt.Println("Cannot read config file!")
+		return err
 	}
+	return nil
 }
