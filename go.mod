@@ -8,6 +8,7 @@ require (
 	github.com/go-redis/redis/v7 v7.4.1
 	github.com/gofiber/fiber/v2 v2.34.0
 	github.com/gofiber/template v1.6.28
+	github.com/joho/godotenv v1.4.0
 	github.com/jxskiss/base62 v1.1.0
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/prometheus/client_golang v1.12.2
@@ -43,7 +44,6 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.15.6 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect

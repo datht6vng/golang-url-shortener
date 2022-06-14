@@ -1,8 +1,6 @@
 package config
 
 import (
-	"os"
-
 	"github.com/spf13/viper"
 )
 
@@ -58,8 +56,8 @@ var (
 	Config AppConfig
 )
 
-func ReadConfig() error {
-	configPath := os.Getenv("CONFIG_PATH")
+func ReadConfig(configPath string) error {
+
 	viper := viper.New()
 	viper.SetConfigFile(configPath)
 	if err := viper.ReadInConfig(); err != nil {

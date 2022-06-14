@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html"
 	"time"
 	"trueid-shorten-link/internal/shorten-link/interface/http/controller"
@@ -69,7 +70,7 @@ func (this *Handler) InitHandler() *Handler {
 		Views:        html.New(config.Config.View.Path, ".html"),
 		ErrorHandler: this.ErrorController.ErrorController,
 	})
-	this.App.Use(recover)
+	this.App.Use(recover.New())
 	this.App.Use(cors.New(cors.Config{
 		Next:             nil,
 		AllowOrigins:     "*",
