@@ -1,0 +1,36 @@
+[database]
+    host                = "mysql"
+    port                = "3306"   
+    user                = "root"
+    password            = "123456"  
+    database            = "URL_SHORTENER"
+    max_open_connection = "1000"
+    max_idle_connection = "1000"
+
+[redis]
+    address             = "redis:6379" 
+    # Split address by COMMA, Example: address = "0.0.0.0:6379, 0.0.0.0:6379" 
+    password            = ""
+    database            = "0"
+    is_cluster          = "false"
+
+[app]
+    port                = "8080"
+
+[limitter]
+    max_request         = "100000"
+    limitter_expire     = "1"
+
+[logger]
+    level = "info"
+    filePath= "./logs/webapi.log"
+    maxSize=1
+    maxBackups=10
+    maxAge=28
+    sentry_url = ""
+
+[view]
+    path                = "./view"
+
+[key]
+    secret = "Secret key: !@#$%^&*()432144adsfdsafhk12312532dfhsajkfghjkg732478321er1234hkjdhf78234h"

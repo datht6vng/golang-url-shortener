@@ -21,4 +21,5 @@ func (this *ClientRepository) FindByAPIKey(apiKey string) (*model.Client, error)
 		return nil, err
 	}
 	return client, nil
+
 }

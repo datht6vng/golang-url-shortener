@@ -3,7 +3,7 @@ package encryption
 import (
 	"crypto/hmac"
 	"crypto/sha256"
-	"trueid-shorten-link/config"
+	"trueid-shorten-link/package/config"
 
 	"github.com/jxskiss/base62"
 )
