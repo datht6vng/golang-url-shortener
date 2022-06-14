@@ -1,13 +1,14 @@
 package logger
 
 import (
-	"github.com/evalphobia/logrus_sentry"
-	"github.com/sirupsen/logrus"
 	"io"
 	"log"
 	"os"
 	"sync"
 	config2 "trueid-shorten-link/package/config"
+
+	"github.com/evalphobia/logrus_sentry"
+	"github.com/sirupsen/logrus"
 )
 
 var (

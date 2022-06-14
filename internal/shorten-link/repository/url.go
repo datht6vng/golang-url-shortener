@@ -35,24 +35,15 @@ func (r *URLRepository) FindByLongURL(longURL string) (*model.URL, error) {
 	return url, nil
 }
 
-<<<<<<< HEAD
-func (this *URLRepository) InsertURL(ID, clientID, shortURL, longURL string, expireTime time.Time) error {
-	return this.db.Create(&model.URL{
-=======
 func (r *URLRepository) InsertURL(ID int64, clientID, shortURL, longURL string, expireTime time.Time) error {
 	return r.db.Create(&model.URL{
->>>>>>> master
 		ID:         ID,
 		ClientID:   clientID,
 		ShortURL:   shortURL,
 		LongURL:    longURL,
 		ExpireTime: expireTime,
 	}).Error
-<<<<<<< HEAD
-	// return this.db.Exec("insert into shorten_link_urls values(?,?,?,?,?)", ID, clientID, shortURL, longURL, expireTime).Error
-=======
 	// return r.db.Exec("insert into shorten_link_urls values(?,?,?,?,?)", ID, clientID, shortURL, longURL, expireTime).Error
->>>>>>> master
 }
 
 func (r *URLRepository) DeleteURL(shortURL, longURL string) error {
@@ -74,15 +65,9 @@ func (r *URLRepository) DeleteExpiredURL() error {
 	return r.db.Where("expire_time < ?", time.Now()).Delete(url).Error
 }
 
-<<<<<<< HEAD
-func (this *URLRepository) GetMaxID() (string, error) {
-	var result string
-	if err := this.db.Model(&model.URL{}).Select("max(id)").First(&result).Error; err != nil {
-=======
 func (r *URLRepository) GetMaxID() (string, error) {
 	var result string
 	if err := r.db.Model(&model.URL{}).Select("max(id)").First(&result).Error; err != nil {
->>>>>>> master
 		fmt.Println(err)
 		return "0", err
 	}

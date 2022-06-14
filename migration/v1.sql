@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS shorten_link_urls (
 );
 
 CREATE TABLE IF NOT EXISTS shorten_link_clients (
-    id VARCHAR (256) PRIMARY KEY,
+    client_id VARCHAR (256) PRIMARY KEY,
     api_key VARCHAR(256)
 );
 
