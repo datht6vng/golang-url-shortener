@@ -7662,3 +7662,54 @@
 2022/06/13 10:26:09 Service start!
 2022/06/13 10:26:09 Delete expire URL!
 2022/06/13 10:26:09 Reset max ID!
+2022/06/13 10:39:14 Service start!
+2022/06/13 10:39:15 Delete expire URL!
+2022/06/13 10:39:15 Reset max ID!
+2022/06/13 10:41:49 Service start!
+2022/06/13 10:41:49 Delete expire URL!
+2022/06/13 10:41:49 Reset max ID!
+2022/06/14 02:55:06 Service start!
+2022/06/14 02:55:06 Delete expire URL!
+2022/06/14 02:55:06 Reset max ID!
+2022/06/14 03:14:55 Service start!
+2022/06/14 03:14:55 Delete expire URL!
+2022/06/14 03:14:55 Reset max ID!
+2022/06/14 03:15:36 Service start!
+2022/06/14 03:15:36 Delete expire URL!
+2022/06/14 03:15:36 Reset max ID!
+2022/06/14 03:20:53 Service start!
+2022/06/14 03:20:53 Delete expire URL!
+2022/06/14 03:20:53 Reset max ID!
+2022/06/14 03:22:31 Service start!
+2022/06/14 03:22:31 Delete expire URL!
+2022/06/14 03:22:31 Reset max ID!
+2022/06/14 03:28:10 Service start!
+2022/06/14 03:28:10 Delete expire URL!
+2022/06/14 03:28:10 Reset max ID!
+2022/06/14 03:32:43 Service start!
+2022/06/14 03:32:43 Delete expire URL!
+2022/06/14 03:32:43 Reset max ID!
+2022/06/14 03:32:45 Error 1062: Duplicate entry '1' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:32:50 Error 1062: Duplicate entry '2' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:32:51 Error 1062: Duplicate entry '3' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:32:53 Error 1062: Duplicate entry '4' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:32:53 Error 1062: Duplicate entry '5' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:33:50 Service start!
+2022/06/14 03:33:50 Delete expire URL!
+2022/06/14 03:33:50 Reset max ID!
+2022/06/14 03:34:16 Error 1062: Duplicate entry '1' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:34:17 Error 1062: Duplicate entry '2' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:34:19 Error 1062: Duplicate entry '3' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:34:20 Error 1062: Duplicate entry '4' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:34:21 Error 1062: Duplicate entry '5' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:34:22 Error 1062: Duplicate entry '6' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:34:22 Error 1062: Duplicate entry '7' for key 'shorten_link_urls.PRIMARY'
+2022/06/14 03:35:55 Service start!
+2022/06/14 03:35:55 Delete expire URL!
+2022/06/14 03:35:55 Reset max ID!
+2022/06/14 03:37:27 Service start!
+2022/06/14 03:37:27 Delete expire URL!
+2022/06/14 03:37:27 Reset max ID!
+2022/06/14 03:38:30 Service start!
+2022/06/14 03:38:30 Delete expire URL!
+2022/06/14 03:38:30 Reset max ID!

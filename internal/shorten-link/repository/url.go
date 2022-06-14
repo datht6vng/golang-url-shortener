@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"time"
 	"trueid-shorten-link/package/model"
 
@@ -35,7 +36,14 @@ func (this *URLRepository) FindByLongURL(longURL string) (*model.URL, error) {
 }
 
 func (this *URLRepository) InsertURL(ID, clientID, shortURL, longURL string, expireTime time.Time) error {
-	return this.db.Exec("insert into urls values(?,?,?,?,?)", ID, clientID, shortURL, longURL, expireTime).Error
+	return this.db.Create(&model.URL{
+		ID:         ID,
+		ClientID:   clientID,
+		ShortURL:   shortURL,
+		LongURL:    longURL,
+		ExpireTime: expireTime,
+	}).Error
+	// return this.db.Exec("insert into shorten_link_urls values(?,?,?,?,?)", ID, clientID, shortURL, longURL, expireTime).Error
 }
 
 func (this *URLRepository) DeleteURL(shortURL, longURL string) error {
@@ -58,10 +66,10 @@ func (this *URLRepository) DeleteExpiredURL() error {
 }
 
 func (this *URLRepository) GetMaxID() (string, error) {
-	var result interface{}
-	err := this.db.Table("urls").Select("max(id)").Row().Scan(&result)
-	if result == nil {
+	var result string
+	if err := this.db.Model(&model.URL{}).Select("max(id)").First(&result).Error; err != nil {
+		fmt.Println(err)
 		return "0", err
 	}
-	return string(result.([]byte)), err
+	return result, nil
 }

@@ -8,7 +8,6 @@ import (
 	"trueid-shorten-link/internal/shorten-link/interface/job"
 	"trueid-shorten-link/internal/shorten-link/repository"
 	"trueid-shorten-link/internal/shorten-link/service"
-	"trueid-shorten-link/migration"
 	"trueid-shorten-link/package/database"
 	"trueid-shorten-link/package/metrics"
 	"trueid-shorten-link/package/redis"
@@ -33,7 +32,6 @@ type Handler struct {
 func (this *Handler) InitHandler() *Handler {
 	// Connect database
 	db := database.Connect()
-	migration.CreateTable(db)
 	redis := redis.Connect()
 
 	// Metrics
