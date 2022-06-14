@@ -69,7 +69,7 @@ func (this *Handler) InitHandler() *Handler {
 		Views:        html.New(config.Config.View.Path, ".html"),
 		ErrorHandler: this.ErrorController.ErrorController,
 	})
-	this.App.Use(recover.New())
+	this.App.Use(recover)
 	this.App.Use(cors.New(cors.Config{
 		Next:             nil,
 		AllowOrigins:     "*",

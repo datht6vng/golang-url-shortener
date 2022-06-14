@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
 	"trueid-shorten-link/package/encryption"
@@ -25,10 +24,10 @@ func (this *GenerateURLService) Init(urlRepository *repository.URLRepository, re
 	return this
 }
 
-func (this *GenerateURLService) GetNextID() string {
+func (this *GenerateURLService) GetNextID() int64 {
 	if currentID := this.redis.Get("CurrentID"); currentID == "" {
 		pipe := this.redis.TxPipeline()
-		resultID := ""
+		var resultID int64
 		this.redis.Watch(func(tx *redis.Tx) error {
 			maxID, _ := this.urlRepository.GetMaxID()
 			pipe.Set("CurrentID", maxID, -1)
@@ -36,12 +35,12 @@ func (this *GenerateURLService) GetNextID() string {
 			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
 				return err
 			}
-			resultID = fmt.Sprint(cmd.Val())
+			resultID = cmd.Val()
 			return nil
 		}, "CurrentID")
 		return resultID
 	}
-	return fmt.Sprint(this.redis.Incr("CurrentID"))
+	return this.redis.Incr("CurrentID")
 }
 
 func (this *GenerateURLService) GenerateURL(url string, clientID string) (string, error) {

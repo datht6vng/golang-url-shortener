@@ -1,11 +1,12 @@
 package encryption
 
 import (
+	"fmt"
 	"github.com/belinskiydm/bsconv"
 )
 
-func GenerateShortLink(ID string) string {
-	newShortURL, err := bsconv.ConvertFromDec(ID, 62)
+func GenerateShortLink(ID int64) string {
+	newShortURL, err := bsconv.ConvertFromDec(fmt.Sprintf("%v", ID), 62)
 	if err != nil {
 		panic(err)
 	}

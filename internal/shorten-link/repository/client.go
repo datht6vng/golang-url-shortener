@@ -10,16 +10,15 @@ type ClientRepository struct {
 	db *gorm.DB
 }
 
-func (this *ClientRepository) Init(DB *gorm.DB) *ClientRepository {
-	this.db = DB
-	return this
+func (r *ClientRepository) Init(DB *gorm.DB) *ClientRepository {
+	r.db = DB
+	return r
 }
-func (this *ClientRepository) FindByAPIKey(apiKey string) (*model.Client, error) {
+func (r *ClientRepository) FindByAPIKey(apiKey string) (*model.Client, error) {
 	client := new(model.Client)
-	err := this.db.Where("api_key = ?", apiKey).First(client).Error
+	err := r.db.Where("api_key = ?", apiKey).First(client).Error
 	if err != nil {
 		return nil, err
 	}
 	return client, nil
-
 }

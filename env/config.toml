@@ -23,14 +23,14 @@
 
 [logger]
     level = "info"
-    filePath= "./logs/webapi.log"
+    filePath= "/Users/lap14183/VNG/url-shortener/logs"
     maxSize=1
     maxBackups=10
     maxAge=28
     sentry_url = ""
 
 [view]
-    path                = "./view"
+    path                = "/Users/lap14183/VNG/url-shortener/view"
 
 [key]
     secret = "Secret key: !@#$%^&*()432144adsfdsafhk12312532dfhsajkfghjkg732478321er1234hkjdhf78234h"

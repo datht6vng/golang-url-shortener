@@ -9,3 +9,7 @@ type URL struct {
 	LongURL    string    `json:"longURL"  xml:"longURL"  form:"longURL" gorm:"long_url;index"`
 	ExpireTime time.Time `json:"expireTime" xml:"expireTime" form:"expireTime" gorm:"expire_time"`
 }
+
+func (m *URL) TableName() string {
+	return `shorten_link_urls`
+}

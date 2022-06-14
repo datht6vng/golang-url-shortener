@@ -66,7 +66,6 @@ github.com/gofiber/fiber/v2/internal/schema
 github.com/gofiber/fiber/v2/internal/uuid
 github.com/gofiber/fiber/v2/middleware/cors
 github.com/gofiber/fiber/v2/middleware/limiter
-github.com/gofiber/fiber/v2/middleware/recover
 github.com/gofiber/fiber/v2/utils
 # github.com/gofiber/template v1.6.28
 ## explicit; go 1.16
