@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
 	"trueid-shorten-link/package/encryption"
@@ -15,12 +16,14 @@ type GenerateURLService struct {
 	urlRepository *repository.URLRepository
 	redis         *_redis.Redis
 	metrics       *metrics.Metrics
+	timeFormat    string
 }
 
 func (this *GenerateURLService) Init(urlRepository *repository.URLRepository, redis *_redis.Redis, metrics *metrics.Metrics) *GenerateURLService {
 	this.urlRepository = urlRepository
 	this.redis = redis
 	this.metrics = metrics
+	this.timeFormat = "2006-01-02"
 	return this
 }
 
@@ -45,6 +48,14 @@ func (this *GenerateURLService) GetNextID() int64 {
 
 func (this *GenerateURLService) GenerateURL(url string, clientID string) (string, error) {
 	go this.metrics.IncreaseGenURLRequests(clientID)
+	counterKey, _ := json.Marshal(GenerateCounterKey{
+		ClientID:   clientID,
+		CreateDate: time.Now().Format(this.timeFormat),
+	})
+	go func() {
+		this.redis.Incr("gen-counter:" + string(counterKey))
+		this.redis.Expire("gen-counter:"+string(counterKey), 24*time.Hour)
+	}()
 	shortURL := this.redis.Get("url:" + url)
 	if shortURL != "" {
 		return shortURL, nil

@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"time"
 	"trueid-shorten-link/package/model"
 
@@ -68,8 +67,16 @@ func (r *URLRepository) DeleteExpiredURL() error {
 func (r *URLRepository) GetMaxID() (string, error) {
 	var result string
 	if err := r.db.Model(&model.URL{}).Select("max(id)").First(&result).Error; err != nil {
-		fmt.Println(err)
 		return "0", err
+	}
+	return result, nil
+}
+func (r *URLRepository) CountLinkGenerated(clientID string) (int64, error) {
+	var result int64
+	if err := r.db.Model(&model.URL{}).Select("count(*)").Where(`
+		client_id = ? and cast(expire_time as date) = ? 
+	`, clientID, time.Now().AddDate(0, 0, 3).Format("2006-01-02")).First(&result).Error; err != nil {
+		return 0, err
 	}
 	return result, nil
 }

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun 15 14:29:52 2022
+# Make data base, printed on Wed Jun 15 16:21:56 2022
 
 # Variables
 
@@ -21,7 +21,9 @@ GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a86b6456-3aa4-41a0-85ce-36a8567d614c.sock
+GJS_DEBUG_OUTPUT = stderr
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a43ca564-8568-4700-9c60-fe0ccf78c75f.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -103,7 +105,7 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 4952
+VSCODE_PID = 30236
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -133,6 +135,8 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
 SHLVL = 0
 # environment
 ANTLR_HOME = /home/dathuynh/.ANTLR
@@ -151,7 +155,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = ae9ae99f465c432dab1ccfe8f49a52e0
+INVOCATION_ID = 4ee5e75f90f44ac089826a2bd584400e
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -181,7 +185,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1473
+SYSTEMD_EXEC_PID = 1491
 # environment
 DISPLAY = :0
 # environment
@@ -195,7 +199,7 @@ MANAGERPID = 1032
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4952
+GIO_LAUNCHED_DESKTOP_FILE_PID = 30236
 # environment
 PAGER = less
 # environment
@@ -207,7 +211,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:31889
+JOURNAL_STREAM = 8:21465
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -245,7 +249,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=116/1024=11%, Rehash=0, Collisions=5/146=3%
+# Load=118/1024=12%, Rehash=0, Collisions=5/148=3%
 
 # Pattern-specific Variable Values
 
@@ -253,9 +257,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 20 files, no impossibilities.
+# . (device 66308, inode 5908410): 21 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -288,7 +292,6 @@ server:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  recipe to execute (from 'Makefile', line 2):
 			go run cmd/shorten-link/main.go
 
@@ -302,6 +305,7 @@ server:
 all:
 #  Command line target.
 #  Implicit rule search has been done.
+ 
 #  File does not exist.
 #  File has not been updated.
 
@@ -344,12 +348,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 247 B / avg = 7 B
-# current buf: size = 8162 B / used = 247 B / count = 33 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 34 / storage = 252 B / avg = 7 B
+# current buf: size = 8162 B / used = 252 B / count = 34 / avg = 7 B
 
-# strcache performance: lookups = 51 / hit rate = 35%
+# strcache performance: lookups = 52 / hit rate = 34%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=0/51=0%
-# Finished Make data base on Wed Jun 15 14:29:52 2022
+# Load=34/8192=0%, Rehash=0, Collisions=0/52=0%
+# Finished Make data base on Wed Jun 15 16:21:56 2022
 
  
