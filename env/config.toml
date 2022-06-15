@@ -23,7 +23,7 @@
 
 [logger]
     level = "info"
-    filePath= "./logs"
+    filePath= "./logs/logs"
     maxSize=1
     maxBackups=10
     maxAge=28
