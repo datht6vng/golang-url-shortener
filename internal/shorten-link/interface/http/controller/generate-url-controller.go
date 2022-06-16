@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"net/url"
 	"trueid-shorten-link/internal/shorten-link/service"
 
 	"github.com/gofiber/fiber/v2"
@@ -23,6 +24,10 @@ func (this *GenerateURLController) GenerateURL(ctx *fiber.Ctx) error {
 	requestData := new(RequestData)
 	if err := ctx.BodyParser(requestData); err != nil {
 		return this.Failure(ctx, http.StatusBadRequest, http.StatusBadRequest, err.Error())
+	}
+	_, err := url.ParseRequestURI(requestData.URL)
+	if err != nil {
+		return this.Failure(ctx, http.StatusBadRequest, http.StatusBadRequest, "Invalid URL")
 	}
 	shortURL, err := this.generateURLService.GenerateURL(requestData.URL, ctx.Locals("CLIENT-ID").(string))
 	if err != nil {
