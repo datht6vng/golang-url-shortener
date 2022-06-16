@@ -15,22 +15,21 @@
     is_cluster          = "true"
 
 [app]
-    port                = "8080"
-
+    port                = "80"
 [limitter]
     max_request         = "100000"
     limitter_expire     = "1"
 
 [logger]
     level = "info"
-    filePath= "/Users/lap14183/VNG/url-shortener/logs"
+    filePath= "./logs/shorten_url"
     maxSize=1
     maxBackups=10
     maxAge=28
     sentry_url = ""
 
 [view]
-    path                = "/Users/lap14183/VNG/url-shortener/view"
+    path                = "./view"
 
 [key]
     secret = "Secret key: !@#$%^&*()432144adsfdsafhk12312532dfhsajkfghjkg732478321er1234hkjdhf78234h"
