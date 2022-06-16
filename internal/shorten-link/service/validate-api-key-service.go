@@ -1,6 +1,7 @@
 package service
 
 import (
+	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
 	_redis "trueid-shorten-link/package/redis"
 
@@ -33,5 +34,6 @@ func (this *ValidateAPIKeyService) ValidateAPIKey(apiKey string) (string, error)
 		}
 		return "", err
 	}
+	this.redis.Set("API-KEY:"+apiKey, clientIDRecord.ClientID, 24*time.Hour)
 	return clientIDRecord.ClientID, nil
 }

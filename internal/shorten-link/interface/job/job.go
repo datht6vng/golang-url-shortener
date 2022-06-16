@@ -42,6 +42,8 @@ func (this *Job) ResetMaxID() {
 	this.redis.Set("CurrentID", maxID, 0)
 	log.Printf("Reset max ID!")
 }
+
+// for backup version of counter, current solution use Redis and query directly from url table
 func (this *Job) BackupGenCounter() {
 	keys := this.redis.Keys("gen-counter:*")
 	for _, key := range keys {
@@ -60,7 +62,4 @@ func (this *Job) BackupGenCounter() {
 		}
 
 	}
-}
-func (this *Job) BackupGenCounter2() {
-
 }

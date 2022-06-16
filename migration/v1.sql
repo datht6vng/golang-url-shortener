@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS shorten_link_urls (
 
 CREATE TABLE IF NOT EXISTS shorten_link_clients (
     client_id VARCHAR (256) PRIMARY KEY,
-    api_key VARCHAR(256)
+    api_key VARCHAR(256),
+    liciense_key VARCHAR(256),
+    max_link BIGINT
 );
 
 ALTER TABLE shorten_link_urls
@@ -18,14 +20,10 @@ ALTER TABLE shorten_link_urls
 ALTER TABLE shorten_link_urls
     ADD INDEX index_long_url USING HASH (long_url);
 
-CREATE TABLE IF NOT EXISTS shorten_link_generate_counter (
-    client_id VARCHAR(256),
-    create_date DATE,
-    number_link_generated INT,
-    PRIMARY KEY (client_id, create_date)
-);
+-- CREATE TABLE IF NOT EXISTS shorten_link_generate_counter (
+--     client_id VARCHAR(256),
+--     create_date DATE,
+--     number_link_generated INT,
+--     PRIMARY KEY (client_id, create_date)
+-- );
 
-CREATE TABLE IF NOT EXISTS shorten_link_liciense(
-    liciense_id VARCHAR(256) PRIMARY KEY,
-    max_link INT
-);

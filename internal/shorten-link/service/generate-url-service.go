@@ -1,7 +1,6 @@
 package service
 
 import (
-	"encoding/json"
 	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
 	"trueid-shorten-link/package/encryption"
@@ -48,15 +47,7 @@ func (this *GenerateURLService) GetNextID() int64 {
 
 func (this *GenerateURLService) GenerateURL(url string, clientID string) (string, error) {
 	go this.metrics.IncreaseGenURLRequests(clientID)
-	counterKey, _ := json.Marshal(GenerateCounterKey{
-		ClientID:   clientID,
-		CreateDate: time.Now().Format(this.timeFormat),
-	})
-	go func() {
-		this.redis.Incr("gen-counter:" + string(counterKey))
-		this.redis.Expire("gen-counter:"+string(counterKey), 24*time.Hour)
-	}()
-	shortURL := this.redis.Get("url:" + url)
+	shortURL := this.redis.Get("URL:" + url)
 	if shortURL != "" {
 		return shortURL, nil
 	}
@@ -79,12 +70,12 @@ func (this *GenerateURLService) GenerateURL(url string, clientID string) (string
 		channelRepo <- struct{}{}
 	}()
 	go func() {
-		errRedis = this.redis.SetJSON("url:"+newShortURL, URLData{URL: url, ClientID: clientID}, 24*time.Hour)
+		errRedis = this.redis.SetJSON("URL:"+newShortURL, URLData{URL: url, ClientID: clientID}, 24*time.Hour)
 		if errRedis != nil {
 			channelRedis <- struct{}{}
 			return
 		}
-		errRedis = this.redis.Set("url:"+url, newShortURL, 24*time.Hour)
+		errRedis = this.redis.Set("URL:"+url, newShortURL, 24*time.Hour)
 		channelRedis <- struct{}{}
 	}()
 	go this.metrics.ResetGetURLRequests(newShortURL, clientID)

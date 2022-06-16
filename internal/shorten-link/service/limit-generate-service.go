@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"strconv"
 	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
@@ -24,14 +23,14 @@ func (this *LimitGenerateService) Init(urlRepository *repository.URLRepository, 
 	return this
 }
 func (this *LimitGenerateService) LimitGenerate(clientID string, limit int64) error {
-	counterKey := clientID + time.Now().Format(this.timeFormat)
+	counterKey := "LinkCounter:" + clientID + "|" + time.Now().Format(this.timeFormat)
 	if this.redis.Get(counterKey) == "" {
 		// Create pipline to reset
-		fmt.Println("Run in thiss")
 		pipe := this.redis.TxPipeline()
 		this.redis.Watch(func(tx *redis.Tx) error {
 			limit, _ := this.urlRepository.CountLinkGenerated(clientID)
 			pipe.Set(counterKey, limit, 24*time.Hour)
+			pipe.Incr(counterKey)
 			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
 				return err
 			}

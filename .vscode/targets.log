@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun 15 16:21:56 2022
+# Make data base, printed on Thu Jun 16 13:37:34 2022
 
 # Variables
 
@@ -21,9 +21,7 @@ GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-GJS_DEBUG_OUTPUT = stderr
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a43ca564-8568-4700-9c60-fe0ccf78c75f.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8802064a-bfac-4a0c-8e91-07d75e0719f3.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -105,13 +103,13 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 30236
+VSCODE_PID = 56614
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1473,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1473
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1370,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1370
 # automatic
 *F = $(notdir $*)
 # environment
@@ -135,8 +133,6 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-GJS_DEBUG_TOPICS = JS ERROR;JS LOG
-# environment
 SHLVL = 0
 # environment
 ANTLR_HOME = /home/dathuynh/.ANTLR
@@ -155,7 +151,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 4ee5e75f90f44ac089826a2bd584400e
+INVOCATION_ID = 7039d79863a3425b94ccf1080f54fb61
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -185,7 +181,7 @@ GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1491
+SYSTEMD_EXEC_PID = 1370
 # environment
 DISPLAY = :0
 # environment
@@ -195,11 +191,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 1032
+MANAGERPID = 970
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 30236
+GIO_LAUNCHED_DESKTOP_FILE_PID = 56614
 # environment
 PAGER = less
 # environment
@@ -211,7 +207,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:21465
+JOURNAL_STREAM = 8:30170
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -249,7 +245,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=118/1024=12%, Rehash=0, Collisions=5/148=3%
+# Load=116/1024=11%, Rehash=0, Collisions=5/146=3%
 
 # Pattern-specific Variable Values
 
@@ -257,9 +253,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 21 files, no impossibilities.
+# . (device 66308, inode 5908410): 20 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 20 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -289,6 +285,7 @@ stop:
 			docker compose stop
 
 server:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -305,7 +302,6 @@ server:
 all:
 #  Command line target.
 #  Implicit rule search has been done.
- 
 #  File does not exist.
 #  File has not been updated.
 
@@ -348,12 +344,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 34 / storage = 252 B / avg = 7 B
-# current buf: size = 8162 B / used = 252 B / count = 34 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 247 B / avg = 7 B
+# current buf: size = 8162 B / used = 247 B / count = 33 / avg = 7 B
 
-# strcache performance: lookups = 52 / hit rate = 34%
+# strcache performance: lookups = 51 / hit rate = 35%
 # hash-table stats:
-# Load=34/8192=0%, Rehash=0, Collisions=0/52=0%
-# Finished Make data base on Wed Jun 15 16:21:56 2022
+# Load=33/8192=0%, Rehash=0, Collisions=0/51=0%
+# Finished Make data base on Thu Jun 16 13:37:34 2022
 
  

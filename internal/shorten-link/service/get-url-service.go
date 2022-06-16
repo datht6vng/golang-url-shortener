@@ -25,7 +25,7 @@ func (this *GetURLService) Init(urlRepository *repository.URLRepository, redis *
 
 func (this *GetURLService) GetURL(url string) (string, error) {
 	cacheURL := new(URLData)
-	err := this.redis.GetJSON("url:"+url, cacheURL)
+	err := this.redis.GetJSON("URL:"+url, cacheURL)
 	if err != nil {
 		return "", err
 	}
@@ -49,8 +49,8 @@ func (this *GetURLService) GetURL(url string) (string, error) {
 			Message: "URL has been expired!",
 		}
 	}
-	err = this.redis.SetJSON("url:"+urlRecord.ShortURL, URLData{URL: urlRecord.ShortURL, ClientID: urlRecord.ClientID}, 24*time.Hour)
-	err = this.redis.Set("url:"+urlRecord.LongURL, urlRecord.ShortURL, 24*time.Hour)
+	err = this.redis.SetJSON("URL:"+urlRecord.ShortURL, URLData{URL: urlRecord.ShortURL, ClientID: urlRecord.ClientID}, 24*time.Hour)
+	err = this.redis.Set("URL:"+urlRecord.LongURL, urlRecord.ShortURL, 24*time.Hour)
 	if err != nil {
 		return "", err
 	}
