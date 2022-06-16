@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS shorten_link_urls (
 CREATE TABLE IF NOT EXISTS shorten_link_clients (
     client_id VARCHAR (256) PRIMARY KEY,
     api_key VARCHAR(256),
-    liciense_key VARCHAR(256),
+    license_key VARCHAR(256),
     max_link BIGINT
 );
 
