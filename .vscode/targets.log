@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 16 14:39:16 2022
+# Make data base, printed on Thu Jun 16 17:16:45 2022
 
 # Variables
 
@@ -17,11 +17,13 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
+NO_AT_BRIDGE = 1
+# environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e489e030-05e0-4e95-a487-2a45331d23cd.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-2e49a972-7939-461b-82de-fc7d06e0c97b.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -72,6 +74,8 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
+# environment
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=78afb017128324dea82834f962aa9c94
 # makefile
 CURDIR := /home/dathuynh/Workspace/golang-url-shortener
 # environment
@@ -103,7 +107,7 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 90629
+VSCODE_PID = 250536
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -115,7 +119,7 @@ SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1370,unix/d
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=78afb017128324dea82834f962aa9c94
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -177,7 +181,7 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = dathuynh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
@@ -193,9 +197,11 @@ MAKE_VERSION := 4.3
 # environment
 MANAGERPID = 970
 # environment
+DBUS_STARTER_BUS_TYPE = session
+# environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 90629
+GIO_LAUNCHED_DESKTOP_FILE_PID = 250536
 # environment
 PAGER = less
 # environment
@@ -245,7 +251,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=116/1024=11%, Rehash=0, Collisions=5/146=3%
+# Load=119/1024=12%, Rehash=0, Collisions=6/149=4%
 
 # Pattern-specific Variable Values
 
@@ -275,13 +281,13 @@ up:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 5):
+ 
 			docker compose up -d
 
 stop:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 #  recipe to execute (from 'Makefile', line 7):
 			docker compose stop
 
@@ -350,6 +356,6 @@ down:
 # strcache performance: lookups = 51 / hit rate = 35%
 # hash-table stats:
 # Load=33/8192=0%, Rehash=0, Collisions=0/51=0%
-# Finished Make data base on Thu Jun 16 14:39:16 2022
+# Finished Make data base on Thu Jun 16 17:16:45 2022
 
  
