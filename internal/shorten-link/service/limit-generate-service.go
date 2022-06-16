@@ -24,23 +24,25 @@ func (this *LimitGenerateService) Init(urlRepository *repository.URLRepository, 
 }
 func (this *LimitGenerateService) LimitGenerate(clientID string, limit int64) error {
 	counterKey := "LinkCounter:" + time.Now().Format(this.timeFormat) + "|" + clientID
-	if this.redis.Get(counterKey) == "" {
+	result := this.redis.Get(counterKey)
+	var counter int64
+	if result == "" {
 		// Create pipline to reset
 		pipe := this.redis.TxPipeline()
 		this.redis.Watch(func(tx *redis.Tx) error {
-			countLink, _ := this.urlRepository.CountLinkGenerated(clientID)
-			pipe.Set(counterKey, countLink, 24*time.Hour)
-			pipe.Incr(counterKey)
+			counter, _ = this.urlRepository.CountLinkGenerated(clientID)
+			pipe.Set(counterKey, counter, 24*time.Hour)
 			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
 				return err
 			}
 			return nil
 		}, counterKey)
-	}
-	// Check client limit gen
-	counter, err := strconv.ParseInt(this.redis.Get(counterKey), 10, 64)
-	if err != nil {
-		return err
+	} else {
+		var err error
+		counter, err = strconv.ParseInt(result, 10, 64)
+		if err != nil {
+			return err
+		}
 	}
 	if counter > limit {
 		return &fiber.Error{
@@ -48,6 +50,6 @@ func (this *LimitGenerateService) LimitGenerate(clientID string, limit int64) er
 			Message: "Reach limit of link generation!",
 		}
 	}
-	this.redis.Incr(counterKey)
+	go this.redis.Incr(counterKey)
 	return nil
 }

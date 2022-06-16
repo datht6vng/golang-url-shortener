@@ -54,6 +54,7 @@ func (this *Job) UpdateLinkCounter() {
 			return nil
 		}, key)
 	}
+	log.Printf("Reset link counter!")
 }
 
 // for backup version of counter, current solution use Redis and query directly from url table
