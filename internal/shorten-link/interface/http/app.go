@@ -1,11 +1,6 @@
 package http
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/limiter"
-	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/template/html"
 	"time"
 	"trueid-shorten-link/internal/shorten-link/interface/http/controller"
 	"trueid-shorten-link/internal/shorten-link/interface/http/middleware"
@@ -16,6 +11,12 @@ import (
 	"trueid-shorten-link/package/database"
 	"trueid-shorten-link/package/metrics"
 	"trueid-shorten-link/package/redis"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/template/html"
 )
 
 func NewApp() *fiber.App {
@@ -30,6 +31,7 @@ type Handler struct {
 	MetricsController        *controller.MetricsController
 	ValidateURLMiddleware    *middleware.ValidateURLMiddleware
 	ValidateAPIKeyMiddleware *middleware.ValidateAPIKeyMiddleware
+	LimitGenerateMiddleware  *middleware.LimitGenerateMiddleware
 }
 
 func (this *Handler) InitHandler() *Handler {
@@ -43,16 +45,21 @@ func (this *Handler) InitHandler() *Handler {
 	// Repositories
 	urlRepository := new(repository.URLRepository).Init(db)
 	clientRepository := new(repository.ClientRepository).Init(db)
+	generateCounterRepository := new(repository.GenerateCounterRepository).Init(db)
 	// Job
-	job := new(job.Job).Init(urlRepository, redis)
+	job := new(job.Job).Init(urlRepository, generateCounterRepository, redis)
 	job.CreateCronJob(
 		"@every 12h",
 		job.DeleteExpireURL,
 		job.ResetMaxID,
 	)
+	job.CreateCronJob(
+		"@every 30m",
+		job.UpdateLinkCounter,
+	)
 	job.DeleteExpireURL()
 	job.ResetMaxID()
-
+	job.UpdateLinkCounter()
 	// Controllers
 	this.ErrorController = new(controller.ErrorController)
 	this.GenerateURLController = new(controller.GenerateURLController).Init(
@@ -65,6 +72,9 @@ func (this *Handler) InitHandler() *Handler {
 	this.ValidateURLMiddleware = new(middleware.ValidateURLMiddleware).Init()
 	this.ValidateAPIKeyMiddleware = new(middleware.ValidateAPIKeyMiddleware).Init(
 		new(service.ValidateAPIKeyService).Init(clientRepository, redis),
+	)
+	this.LimitGenerateMiddleware = new(middleware.LimitGenerateMiddleware).Init(
+		new(service.LimitGenerateService).Init(urlRepository, redis),
 	)
 	this.App = fiber.New(fiber.Config{
 		Views:        html.New(config.Config.View.Path, ".html"),
