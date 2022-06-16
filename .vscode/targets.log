@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 16 13:37:34 2022
+# Make data base, printed on Thu Jun 16 14:39:16 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8802064a-bfac-4a0c-8e91-07d75e0719f3.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e489e030-05e0-4e95-a487-2a45331d23cd.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -103,7 +103,7 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 56614
+VSCODE_PID = 90629
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -195,7 +195,7 @@ MANAGERPID = 970
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 56614
+GIO_LAUNCHED_DESKTOP_FILE_PID = 90629
 # environment
 PAGER = less
 # environment
@@ -281,11 +281,11 @@ stop:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'Makefile', line 7):
 			docker compose stop
 
 server:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -350,6 +350,6 @@ down:
 # strcache performance: lookups = 51 / hit rate = 35%
 # hash-table stats:
 # Load=33/8192=0%, Rehash=0, Collisions=0/51=0%
-# Finished Make data base on Thu Jun 16 13:37:34 2022
+# Finished Make data base on Thu Jun 16 14:39:16 2022
 
  

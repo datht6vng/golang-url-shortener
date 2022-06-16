@@ -23,10 +23,11 @@ func (this *ValidateAPIKeyMiddleware) ValidateAPIKey(ctx *fiber.Ctx) error {
 			Message: "X-API-KEY header not found!",
 		}
 	}
-	clientID, err := this.validateAPIKeyService.ValidateAPIKey(apiKey)
+	clientID, maxLink, err := this.validateAPIKeyService.ValidateAPIKey(apiKey)
 	if err != nil {
 		return err
 	}
 	ctx.Locals("CLIENT-ID", clientID)
+	ctx.Locals("MAX-LINK", maxLink)
 	return ctx.Next()
 }

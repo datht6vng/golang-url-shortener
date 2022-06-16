@@ -23,13 +23,13 @@ func (this *LimitGenerateService) Init(urlRepository *repository.URLRepository, 
 	return this
 }
 func (this *LimitGenerateService) LimitGenerate(clientID string, limit int64) error {
-	counterKey := "LinkCounter:" + clientID + "|" + time.Now().Format(this.timeFormat)
+	counterKey := "LinkCounter:" + time.Now().Format(this.timeFormat) + "|" + clientID
 	if this.redis.Get(counterKey) == "" {
 		// Create pipline to reset
 		pipe := this.redis.TxPipeline()
 		this.redis.Watch(func(tx *redis.Tx) error {
-			limit, _ := this.urlRepository.CountLinkGenerated(clientID)
-			pipe.Set(counterKey, limit, 24*time.Hour)
+			countLink, _ := this.urlRepository.CountLinkGenerated(clientID)
+			pipe.Set(counterKey, countLink, 24*time.Hour)
 			pipe.Incr(counterKey)
 			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
 				return err
@@ -48,5 +48,6 @@ func (this *LimitGenerateService) LimitGenerate(clientID string, limit int64) er
 			Message: "Reach limit of link generation!",
 		}
 	}
+	this.redis.Incr(counterKey)
 	return nil
 }

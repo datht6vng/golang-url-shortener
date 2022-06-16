@@ -3,6 +3,7 @@ package service
 import (
 	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
+	"trueid-shorten-link/package/model"
 	_redis "trueid-shorten-link/package/redis"
 
 	"github.com/gofiber/fiber/v2"
@@ -19,21 +20,22 @@ func (this *ValidateAPIKeyService) Init(clientRepository *repository.ClientRepos
 	this.redis = redis
 	return this
 }
-func (this *ValidateAPIKeyService) ValidateAPIKey(apiKey string) (string, error) {
-	cacheClientID := this.redis.Get("API-KEY:" + apiKey)
-	if cacheClientID != "" {
-		return cacheClientID, nil
+func (this *ValidateAPIKeyService) ValidateAPIKey(apiKey string) (string, int64, error) {
+	var cacheClient = new(model.Client)
+	this.redis.GetJSON("API-KEY:"+apiKey, cacheClient)
+	if cacheClient.ClientID != "" {
+		return cacheClient.ClientID, cacheClient.MaxLink, nil
 	}
-	clientIDRecord, err := this.clientRepository.FindByAPIKey(apiKey)
+	clientRecord, err := this.clientRepository.FindByAPIKey(apiKey)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return "", &fiber.Error{
+			return "", 0, &fiber.Error{
 				Code:    401,
 				Message: "API Key not found!",
 			}
 		}
-		return "", err
+		return "", 0, err
 	}
-	this.redis.Set("API-KEY:"+apiKey, clientIDRecord.ClientID, 24*time.Hour)
-	return clientIDRecord.ClientID, nil
+	this.redis.SetJSON("API-KEY:"+apiKey, clientRecord, 24*time.Hour)
+	return clientRecord.ClientID, clientRecord.MaxLink, nil
 }

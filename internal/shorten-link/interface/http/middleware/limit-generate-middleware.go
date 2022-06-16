@@ -15,11 +15,7 @@ func (this *LimitGenerateMiddleware) Init(limitGenerateService *service.LimitGen
 	return this
 }
 func (this *LimitGenerateMiddleware) LimitGenerate(ctx *fiber.Ctx) error {
-	clientID := ctx.Locals("CLIENT-ID").(string)
-	//clientLimit := ctx.Locals("CLIENT-LIMIT").(int64)
-	clientLimit := int64(10000)
-	// take limit
-	err := this.limitGenerateService.LimitGenerate(clientID, clientLimit)
+	err := this.limitGenerateService.LimitGenerate(ctx.Locals("CLIENT-ID").(string), ctx.Locals("MAX-LINK").(int64))
 	if err != nil {
 		return err
 	}

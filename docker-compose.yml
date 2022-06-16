@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=URL_SHORTENER
+      - MYSQL_DATABASE=VNG_TRUEID
       - MYSQL_ROOT_HOST=%
     ports:
       - '3306:3306'

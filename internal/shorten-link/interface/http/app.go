@@ -53,10 +53,13 @@ func (this *Handler) InitHandler() *Handler {
 		job.DeleteExpireURL,
 		job.ResetMaxID,
 	)
+	job.CreateCronJob(
+		"@every 30m",
+		job.UpdateLinkCounter,
+	)
 	job.DeleteExpireURL()
 	job.ResetMaxID()
-	//job.BackupGenCounter()
-
+	job.UpdateLinkCounter()
 	// Controllers
 	this.ErrorController = new(controller.ErrorController)
 	this.GenerateURLController = new(controller.GenerateURLController).Init(
