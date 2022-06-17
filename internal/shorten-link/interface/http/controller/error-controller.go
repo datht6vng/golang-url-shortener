@@ -19,7 +19,7 @@ func (this *ErrorController) ErrorController(ctx *fiber.Ctx, err error) error {
 		code = e.Code
 	}
 	// For API path
-	if ctx.Path()[:4] == "/api" {
+	if len(ctx.Path()) > 4 && ctx.Path()[:4] == "/api" && ctx.Path()[:4] == "/api" {
 		if code >= 500 {
 			log.Println(err.Error())
 		}

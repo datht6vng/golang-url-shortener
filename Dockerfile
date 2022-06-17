@@ -12,7 +12,7 @@ RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ./cmd/shorten-link/main ./cmd/shorten-link
 
 
-FROM alpine:lasted
+FROM alpine
 
 ENV CONFIG_PATH="./configs/config.toml"
 
