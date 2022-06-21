@@ -7,6 +7,7 @@ func (this *Handler) InitRoute() *Handler {
 		this.GenerateURLController.GenerateURL,
 	)
 	this.App.Get("/api/metrics", this.MetricsController.Metrics)
-	this.App.Get("/call/:url", this.ValidateURLMiddleware.ValidateURL, this.GetURLController.GetURL)
+	this.App.Post("/api/client", this.ClientController.UpdateClient)
+	this.App.Get("/:url", this.ValidateURLMiddleware.ValidateURL, this.GetURLController.GetURL)
 	return this
 }

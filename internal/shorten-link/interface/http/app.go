@@ -9,9 +9,12 @@ import (
 	"trueid-shorten-link/internal/shorten-link/service"
 	"trueid-shorten-link/package/config"
 	"trueid-shorten-link/package/database"
+
+	logger "trueid-shorten-link/package/log"
 	"trueid-shorten-link/package/metrics"
 	"trueid-shorten-link/package/redis"
 
+	json "github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
@@ -29,6 +32,7 @@ type Handler struct {
 	GenerateURLController    *controller.GenerateURLController
 	GetURLController         *controller.GetURLController
 	MetricsController        *controller.MetricsController
+	ClientController         *controller.ClientController
 	ValidateURLMiddleware    *middleware.ValidateURLMiddleware
 	ValidateAPIKeyMiddleware *middleware.ValidateAPIKeyMiddleware
 	LimitGenerateMiddleware  *middleware.LimitGenerateMiddleware
@@ -36,6 +40,7 @@ type Handler struct {
 
 func (this *Handler) InitHandler() *Handler {
 	// Connect database
+	logger := logger.GetLog()
 	db := database.Connect()
 	redis := redis.Connect()
 
@@ -46,6 +51,7 @@ func (this *Handler) InitHandler() *Handler {
 	urlRepository := new(repository.URLRepository).Init(db)
 	clientRepository := new(repository.ClientRepository).Init(db)
 	generateCounterRepository := new(repository.GenerateCounterRepository).Init(db)
+
 	// Job
 	job := new(job.Job).Init(urlRepository, generateCounterRepository, redis)
 	job.CreateCronJob(
@@ -60,14 +66,17 @@ func (this *Handler) InitHandler() *Handler {
 	job.DeleteExpireURL()
 	job.ResetMaxID()
 	job.UpdateLinkCounter()
+
 	// Controllers
 	this.ErrorController = new(controller.ErrorController)
 	this.GenerateURLController = new(controller.GenerateURLController).Init(
-		new(service.GenerateURLService).Init(urlRepository, redis, metrics),
+		service.NewGenerateURLService(urlRepository, redis, metrics),
 	)
 	this.GetURLController = new(controller.GetURLController).Init(
 		new(service.GetURLService).Init(urlRepository, redis, metrics),
 	)
+	this.ClientController = controller.NewClientController(service.NewClientService(clientRepository, redis))
+
 	// Middlewares
 	this.ValidateURLMiddleware = new(middleware.ValidateURLMiddleware).Init()
 	this.ValidateAPIKeyMiddleware = new(middleware.ValidateAPIKeyMiddleware).Init(
@@ -76,7 +85,10 @@ func (this *Handler) InitHandler() *Handler {
 	this.LimitGenerateMiddleware = new(middleware.LimitGenerateMiddleware).Init(
 		new(service.LimitGenerateService).Init(urlRepository, redis),
 	)
+
 	this.App = fiber.New(fiber.Config{
+		JSONEncoder:  json.Marshal,
+		JSONDecoder:  json.Unmarshal,
 		Views:        html.New(config.Config.View.Path, ".html"),
 		ErrorHandler: this.ErrorController.ErrorController,
 	})
@@ -103,6 +115,10 @@ func (this *Handler) InitHandler() *Handler {
 		SkipSuccessfulRequests: false,
 		LimiterMiddleware:      limiter.FixedWindow{},
 	}))
+
+	// general middleware
+	this.App.Use(middleware.NewLogMiddleWare(logger))
+
 	this.InitRoute()
 	return this
 }

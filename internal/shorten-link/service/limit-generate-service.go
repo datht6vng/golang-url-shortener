@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
+	logger "trueid-shorten-link/package/log"
 	_redis "trueid-shorten-link/package/redis"
 
 	"github.com/go-redis/redis/v7"
@@ -23,16 +24,22 @@ func (this *LimitGenerateService) Init(urlRepository *repository.URLRepository, 
 	return this
 }
 func (this *LimitGenerateService) LimitGenerate(clientID string, limit int64) error {
-	counterKey := "LinkCounter:" + time.Now().Format(this.timeFormat) + "|" + clientID
-	result := this.redis.Get(counterKey)
+	logger := logger.GetLog()
+	counterKey := time.Now().Format(this.timeFormat) + "|" + clientID
+	result := this.redis.HGet("LINKS_COUNTER", counterKey)
 	var counter int64
 	if result == "" {
 		// Create pipline to reset
 		pipe := this.redis.TxPipeline()
 		this.redis.Watch(func(tx *redis.Tx) error {
-			counter, _ = this.urlRepository.CountLinkGenerated(clientID)
-			pipe.Set(counterKey, counter, 24*time.Hour)
+			counter, err := this.urlRepository.CountLinkGenerated(clientID)
+			if err != nil {
+				logger.Errorf("Error when update link counter %v", err.Error())
+				return err
+			}
+			pipe.HSet("LINKS_COUNTER", counterKey, counter)
 			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
+				logger.Errorf("Error when update link counter %v", err.Error())
 				return err
 			}
 			return nil
@@ -50,6 +57,6 @@ func (this *LimitGenerateService) LimitGenerate(clientID string, limit int64) er
 			Message: "Reach limit of link generation!",
 		}
 	}
-	go this.redis.Incr(counterKey)
+	go this.redis.HIncrBy("LINKS_COUNTER", counterKey, 1)
 	return nil
 }

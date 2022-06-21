@@ -22,3 +22,15 @@ func (r *ClientRepository) FindByAPIKey(apiKey string) (*model.Client, error) {
 	}
 	return client, nil
 }
+func (r *ClientRepository) FindByID(id string) (*model.Client, error) {
+	client := new(model.Client)
+	err := r.db.Where("client_id = ?", id).First(client).Error
+	if err != nil {
+		return nil, err
+	}
+	return client, nil
+}
+
+func (r *ClientRepository) Update(client *model.Client) error {
+	return r.db.Save(client).Error
+}

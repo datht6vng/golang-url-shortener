@@ -20,9 +20,10 @@ func (this *ValidateAPIKeyService) Init(clientRepository *repository.ClientRepos
 	this.redis = redis
 	return this
 }
+
 func (this *ValidateAPIKeyService) ValidateAPIKey(apiKey string) (string, int64, error) {
 	var cacheClient = new(model.Client)
-	this.redis.GetJSON("API-KEY:"+apiKey, cacheClient)
+	this.redis.HGetJSON("SHORTEN_API_KEYS", apiKey, cacheClient)
 	if cacheClient.ClientID != "" {
 		return cacheClient.ClientID, cacheClient.MaxLink, nil
 	}
@@ -36,6 +37,8 @@ func (this *ValidateAPIKeyService) ValidateAPIKey(apiKey string) (string, int64,
 		}
 		return "", 0, err
 	}
-	this.redis.SetJSON("API-KEY:"+apiKey, clientRecord, 24*time.Hour)
+
+	//this.redis.SetJSON("API-KEY:"+apiKey, clientRecord, 24*time.Hour)
+	this.redis.HSetTTL("SHORTEN_API_KEYS", apiKey, clientRecord, 24*time.Hour)
 	return clientRecord.ClientID, clientRecord.MaxLink, nil
 }

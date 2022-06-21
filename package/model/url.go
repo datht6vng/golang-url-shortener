@@ -1,6 +1,10 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	json "github.com/bytedance/sonic"
+)
 
 type URL struct {
 	ID         int64     `json:"ID" xml:"ID" form:"ID" gorm:"id;primaryKey;index"`
@@ -10,6 +14,10 @@ type URL struct {
 	ExpireTime time.Time `json:"expireTime" xml:"expireTime" form:"expireTime" gorm:"expire_time"`
 }
 
+func (u URL) MarshalBinary() (data []byte, err error) {
+	bytes, err := json.Marshal(u)
+	return bytes, err
+}
 func (m *URL) TableName() string {
 	return `shorten_link_urls`
 }

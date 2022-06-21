@@ -4,7 +4,7 @@ services:
     image: "redis"
     ports:
       - "6379:6379"
-    command: redis-server --maxmemory-policy allkeys-lru --maxmemory 10M
+    command: redis-server --maxmemory-policy allkeys-lru --maxmemory 4G
     restart: always
     volumes:
       - redis-data:/data
@@ -34,10 +34,6 @@ services:
       - mysql
     links:
       - mysql:db
-      # environment:
-      # PMA_HOST: mysql
-      # PMA_PORT: 3306
-      # PMA_ARBITRARY: 1
     restart: always
     ports:
       - 8081:80
@@ -90,7 +86,7 @@ services:
   #     - '8080:8080'
 
 volumes:
+  grafana-data:
   prometheus-data:
   redis-data:
   mysql-data:
-  grafana-data:

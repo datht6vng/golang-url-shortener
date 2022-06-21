@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"trueid-shorten-link/internal/shorten-link/interface/http/entity"
+	"trueid-shorten-link/internal/shorten-link/entity"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 16 17:16:45 2022
+# Make data base, printed on Thu Jun 16 21:17:01 2022
 
 # Variables
 
@@ -17,13 +17,11 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-NO_AT_BRIDGE = 1
-# environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-2e49a972-7939-461b-82de-fc7d06e0c97b.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-4448a7c8-fc07-4a1f-8c16-f219df28ff47.sock
 # environment
 LC_NAME = vi_VN
 # environment
@@ -74,8 +72,6 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
-# environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=78afb017128324dea82834f962aa9c94
 # makefile
 CURDIR := /home/dathuynh/Workspace/golang-url-shortener
 # environment
@@ -107,19 +103,19 @@ ZSH = /home/dathuynh/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 250536
+VSCODE_PID = 2254
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1370,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1370
+SESSION_MANAGER = local/dathuynh-ThinkPad-T14-Gen-2i:@/tmp/.ICE-unix/1373,unix/dathuynh-ThinkPad-T14-Gen-2i:/tmp/.ICE-unix/1373
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=78afb017128324dea82834f962aa9c94
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -155,7 +151,7 @@ LC_MONETARY = vi_VN
 # environment
 LC_TIME = vi_VN
 # environment
-INVOCATION_ID = 7039d79863a3425b94ccf1080f54fb61
+INVOCATION_ID = 863400be527a4389b8349a83974ff9e7
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
@@ -181,11 +177,11 @@ GNUMAKEFLAGS :=
 # environment
 LOGNAME = dathuynh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
+GIO_LAUNCHED_DESKTOP_FILE = /home/dathuynh/Desktop/code.desktop
 # makefile
 .DEFAULT_GOAL := server
 # environment
-SYSTEMD_EXEC_PID = 1370
+SYSTEMD_EXEC_PID = 1373
 # environment
 DISPLAY = :0
 # environment
@@ -195,13 +191,11 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 970
-# environment
-DBUS_STARTER_BUS_TYPE = session
+MANAGERPID = 1011
 # environment
 LC_MEASUREMENT = vi_VN
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 250536
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2254
 # environment
 PAGER = less
 # environment
@@ -213,7 +207,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-JOURNAL_STREAM = 8:30170
+JOURNAL_STREAM = 8:26433
 # environment
 GOMODCACHE = /home/dathuynh/go/pkg/mod
 # environment
@@ -251,7 +245,7 @@ GDMSESSION = ubuntu
 # environment
 LC_IDENTIFICATION = vi_VN
 # variable set hash-table stats:
-# Load=119/1024=12%, Rehash=0, Collisions=6/149=4%
+# Load=116/1024=11%, Rehash=0, Collisions=5/146=3%
 
 # Pattern-specific Variable Values
 
@@ -259,9 +253,9 @@ LC_IDENTIFICATION = vi_VN
 
 # Directories
 
-# . (device 66308, inode 5908410): 20 files, no impossibilities.
+# . (device 66308, inode 5908410): 21 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -281,13 +275,13 @@ up:
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 5):
- 
 			docker compose up -d
 
 stop:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'Makefile', line 7):
 			docker compose stop
 
@@ -350,12 +344,12 @@ down:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 247 B / avg = 7 B
-# current buf: size = 8162 B / used = 247 B / count = 33 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 34 / storage = 261 B / avg = 7 B
+# current buf: size = 8162 B / used = 261 B / count = 34 / avg = 7 B
 
-# strcache performance: lookups = 51 / hit rate = 35%
+# strcache performance: lookups = 52 / hit rate = 34%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=0/51=0%
-# Finished Make data base on Thu Jun 16 17:16:45 2022
+# Load=34/8192=0%, Rehash=0, Collisions=0/52=0%
+# Finished Make data base on Thu Jun 16 21:17:01 2022
 
  

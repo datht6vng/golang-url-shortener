@@ -1,10 +1,9 @@
 package job
 
 import (
-	"log"
 	"strings"
-	"time"
 	"trueid-shorten-link/internal/shorten-link/repository"
+	logger "trueid-shorten-link/package/log"
 	_redis "trueid-shorten-link/package/redis"
 
 	"github.com/go-redis/redis/v7"
@@ -33,28 +32,38 @@ func (this *Job) CreateCronJob(interval string, cronJobs ...func()) {
 }
 func (this *Job) DeleteExpireURL() {
 	this.urlRepository.DeleteExpiredURL()
-	log.Printf("Delete expire URL!")
+	logger.GetLog().Info("Delete expire URL!")
 }
 func (this *Job) ResetMaxID() {
 	maxID, _ := this.urlRepository.GetMaxID()
 	this.redis.Set("CurrentID", maxID, 0)
-	log.Printf("Reset max ID!")
+	logger.GetLog().Info("Reset max ID!")
 }
+
 func (this *Job) UpdateLinkCounter() {
-	keys := this.redis.Keys("LinkCounter:*")
+	logger := logger.GetLog()
+	keys, err := this.redis.HKeys("LINKS_COUNTER")
+	if err != nil {
+		logger.Errorf("Error when update link counter %v", err.Error())
+		return
+	}
 	for _, key := range keys {
-		clientID := strings.Split(key, "LinkCounter:")[1]
+		clientID := strings.Split(key, "|")[1]
 		pipe := this.redis.TxPipeline()
 		this.redis.Watch(func(tx *redis.Tx) error {
-			countLink, _ := this.urlRepository.CountLinkGenerated(clientID)
-			pipe.Set(key, countLink, 24*time.Hour)
-			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
+			countLink, err := this.urlRepository.CountLinkGenerated(clientID)
+			if err != nil {
+				logger.Errorf("Error when update link counter %v", err.Error())
 				return err
+			}
+			pipe.HSet("LINKS_COUNTER", key, countLink)
+			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
+				logger.Errorf("Error when update link counter %v", err.Error())
 			}
 			return nil
 		}, key)
 	}
-	log.Printf("Reset link counter!")
+	logger.Info("Reset link counter!")
 }
 
 // for backup version of counter, current solution use Redis and query directly from url table

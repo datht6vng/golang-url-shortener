@@ -9,7 +9,7 @@
 
 [redis]
     address             = "0.0.0.0:6379"
-    # Split address by COMMA, Example: address = "0.0.0.0:6379, 0.0.0.0:6379" 
+    # Split address by COMMA, Example: address = "0.0.0.0:6379, 0.0.0.0:6379"
     password            = ""
     database            = "0"
     is_cluster          = "false"
@@ -18,12 +18,12 @@
     port                = "8080"
 
 [limitter]
-    max_request         = "100000000"
+    max_request         = "100000"
     limitter_expire     = "1"
 
 [logger]
     level = "info"
-    filePath= "./logs/logs"
+    filePath= "./logs/shorten_url"
     maxSize=1
     maxBackups=10
     maxAge=28

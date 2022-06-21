@@ -1,11 +1,12 @@
 package redis
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"time"
 	"trueid-shorten-link/package/config"
+
+	json "github.com/bytedance/sonic"
 
 	"github.com/go-redis/redis/v7"
 )
@@ -191,7 +192,18 @@ func (r *Redis) HGet(k, field string) string {
 	}
 	return r.single.HGet(k, field).Val()
 }
-
+func (r *Redis) HGetJSON(k, field string, result interface{}) error {
+	encodedValue := r.HGet(k, field)
+	if encodedValue == "" {
+		result = nil
+		return nil
+	}
+	err := json.Unmarshal([]byte(encodedValue), result)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func (r *Redis) HGetAll(k string) map[string]string {
 	if r.clusterMode {
 		return r.cluster.HGetAll(k).Val()

@@ -1,16 +1,9 @@
-local charset = {}  do -- [0-9a-zA-Z]
-    for c = 48, 57  do table.insert(charset, string.char(c)) end
-    for c = 65, 90  do table.insert(charset, string.char(c)) end
-    for c = 97, 122 do table.insert(charset, string.char(c)) end
+request = function()
+    wrk.headers["X-API-KEY"] = "123456"
+    wrk.method = "POST"
+    param_value = math.random(1,1000000000)
+    longURL = "https://zingnews.vn/da-tim-thay-co-gai-16-tuoi-mat-tich-khi-den-tphcm-post-" .. param_value
+    wrk.headers["Content-Type"] = "application/json"
+    wrk.body = '{"url": "'..longURL..'"}' ;
+    return wrk.format("POST", path)
 end
-
-local function randomString(length)
-    if not length or length <= 0 then return '' end
-    math.randomseed(os.clock()^5)
-    return randomString(length - 1) .. charset[math.random(1, #charset)]
-end
-url = randomString(20)
-wrk.method = "POST"
-wrk.body = "{\"url\":\"" ..url .. "\"}"
-wrk.headers["Content-Type"] = "application/json"
-wrk.headers["X-API-KEY"] = "123456"

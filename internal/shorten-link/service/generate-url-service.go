@@ -2,8 +2,10 @@ package service
 
 import (
 	"time"
+	"trueid-shorten-link/internal/shorten-link/entity"
 	"trueid-shorten-link/internal/shorten-link/repository"
 	"trueid-shorten-link/package/encryption"
+	logger "trueid-shorten-link/package/log"
 	"trueid-shorten-link/package/metrics"
 	_redis "trueid-shorten-link/package/redis"
 
@@ -11,30 +13,40 @@ import (
 	"gorm.io/gorm"
 )
 
-type GenerateURLService struct {
+type GenerateURLService interface {
+	GenerateURL(url string, clientID string) (string, error)
+}
+
+type generateURLService struct {
 	urlRepository *repository.URLRepository
 	redis         *_redis.Redis
 	metrics       *metrics.Metrics
 	timeFormat    string
 }
 
-func (this *GenerateURLService) Init(urlRepository *repository.URLRepository, redis *_redis.Redis, metrics *metrics.Metrics) *GenerateURLService {
-	this.urlRepository = urlRepository
-	this.redis = redis
-	this.metrics = metrics
-	this.timeFormat = "2006-01-02"
-	return this
+func NewGenerateURLService(urlRepository *repository.URLRepository, redis *_redis.Redis, metrics *metrics.Metrics) GenerateURLService {
+	return &generateURLService{
+		urlRepository: urlRepository,
+		redis:         redis,
+		metrics:       metrics,
+		timeFormat:    "2006-01-02",
+	}
 }
 
-func (this *GenerateURLService) GetNextID() int64 {
-	if currentID := this.redis.Get("CurrentID"); currentID == "" {
-		pipe := this.redis.TxPipeline()
+func (s *generateURLService) GetNextID() int64 {
+	if s.redis.Get("CurrentID") == "" {
+		pipe := s.redis.TxPipeline()
 		var resultID int64
-		this.redis.Watch(func(tx *redis.Tx) error {
-			maxID, _ := this.urlRepository.GetMaxID()
+		s.redis.Watch(func(tx *redis.Tx) error {
+			maxID, err := s.urlRepository.GetMaxID()
+			if err != nil {
+				logger.GetLog().Errorf("Error reset ID %v", err.Error())
+				return err
+			}
 			pipe.Set("CurrentID", maxID, -1)
 			cmd := pipe.Incr("CurrentID")
 			if _, err := pipe.Exec(); err != nil && err != redis.Nil {
+				logger.GetLog().Errorf("Error reset ID %v", err.Error())
 				return err
 			}
 			resultID = cmd.Val()
@@ -42,50 +54,73 @@ func (this *GenerateURLService) GetNextID() int64 {
 		}, "CurrentID")
 		return resultID
 	}
-	return this.redis.Incr("CurrentID")
+	return s.redis.Incr("CurrentID")
 }
 
-func (this *GenerateURLService) GenerateURL(url string, clientID string) (string, error) {
-	go this.metrics.IncreaseGenURLRequests(clientID)
-	shortURL := this.redis.Get("URL:" + url)
+func (s *generateURLService) GenerateURL(url string, clientID string) (string, error) {
+	logger := logger.GetLog()
+	go s.metrics.IncreaseGenURLRequests(clientID)
+	shortURL := s.redis.HGet("LONG_URLS", url)
 	if shortURL != "" {
+		go func() {
+			err := s.redis.HSetTTL("SHORT_URLS", shortURL, entity.URLData{URL: url, ClientID: clientID}, 24*time.Hour)
+			if err != nil {
+				logger.Errorf("Set cache fail: %v", err)
+				return
+			}
+		}()
+		go func() {
+			err := s.redis.HSetTTL("LONG_URLS", url, shortURL, 24*time.Hour)
+			if err != nil {
+				logger.Errorf("Set cache fail: %v", err)
+			}
+		}()
 		return shortURL, nil
 	}
-	urlRecord, err := this.urlRepository.FindByLongURL(url)
+	urlRecord, err := s.urlRepository.FindByLongURL(url)
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return "", err
 	}
+
 	// Found url and not exprire
 	if err != gorm.ErrRecordNotFound && urlRecord.ExpireTime.After(time.Now()) {
+		go func() {
+			err := s.redis.HSetTTL("SHORT_URLS", urlRecord.ShortURL, entity.URLData{URL: url, ClientID: clientID}, 24*time.Hour)
+			if err != nil {
+				logger.Errorf("Set cache fail: %v", err)
+			}
+		}()
+		go func() {
+			err := s.redis.HSetTTL("LONG_URLS", url, urlRecord.ShortURL, 24*time.Hour)
+			if err != nil {
+				logger.Errorf("Set cache fail: %v", err)
+			}
+		}()
 		return urlRecord.ShortURL, nil
 	}
 	// insert DB
-	channelRepo := make(chan struct{})
-	channelRedis := make(chan struct{})
-	newID := this.GetNextID()
+	newID := s.GetNextID()
+
 	newShortURL := encryption.GenerateShortLink(newID)
-	var errRepo, errRedis error
 	go func() {
-		errRepo = this.urlRepository.InsertURL(newID, clientID, newShortURL, url, time.Now().AddDate(0, 0, 3))
-		channelRepo <- struct{}{}
-	}()
-	go func() {
-		errRedis = this.redis.SetJSON("URL:"+newShortURL, URLData{URL: url, ClientID: clientID}, 24*time.Hour)
-		if errRedis != nil {
-			channelRedis <- struct{}{}
-			return
+		err := s.urlRepository.InsertURL(newID, clientID, newShortURL, url, time.Now().AddDate(0, 0, 3))
+
+		if err != nil {
+			logger.Errorf("Insert DB fail: %v", err)
 		}
-		errRedis = this.redis.Set("URL:"+url, newShortURL, 24*time.Hour)
-		channelRedis <- struct{}{}
 	}()
-	go this.metrics.ResetGetURLRequests(newShortURL, clientID)
-	<-channelRepo
-	<-channelRedis
-	if errRepo != nil {
-		return "", errRepo
-	}
-	if errRedis != nil {
-		return "", errRedis
-	}
+	go func() {
+		err := s.redis.HSetTTL("SHORT_URLS", newShortURL, entity.URLData{URL: url, ClientID: clientID}, 24*time.Hour)
+		if err != nil {
+			logger.Errorf("Set cache fail: %v", err)
+		}
+	}()
+	go func() {
+		err := s.redis.HSetTTL("LONG_URLS", url, newShortURL, 24*time.Hour)
+		if err != nil {
+			logger.Errorf("Set cache fail: %v", err)
+		}
+	}()
+	go s.metrics.ResetGetURLRequests(newShortURL, clientID)
 	return newShortURL, nil
 }

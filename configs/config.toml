@@ -1,29 +1,29 @@
 [database]
-    host                = "0.0.0.0"
+    host                = "ekyc-mysql-stag.stag"
     port                = "3306"
-    user                = "root"
-    password            = "123456"
-    database            = "VNG_TRUEID"
+    user                = "trueid_stag_dba"
+    password            = "SIwiRu91l5s5wxzGFFTkyc"
+    database            = "trueid_stag"
     max_open_connection = "100"
     max_idle_connection = "20"
 
 [redis]
-    address             = "0.0.0.0:6379"
-    # Split address by COMMA, Example: address = "0.0.0.0:6379, 0.0.0.0:6379" 
+    address             = "ekyc-nginx-lb-redis-stag.stag:6379"
+    # Split address by COMMA, Example: address = "0.0.0.0:6379, 0.0.0.0:6379"
     password            = ""
     database            = "0"
-    is_cluster          = "false"
+    is_cluster          = "true"
 
 [app]
-    port                = "8080"
+    port                = "80"
 
 [limitter]
-    max_request         = "100000000"
+    max_request         = "100000"
     limitter_expire     = "1"
 
 [logger]
     level = "info"
-    filePath= "./logs/logs"
+    filePath= "./logs/shorten_url"
     maxSize=1
     maxBackups=10
     maxAge=28
